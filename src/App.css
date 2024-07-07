@@ -2,40 +2,42 @@
   --main-font: 'Arial', sans-serif;
   --primary-color: #333;
   --secondary-color: #f0f0f0;
-  --border-radius: 8px;
+  --border-radius: 20px;
 }
 
 body {
   font-family: var(--main-font);
   color: var(--primary-color);
+  margin: 0;
+  padding: 0;
 }
 
-h1, h2, p, ul, li {
-  margin: 20px;
+.day-background {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 0, 0, 0.2) 16.67%, rgba(255, 255, 0, 0.2) 33.33%, rgba(0, 255, 0, 0.2) 50%, rgba(0, 0, 255, 0.2) 66.67%, rgba(255, 0, 255, 0.2) 83.33%, rgba(255, 255, 255, 1) 100%);
+  background-size: 200% 200%;
+  animation: rainbow 20s linear infinite;
 }
 
-a {
-  color: var(--primary-color);
-  text-decoration: none;
+.night-background {
+  background: linear-gradient(90deg, rgba(0, 0, 50, 1) 0%, rgba(255, 0, 0, 0.2) 16.67%, rgba(255, 255, 0, 0.2) 33.33%, rgba(0, 255, 0, 0.2) 50%, rgba(0, 0, 255, 0.2) 66.67%, rgba(255, 0, 255, 0.2) 83.33%, rgba(0, 0, 50, 1) 100%);
+  background-size: 200% 200%;
+  animation: rainbow 20s linear infinite;
 }
 
-a:hover {
-  color: var(--secondary-color);
+@keyframes rainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
 }
 
 .navbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  width: 100%;
   display: flex;
-  justify-content: space-around;
-  background-color: #fff;
+  justify-content: center;
   padding: 1rem;
   transition: background-color 0.3s, opacity 0.3s;
-}
-
-.navbar-scrolled {
-  background-color: rgba(255, 255, 255, 0.8);
-  opacity: 0.7;
+  z-index: 1000;
 }
 
 .navbar a {
@@ -43,10 +45,17 @@ a:hover {
   color: #333;
   font-family: var(--main-font);
   padding: 0.5rem 1rem;
-  border-radius: var(--border-radius);
+  margin: 0 0.5rem;
   transition: background-color 0.3s;
 }
 
 .navbar a:hover {
   background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+}
+
+.navbar-scrolled {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

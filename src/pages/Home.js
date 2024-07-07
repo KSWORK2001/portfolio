@@ -1,28 +1,23 @@
 import React from 'react';
+import './Home.css';
 
 const Home = () => {
   return (
-    <div>
-      <h1>Welcome to My Portfolio</h1>
-      <p>Hi, I'm Karan Shrivastava, a Computer Science student at Georgia State University with a passion for cloud computing and full-stack development.</p>
-      
-      <h2>Featured Projects</h2>
-      <ul>
-        <li>
-          <a href="https://github.com/KSWORK2001/FitFirst">FitFirst</a> - A mobile app for water intake, BMI, and BFP tracking.
-        </li>
-        <li>
-          <a href="https://github.com/KSWORK2001/Zapp">Zapp</a> - A platform for enjoying media with friends and family using Discord's API.
-        </li>
-      </ul>
-      
-      <h2>Latest Certifications</h2>
-      <ul>
-        <li>Cloud Computing Specialization from Georgia Institute of Technology</li>
-      </ul>
-      
-      <h2>Future Goals</h2>
-      <p>I aim to continue developing my skills in cloud computing and full-stack development, and eventually become a leading cloud solutions architect.</p>
+    <div className="home-container">
+      <h1>Hey there! I'm Karan! </h1>
+      <h1>A Full Stack Developer and an Aspiring Cloud Architect!</h1>
+      <p>I'm passionate about crafting experiences that are engaging, accessible, and user-centric.</p>
+
+      <div className="featured-projects">
+        <div className="project-card">
+          <h3>FitFirst</h3>
+          <p>HealthTech mobile application</p>
+        </div>
+        <div className="project-card">
+          <h3>Zapp</h3>
+          <p>Media platform using Discord's API</p>
+        </div>
+      </div>
     </div>
   );
 };
