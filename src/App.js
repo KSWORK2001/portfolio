@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Work from './pages/Work';
+import Certifications from './pages/Certifications';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 const App = () => {
@@ -41,12 +42,14 @@ const App = () => {
           <Link to="/projects">Projects</Link>
           <Link to="/contact">Contact</Link>
           <Link to="/work">Work</Link>
+          <Link to="/certifications">Certifications</Link>
         </nav>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/work" element={<Work />} />
+          <Route path="/certifications" element={<Certifications />} />
         </Routes>
       </Router>
     </div>

@@ -1,37 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+  --border-radius: 40px;
+  --left-color: #8ADFE6; /* Color for the left box */
+  --right-color: #CB9AE5; /* Color for the right box */
+}
+
+/* Hide scrollbar for all browsers */
+body {
+    overflow-y: scroll; /* Ensure scrolling is still possible */
+}
+  
+body::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+  
+body {
+    -ms-overflow-style: none;  /* Hide scrollbar for Internet Explorer and Edge */
+    scrollbar-width: none;  /* Hide scrollbar for Firefox */
+}
+  
+
 .home-container {
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    color: #333;
-  }
-  
-  p {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .featured-projects {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  
-  .project-card {
-    background-color: #f0f0f0;
-    border-radius: var(--border-radius);
-    padding: 1rem;
-    margin: 0 1rem;
-    width: 200px;
-  }
-  
-  .project-card h3 {
-    color: #333;
-  }
-  
-  .project-card p {
-    color: #777;
-  }
-  
+  text-align: center;
+  padding: 2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+  font-size: 5.5rem;
+  color: #333;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.featured-projects {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.project-card {
+  border-radius: var(--border-radius);
+  padding: 2rem; /* Increased padding for larger size */
+  margin: 0 1rem;
+  width: 700px; /* Adjusted width to 65% */
+  height: 600px; /* Increased height for longer length */
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow */
+}
+
+.project-card:hover {
+  transform: scale(1.025);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.project-card h3 {
+  color: #333;
+  font-size: 1.5rem; /* Adjusted font size for larger card */
+}
+
+.project-card p {
+  color: #777;
+  font-size: 1.2rem; /* Adjusted font size for larger card */
+}
+
+/* Specific colors for each project card */
+.project-card:nth-child(1) {
+  background-color: var(--left-color);
+}
+
+.project-card:nth-child(2) {
+  background-color: var(--right-color);
+}

@@ -11,8 +11,23 @@ body {
   background-color: transparent;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
+.scrollable-content {
+  overflow-y: scroll; /* Allow scrolling within this element */
+  height: 100vh; /* Full viewport height */
+}
+
+.scrollable-content::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.scrollable-content {
+  -ms-overflow-style: none;  /* Hide scrollbar for Internet Explorer and Edge */
+  scrollbar-width: none;  /* Hide scrollbar for Firefox */
+  
+}
 .day-background {
   background: linear-gradient(90deg, rgba(191, 191, 255, 1) 0%, rgba(255, 0, 0, 0.2) 20%, rgba(255, 255, 0, 0.377) 40%, rgba(0, 255, 0, 0.2) 60%, rgba(0, 0, 255, 0.2) 80%, rgba(255, 0, 255, 0.2) 100%);
   background-size: 300% 300%;
