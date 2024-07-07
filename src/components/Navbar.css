@@ -1,28 +1,49 @@
 .navbar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    width: 100%;
     display: flex;
-    justify-content: space-around;
-    background-color: #fff;
+    justify-content: center;
     padding: 1rem;
     transition: background-color 0.3s, opacity 0.3s;
-  }
-  
-  .navbar-scrolled {
-    background-color: rgba(255, 255, 255, 0.8);
-    opacity: 0.7;
+    z-index: 1000;
   }
   
   .navbar a {
     text-decoration: none;
     color: #333;
-    font-family: 'Arial', sans-serif;
+    font-family: var(--main-font);
     padding: 0.5rem 1rem;
-    border-radius: 8px;
+    margin: 0 0.5rem;
     transition: background-color 0.3s;
   }
   
   .navbar a:hover {
-    background-color: #f0f0f0;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+  }
+  
+  .navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lamp {
+    cursor: pointer;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  
+  .lamp-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    transition: transform 0.5s;
+  }
+  
+  .animating .lamp-icon {
+    transform: rotate(20deg);
   }
   

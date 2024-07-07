@@ -1,6 +1,6 @@
 :root {
   --main-font: 'Arial', sans-serif;
-  --primary-color: #333;
+  --primary-color: transparent;
   --secondary-color: #f0f0f0;
   --border-radius: 20px;
 }
@@ -8,20 +8,21 @@
 body {
   font-family: var(--main-font);
   color: var(--primary-color);
+  background-color: transparent;
   margin: 0;
   padding: 0;
 }
 
 .day-background {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 0, 0, 0.2) 16.67%, rgba(255, 255, 0, 0.2) 33.33%, rgba(0, 255, 0, 0.2) 50%, rgba(0, 0, 255, 0.2) 66.67%, rgba(255, 0, 255, 0.2) 83.33%, rgba(255, 255, 255, 1) 100%);
-  background-size: 200% 200%;
-  animation: rainbow 20s linear infinite;
+  background: linear-gradient(90deg, rgba(191, 191, 255, 1) 0%, rgba(255, 0, 0, 0.2) 20%, rgba(255, 255, 0, 0.377) 40%, rgba(0, 255, 0, 0.2) 60%, rgba(0, 0, 255, 0.2) 80%, rgba(255, 0, 255, 0.2) 100%);
+  background-size: 300% 300%;
+  animation: rainbow 20s linear infinite alternate;
 }
 
 .night-background {
-  background: linear-gradient(90deg, rgba(0, 0, 50, 1) 0%, rgba(255, 0, 0, 0.2) 16.67%, rgba(255, 255, 0, 0.2) 33.33%, rgba(0, 255, 0, 0.2) 50%, rgba(0, 0, 255, 0.2) 66.67%, rgba(255, 0, 255, 0.2) 83.33%, rgba(0, 0, 50, 1) 100%);
-  background-size: 200% 200%;
-  animation: rainbow 20s linear infinite;
+  background: linear-gradient(90deg, rgb(191, 191, 255) 0%, rgba(255, 0, 0, 0.2) 20%, rgba(255, 255, 0, 0.377) 40%, rgba(0, 255, 0, 0.2) 60%, rgba(0, 0, 255, 0.2) 80%, rgba(255, 0, 255, 0.2) 100%);
+  background-size: 300% 300%;
+  animation: rainbow 20s linear infinite alternate;
 }
 
 @keyframes rainbow {
