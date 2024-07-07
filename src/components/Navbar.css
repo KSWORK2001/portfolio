@@ -1,4 +1,36 @@
-.navbar {
+:root {
+    --main-font: 'Arial', sans-serif;
+    --primary-color: transparent;
+    --secondary-color: #f0f0f0;
+    --border-radius: 20px;
+  }
+  
+  body {
+    font-family: var(--main-font);
+    color: var(--primary-color);
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .day-background {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 0, 0, 0.2) 20%, rgba(255, 255, 0, 0.2) 40%, rgba(0, 255, 0, 0.2) 60%, rgba(0, 0, 255, 0.2) 80%, rgba(255, 0, 255, 0.2) 100%);
+    background-size: 400% 400%;
+    animation: rainbow 20s linear infinite alternate;
+  }
+  
+  .night-background {
+    background: linear-gradient(90deg, rgb(191, 191, 255) 0%, rgba(255, 0, 0, 0.2) 20%, rgba(255, 255, 0, 0.2) 40%, rgba(0, 255, 0, 0.2) 60%, rgba(0, 0, 255, 0.2) 80%, rgba(255, 0, 255, 0.2) 100%);
+    background-size: 400% 400%;
+    animation: rainbow 20s linear infinite alternate;
+  }
+  
+  @keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+  
+  .navbar {
     position: fixed;
     top: 0;
     width: 100%;
@@ -10,17 +42,32 @@
   }
   
   .navbar a {
+    position: relative;
     text-decoration: none;
     color: #333;
-    font-family: var(--main-font);
+    font-family: 'Pacifico', cursive; /* Use Pacifico font */
     padding: 0.5rem 1rem;
     margin: 0 0.5rem;
-    transition: background-color 0.3s;
+    border-radius: var(--border-radius);
+    overflow: hidden;
   }
   
-  .navbar a:hover {
+  .navbar a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-color: var(--secondary-color);
     border-radius: var(--border-radius);
+    transition: opacity 0.3s;
+    opacity: 0;
+    z-index: -1;
+  }
+  
+  .navbar a:hover:before {
+    opacity: 1;
   }
   
   .navbar-scrolled {
