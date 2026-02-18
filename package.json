@@ -1,0 +1,48 @@
+{
+  "name": "karan-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev:web": "next dev",
+    "dev": "concurrently \"next dev\" \"wait-on tcp:3000 && electron .\"",
+    "build": "next build",
+    "start": "next start",
+    "desktop": "electron .",
+    "build:desktop": "next build && electron-builder"
+  },
+  "dependencies": {
+    "next": "15.1.7",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "gsap": "3.12.5",
+    "three": "0.173.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.6",
+    "@types/react": "19.0.2",
+    "@types/react-dom": "19.0.2",
+    "concurrently": "9.1.2",
+    "electron": "34.0.0",
+    "electron-builder": "25.1.8",
+    "typescript": "5.7.3",
+    "wait-on": "8.0.1"
+  },
+  "build": {
+    "appId": "com.karan.profile",
+    "productName": "KaranProfile",
+    "files": [
+      ".next/**/*",
+      "electron/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "public/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  }
+}

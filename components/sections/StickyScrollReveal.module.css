@@ -1,0 +1,88 @@
+.layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 1.2rem;
+}
+
+.stickyPane {
+  position: sticky;
+  top: 2rem;
+  align-self: start;
+  height: fit-content;
+}
+
+.previewCard {
+  border: 1px solid rgba(121, 192, 255, 0.2);
+  background: rgba(12, 18, 26, 0.96);
+  border-radius: 18px;
+  padding: 1.5rem;
+}
+
+.kicker {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-size: 0.75rem;
+  margin: 0 0 0.6rem;
+}
+
+.previewCard h3 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+}
+
+.previewCard p {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.bullets {
+  margin: 0.95rem 0 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.bullets li {
+  color: #c5d6ea;
+  line-height: 1.45;
+}
+
+.scrollPane {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.step {
+  min-height: 52vh;
+  border: 1px solid rgba(121, 192, 255, 0.15);
+  background: rgba(18, 24, 33, 0.55);
+  border-radius: 16px;
+  padding: 1.4rem;
+}
+
+.step h4 {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.1rem;
+}
+
+.step p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 940px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .stickyPane {
+    position: relative;
+    top: auto;
+  }
+
+  .step {
+    min-height: auto;
+  }
+}

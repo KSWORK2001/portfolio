@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.active {
+  color: var(--text);
+  background: rgba(121, 192, 255, 0.14);
+  border: 1px solid rgba(121, 192, 255, 0.38);
+  border-radius: 999px;
+  padding: 0.42rem 0.78rem;
+  transition: all 240ms ease;
+}
+
+.inactive {
+  color: rgba(155, 172, 191, 0.75);
+  filter: blur(0.7px);
+  transform: scale(0.98);
+  transition: all 240ms ease;
+}
