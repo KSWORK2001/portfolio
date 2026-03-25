@@ -1,8 +1,12 @@
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
+const asset = (path: string) => `${basePath}${path}`;
+
 export const profile = {
   name: "Karan Shrivastava",
   headline: "Innovation @ Southern Company || ML @ Georgia Tech",
   location: "Atlanta Metropolitan Area",
-  headshot: "/images/karan-headshot.jpg",
+  headshot: asset("/images/karan-headshot.jpg"),
   email: "work.karan2001@gmail.com",
   linkedin: "https://www.linkedin.com/in/kswork",
   website: "https://kswork2001.github.io",
@@ -97,7 +101,7 @@ export const profile = {
       summary:
         "Deterministic AI workflow engine with retrieval, triage, validation, and error correction layers for enterprise business processes.",
       impact: ">80% first-pass acceptance",
-      image: "/images/agentic.png"
+      image: asset("/images/agentic.png")
     },
     {
       title: "Real-time Speech Platform",
@@ -105,7 +109,7 @@ export const profile = {
       summary:
         "GPU-accelerated speech-to-text and voice synthesis prototypes deployed to Azure app services for fast, local inference.",
       impact: "FP16 production accuracy",
-      image: "/images/VoiceFlow.png"
+      image: asset("/images/voiceflow.png")
     },
     {
       title: "SpotMe!",
@@ -113,7 +117,7 @@ export const profile = {
       summary:
         "Social fitness application built and launched to early users with realtime interactions and scalable mobile backend.",
       impact: "200+ active users",
-      image: "/images/spotme.png"
+      image: asset("/images/spotme.png")
     }
   ],
   certifications: [
@@ -162,25 +166,25 @@ export const profile = {
     {
       name: "English",
       level: "Native or Bilingual",
-      image: "/images/lang-english-placeholder.jpg",
+      image: asset("/images/lang-english-placeholder.jpg"),
       phrases: ["Hello", "Great to connect", "Let us build this"]
     },
     {
       name: "Hindi",
       level: "Native or Bilingual",
-      image: "/images/lang-hindi-placeholder.jpg",
+      image: asset("/images/lang-hindi-placeholder.jpg"),
       phrases: ["नमस्ते", "कैसे हो", "शुक्रिया"]
     },
     {
       name: "Punjabi",
       level: "Professional Working",
-      image: "/images/lang-punjabi-placeholder.jpg",
+      image: asset("/images/lang-punjabi-placeholder.jpg"),
       phrases: ["ਸਤ ਸ੍ਰੀ ਅਕਾਲ", "ਤੂਸੀ ਕੀਦਾਨ", "ਧਾਨਵਾਦ"]
     },
     {
       name: "Spanish",
       level: "Professional Working",
-      image: "/images/lang-spanish-placeholder.jpg",
+      image: asset("/images/lang-spanish-placeholder.jpg"),
       phrases: ["Hola", "Mucho gusto", "Gracias"]
     }
   ],
