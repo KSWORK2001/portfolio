@@ -17,7 +17,7 @@ export default function HomePage() {
     },
     {
       question: "Are you willing to relocate?",
-      answer: "Yes. (for the right role)"
+      answer: "Yes, just not to Arkansas."
     },
     {
       question: "What kind of role do you prefer?",
@@ -29,7 +29,7 @@ export default function HomePage() {
     },
     {
       question: "Pineapple on Pizza?",
-      answer: "Nah."
+      answer: "Nah. (Non-negotiable)"
     },
     {
       question: "Marvel or DC?",
