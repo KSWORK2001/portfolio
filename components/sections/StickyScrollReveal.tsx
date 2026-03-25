@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./StickyScrollReveal.module.css";
 
 type Item = {
-  title: string;
-  text: string;
+  company: string;
+  role: string;
+  detail: string;
+  period: string;
   bullets: string[];
 };
 
@@ -15,27 +17,42 @@ type StickyScrollRevealProps = {
 
 export function StickyScrollReveal({ items }: StickyScrollRevealProps) {
   const [active, setActive] = useState(0);
+  const stepRefs = useRef<Array<HTMLElement | null>>([]);
 
   useEffect(() => {
-    const sections = document.querySelectorAll("[data-reveal-index]");
+    if (items.length === 0) {
+      return;
+    }
+
+    const sections = stepRefs.current.filter((section): section is HTMLElement => section !== null);
+    if (sections.length === 0) {
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number((entry.target as HTMLElement).dataset.revealIndex);
-            setActive(index);
-          }
-        });
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleEntries.length === 0) {
+          return;
+        }
+
+        const index = Number((visibleEntries[0].target as HTMLElement).dataset.revealIndex);
+        if (!Number.isNaN(index)) {
+          setActive(index);
+        }
       },
       {
-        rootMargin: "-45% 0px -45% 0px",
-        threshold: 0
+        rootMargin: "-20% 0px -35% 0px",
+        threshold: [0.2, 0.35, 0.5, 0.7]
       }
     );
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [items.length]);
 
   const activeItem = useMemo(() => items[active] ?? items[0], [active, items]);
 
@@ -44,20 +61,30 @@ export function StickyScrollReveal({ items }: StickyScrollRevealProps) {
       <aside className={styles.stickyPane}>
         <div className={styles.previewCard}>
           <p className={styles.kicker}>Experience highlight</p>
-          <h3>{activeItem.title}</h3>
-          <p>{activeItem.text}</p>
-          <ul className={styles.bullets}>
-            {activeItem.bullets.map((bullet) => (
-              <li key={bullet}>{bullet}</li>
-            ))}
-          </ul>
+          <h3>{activeItem.company}</h3>
+          <p className={styles.previewRole}>{activeItem.role}</p>
+          <p>{activeItem.detail}</p>
         </div>
       </aside>
       <div className={styles.scrollPane}>
         {items.map((item, index) => (
-          <section key={item.title} className={styles.step} data-reveal-index={index}>
-            <h4>{item.title}</h4>
-            <p>{item.text}</p>
+          <section
+            key={`${item.company}-${item.role}`}
+            className={styles.step}
+            data-reveal-index={index}
+            ref={(node) => {
+              stepRefs.current[index] = node;
+            }}
+          >
+            <h4>{item.role}</h4>
+            <p className={styles.stepMeta}>
+              {item.company} • {item.period}
+            </p>
+            <ul className={styles.stepBullets}>
+              {item.bullets.map((bullet) => (
+                <li key={`${item.company}-${bullet}`}>{bullet}</li>
+              ))}
+            </ul>
           </section>
         ))}
       </div>

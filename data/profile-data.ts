@@ -92,6 +92,18 @@ export const profile = {
         "Delivered high-coverage tests that lowered regression risk during deployment windows.",
         "Improved telemetry and reduced average request latency in customer workloads by ~18%."
       ]
+    },
+    {
+      role: "Software Engineer Intern",
+      company: "Nexcen Global",
+      period: "Aug 2023 - Dec 2023",
+      detail:
+        "Overhauled low-level framework internals to improve startup speed and runtime reliability for C++ tooling used by internal engineering teams.",
+      bullets: [
+        "Reduced binary startup time by 35% and crash frequency by 30% by reworking memory allocation patterns and fixing 20+ concurrency and lifetime defects.",
+        "Diagnosed and resolved critical memory safety issues using gdb, ASan/TSan, valgrind, and Linux core dump analysis.",
+        "Improved build pipeline reliability by refactoring CMake configurations and integrating sanitizer passes into CI for faster developer feedback."
+      ]
     }
   ],
   projects: [
@@ -118,6 +130,22 @@ export const profile = {
         "Social fitness application built and launched to early users with realtime interactions and scalable mobile backend.",
       impact: "200+ active users",
       image: asset("/images/spotme.png")
+    },
+    {
+      title: "Echo",
+      stack: "Tauri 2.x, Rust, React 19, TypeScript, SQLite, TailwindCSS, Whisper STT",
+      summary:
+        "Privacy-first desktop AI meeting assistant (~10MB) with sub-100ms cold starts and lower memory footprint than Electron, including stealth overlay behavior and real-time transcription.",
+      impact: "300+ public-release downloads • 8+ LLM providers",
+      image: asset("/images/echo.png")
+    },
+    {
+      title: "TokenLess",
+      stack: "Node.js, TypeScript, OpenAI-compatible APIs, CLI",
+      summary:
+        "HackGT 2024 (2nd place) npm CLI that compresses agent command output through an LLM before forwarding downstream, with universal provider abstraction and enterprise-friendly integration patterns.",
+      impact: "Up to 80% token reduction • 10+ provider backends",
+      image: asset("/images/tokenless.png")
     }
   ],
   certifications: [

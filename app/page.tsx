@@ -125,11 +125,13 @@ export default function HomePage() {
       <section className="section">
         <div className="container">
           <div className="section-kicker">Experience</div>
-          <h2 className="section-title">Sticky scroll career timeline</h2>
+          <h2 className="section-title">Career Timeline</h2>
           <StickyScrollReveal
             items={profile.experiences.map((item) => ({
-              title: `${item.role} — ${item.company}`,
-              text: `${item.period} • ${item.detail}`,
+              company: item.company,
+              role: item.role,
+              detail: item.detail,
+              period: item.period,
               bullets: item.bullets
             }))}
           />
