@@ -232,14 +232,36 @@
   line-height: 1;
   width: 1.25rem;
   text-align: center;
-  transition: transform 180ms ease;
+  position: relative;
 }
 
-.faqItem[open] .faqIcon {
-  transform: rotate(45deg);
+.faqIcon::before {
+  content: "+";
+  display: block;
+  transition: transform 200ms ease, opacity 200ms ease;
 }
 
-.faqItem p {
+.faqItem[open] .faqIcon::before {
+  content: "\2212";
+}
+
+.faqAnswer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 260ms ease, opacity 220ms ease;
+}
+
+.faqItem[open] .faqAnswer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.faqAnswerInner {
+  overflow: hidden;
+}
+
+.faqAnswerInner p {
   margin: 0 0 1rem;
   color: var(--muted);
   line-height: 1.7;
@@ -296,7 +318,7 @@
     padding: 0.9rem 0.05rem;
   }
 
-  .faqItem p {
+  .faqAnswerInner p {
     padding-left: 1.8rem;
   }
 }

@@ -194,10 +194,14 @@ export default function HomePage() {
             {faqItems.map((item) => (
               <details key={item.question} className={styles.faqItem}>
                 <summary>
-                  <span className={styles.faqIcon}>+</span>
+                  <span className={styles.faqIcon} aria-hidden="true" />
                   {item.question}
                 </summary>
-                <p>{item.answer}</p>
+                <div className={styles.faqAnswer}>
+                  <div className={styles.faqAnswerInner}>
+                    <p>{item.answer}</p>
+                  </div>
+                </div>
               </details>
             ))}
           </div>
