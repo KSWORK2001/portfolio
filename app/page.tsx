@@ -1,11 +1,21 @@
-import { CardSwap } from "@/components/animations/CardSwap";
-import { CountUp } from "@/components/animations/CountUp";
+import {
+  EmailTrigger,
+  FaqTracker,
+  HeadshotClickTracker
+} from "@/components/achievements/InteractiveTriggers";
 import { DecryptedText } from "@/components/animations/DecryptedText";
 import { FlowingMenu } from "@/components/animations/FlowingMenu";
 import { LogoLoop } from "@/components/animations/LogoLoop";
 import { TrueFocus } from "@/components/animations/TrueFocus";
 import { LightPillar } from "@/components/backgrounds/LightPillar";
-import { StickyScrollReveal } from "@/components/sections/StickyScrollReveal";
+import { NeuralMesh } from "@/components/backgrounds/NeuralMesh";
+import { CareerTimeline } from "@/components/sections/CareerTimeline";
+import { ScrollMorph } from "@/components/sections/ScrollMorph";
+import { ScrollProjects } from "@/components/sections/ScrollProjects";
+import { ScrollStats } from "@/components/sections/ScrollStats";
+import { USAMap } from "@/components/sections/USAMap";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { TiltCard } from "@/components/ui/TiltCard";
 import { profile } from "@/data/profile-data";
 import styles from "./page.module.css";
 
@@ -33,7 +43,12 @@ export default function HomePage() {
     },
     {
       question: "Marvel or DC?",
-      answer: "DC all the way!!"
+      answer: "DC all the way!! (Psst — try the Konami code anywhere on this page.)"
+    },
+    {
+      question: "Are the background particles judging me?",
+      answer:
+        "Yes (unless you get me an offer)"
     }
   ];
 
@@ -42,22 +57,23 @@ export default function HomePage() {
       <LightPillar
         topColor="#5227FF"
         bottomColor="#FF9FFC"
-        intensity={1}
+        intensity={0.85}
         rotationSpeed={0.3}
         glowAmount={0.002}
         pillarWidth={3}
         pillarHeight={0.4}
-        noiseIntensity={0.5}
+        noiseIntensity={0.35}
         pillarRotation={25}
         interactive={false}
         mixBlendMode="screen"
         quality="high"
       />
+      <NeuralMesh />
 
       <section className={`section ${styles.hero}`}>
         <div className={`container ${styles.heroGrid}`}>
           <div>
-            <p className="section-kicker">Machine Learning Engineer</p>
+            <p className="section-kicker">Senior Applied AI Engineer</p>
             <h1 className={styles.title}>
               <DecryptedText text={profile.name} />
             </h1>
@@ -78,41 +94,40 @@ export default function HomePage() {
             <p className={styles.summary}>{profile.summary[0]}</p>
 
             <div className={styles.actions}>
-              <a href={`mailto:${profile.email}`} className={styles.primaryBtn}>
-                Email Me
-              </a>
-              <a href={profile.linkedin} className={styles.ghostBtn} target="_blank" rel="noreferrer">
+              <EmailTrigger>
+                <MagneticButton href={`mailto:${profile.email}`} className={styles.primaryBtn}>
+                  Email Me
+                </MagneticButton>
+              </EmailTrigger>
+              <MagneticButton
+                href={profile.linkedin}
+                className={styles.ghostBtn}
+                target="_blank"
+                rel="noreferrer"
+              >
                 LinkedIn
-              </a>
-              <a href={profile.website} className={styles.ghostBtn} target="_blank" rel="noreferrer">
+              </MagneticButton>
+              <MagneticButton
+                href={profile.website}
+                className={styles.ghostBtn}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Personal Site
-              </a>
+              </MagneticButton>
             </div>
           </div>
 
-          <aside className={styles.headshotCard}>
-            <img src={profile.headshot} alt="Karan Shrivastava" className={styles.headshot} />
-            <p className={styles.headshotCaption}>Building practical AI systems for production teams.</p>
-          </aside>
+          <HeadshotClickTracker>
+            <TiltCard className={styles.headshotCard} max={6}>
+              <img src={profile.headshot} alt="Karan Shrivastava" className={styles.headshot} />
+              <p className={styles.headshotCaption}>Building practical AI systems for production teams.</p>
+            </TiltCard>
+          </HeadshotClickTracker>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="section-kicker">Impact</div>
-          <h2 className="section-title">Production results across AI + enterprise systems</h2>
-          <div className={styles.statsGrid}>
-            {profile.stats.map((stat) => (
-              <article key={stat.label} className={styles.statCard}>
-                <div className={styles.statValue}>
-                  <CountUp end={stat.value} suffix={stat.suffix} />
-                </div>
-                <p>{stat.label}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ScrollStats stats={profile.stats} />
 
       <section className="section">
         <div className="container">
@@ -122,29 +137,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="section-kicker">Experience</div>
-          <h2 className="section-title">Career Timeline</h2>
-          <StickyScrollReveal
-            items={profile.experiences.map((item) => ({
-              company: item.company,
-              role: item.role,
-              detail: item.detail,
-              period: item.period,
-              bullets: item.bullets
-            }))}
-          />
-        </div>
-      </section>
+      <ScrollMorph />
 
-      <section className="section">
-        <div className="container">
-          <div className="section-kicker">Projects</div>
-          <h2 className="section-title">Live project stack with card swap</h2>
-          <CardSwap cards={profile.projects} />
-        </div>
-      </section>
+      <CareerTimeline items={profile.experiences} />
+
+      <ScrollProjects projects={profile.projects} />
 
       <section className="section">
         <div className="container">
@@ -152,11 +149,11 @@ export default function HomePage() {
           <h2 className="section-title">Expanded certification portfolio</h2>
           <div className={styles.certGrid}>
             {profile.certifications.map((cert) => (
-              <article className={styles.certCard} key={cert.title}>
+              <TiltCard className={styles.certCard} key={cert.title} max={7}>
                 <h3>{cert.title}</h3>
                 <p className={styles.certIssuer}>{cert.issuer}</p>
                 <p className={styles.certFocus}>{cert.focus}</p>
-              </article>
+              </TiltCard>
             ))}
           </div>
         </div>
@@ -185,6 +182,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <USAMap />
+
       <section className="section">
         <div className={`container ${styles.faqSection}`}>
           <div>
@@ -192,21 +191,23 @@ export default function HomePage() {
             <h2 className={styles.faqTitle}>Frequently asked questions</h2>
           </div>
 
-          <div className={styles.faqList}>
-            {faqItems.map((item) => (
-              <details key={item.question} className={styles.faqItem}>
-                <summary>
-                  <span className={styles.faqIcon} aria-hidden="true" />
-                  {item.question}
-                </summary>
-                <div className={styles.faqAnswer}>
-                  <div className={styles.faqAnswerInner}>
-                    <p>{item.answer}</p>
+          <FaqTracker total={faqItems.length}>
+            <div className={styles.faqList}>
+              {faqItems.map((item) => (
+                <details key={item.question} className={styles.faqItem} data-faq-id={item.question}>
+                  <summary>
+                    <span className={styles.faqIcon} aria-hidden="true" />
+                    {item.question}
+                  </summary>
+                  <div className={styles.faqAnswer}>
+                    <div className={styles.faqAnswerInner}>
+                      <p>{item.answer}</p>
+                    </div>
                   </div>
-                </div>
-              </details>
-            ))}
-          </div>
+                </details>
+              ))}
+            </div>
+          </FaqTracker>
         </div>
       </section>
     </main>

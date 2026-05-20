@@ -4,18 +4,27 @@ const asset = (path: string) => `${basePath}${path}`;
 
 export const profile = {
   name: "Karan Shrivastava",
-  headline: "Innovation @ Southern Company || ML @ Georgia Tech",
+  headline: "Senior Applied AI Engineer @ The Home Depot || MS CS @ Georgia Tech",
   location: "Atlanta Metropolitan Area",
   headshot: asset("/images/karan-headshot.jpg"),
   email: "work.karan2001@gmail.com",
   linkedin: "https://www.linkedin.com/in/kswork",
   website: "https://kswork2001.github.io",
   summary: [
-    "Machine Learning Engineer and Software Developer shipping cloud-native AI products for healthcare, enterprise energy, and consulting organizations.",
-    "Focused on production ML systems, agentic workflows, and full-stack delivery across Python, React, Node, and modern data infrastructure.",
+    "Senior Applied AI Engineer at The Home Depot, building production agentic systems on Claude and Google Vertex AI for retail-scale workflows.",
+    "Previously shipped cloud-native AI products across telecom, enterprise energy, healthcare, and consulting — production ML, agentic orchestration, and full-stack delivery in Python, React, Node, and modern data infra.",
     "MS Computer Science candidate at Georgia Tech, building practical AI that is reliable, measurable, and deployable at scale."
   ],
-  topSkills: ["Pydantic", "PostgreSQL", "LangGraph", "PyTorch", "Next.js", "Docker"],
+  topSkills: [
+    "Claude (Anthropic)",
+    "Google Vertex AI",
+    "LangGraph",
+    "Pydantic",
+    "PyTorch",
+    "PostgreSQL",
+    "Next.js",
+    "Docker"
+  ],
   stats: [
     { value: 50, suffix: "+", label: "Prototypes delivered" },
     { value: 90, suffix: "%", label: "Manual hand-offs reduced" },
@@ -23,38 +32,53 @@ export const profile = {
     { value: 40, suffix: "%", label: "IoT preprocessing improvement" }
   ],
   logos: [
+    "The Home Depot",
     "Southern Company",
     "AT&T",
     "Georgia Tech",
     "Cognizant",
     "Elevance Health",
-    "AWS",
+    "Anthropic Claude",
+    "Google Vertex AI",
     "LangGraph",
     "Snowflake"
   ],
   experiences: [
     {
-      role: "AI Integration Engineer",
-      company: "Southern Company",
-      period: "Aug 2025 - Present",
+      role: "Senior Applied AI Engineer",
+      company: "The Home Depot",
+      period: "Apr 2026 - Present",
       detail:
-        "Designed and deployed Databricks ML workflows using Spark ML and Delta Lake, reducing preprocessing time by 40% for energy forecasting and IoT workloads.",
+        "Designing and shipping production-grade agentic systems for retail and associate-facing workflows, built on Anthropic's Claude and Google Vertex AI with tool use, RAG, and human-in-the-loop guardrails.",
       bullets: [
-        "Built and maintained low-latency .NET Core APIs to serve production ML inference.",
-        "Integrated model outputs into enterprise systems with reliability-first deployment standards.",
-        "Prototyped Swift iOS interfaces to surface real-time monitoring insights for energy teams."
+        "Architect multi-step Claude agents (tool use, parallel tool calls, extended thinking, prompt caching) for high-volume operational and merchandising workflows.",
+        "Deploy and tune Vertex AI Gemini, embeddings, and Agent Builder pipelines on GCP, integrating Vector Search and BigQuery for retrieval-grounded reasoning.",
+        "Define evaluation harnesses, safety policies, and observability for agentic systems — latency budgets, hallucination guards, and offline regression suites.",
+        "Partner with platform, data, and security teams to take prototypes from POC to enterprise rollout with reliability-first deployment standards."
       ]
     },
     {
       role: "Generative AI Architect",
       company: "AT&T",
-      period: "Oct 2025 - Present",
+      period: "Oct 2025 - Mar 2026",
       detail:
         "Built an agentic orchestration system with retrieval, validation, and remediation layers, eliminating up to 90% of manual hand-offs.",
       bullets: [
         "Designed deterministic, tool-driven LLM agents with LangChain and LangGraph.",
         "Implemented validation layers that reduced runtime parameter failures by around 65%.",
         "Shipped guarded human-gate approvals for critical autonomous actions in enterprise flow."
+      ]
+    },
+    {
+      role: "AI Integration Engineer",
+      company: "Southern Company",
+      period: "Aug 2025 - Dec 2025",
+      detail:
+        "Designed and deployed Databricks ML workflows using Spark ML and Delta Lake, reducing preprocessing time by 40% for energy forecasting and IoT workloads.",
+      bullets: [
+        "Built and maintained low-latency .NET Core APIs to serve production ML inference.",
+        "Integrated model outputs into enterprise systems with reliability-first deployment standards.",
+        "Prototyped Swift iOS interfaces to surface real-time monitoring insights for energy teams."
       ]
     },
     {
@@ -79,18 +103,6 @@ export const profile = {
         "Designed rule-based anomaly checks across policy, provider, and coverage fields.",
         "Built PDF-to-structured-data pipelines with pandas and robust extraction logging.",
         "Containerized workflow in Docker for consistent handoff to operations and DevOps teams."
-      ]
-    },
-    {
-      role: "Software Engineer",
-      company: "Amazon Web Services",
-      period: "May 2024 - Aug 2024",
-      detail:
-        "Implemented a media-decoding microservice for real-time transcription pipelines, improving throughput by ~20-30%.",
-      bullets: [
-        "Wrote and aligned technical design docs across product, security, and platform engineering.",
-        "Delivered high-coverage tests that lowered regression risk during deployment windows.",
-        "Improved telemetry and reduced average request latency in customer workloads by ~18%."
       ]
     },
     {
@@ -214,6 +226,12 @@ export const profile = {
       level: "Professional Working",
       image: asset("/images/lang-spanish-placeholder.jpg"),
       phrases: ["Hola", "Mucho gusto", "Gracias"]
+    },
+    {
+      name: "French",
+      level: "Learning (thanks, Duolingo)",
+      image: asset("/images/lang-french-placeholder.jpg"),
+      phrases: ["Bonjour", "Comment ça va", "Merci"]
     }
   ],
   education: [

@@ -1,0 +1,306 @@
+/* ---------- Floating button (FAB) ---------- */
+.fab {
+  position: fixed;
+  bottom: 1.1rem;
+  right: 1.1rem;
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.9rem 0.55rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(121, 192, 255, 0.32);
+  background: rgba(14, 20, 29, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #deebfb;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color 200ms ease, transform 220ms ease, box-shadow 200ms ease;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+.fab:hover {
+  border-color: rgba(180, 140, 255, 0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(82, 39, 255, 0.32);
+}
+
+.fabIcon {
+  font-size: 1rem;
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.5));
+}
+
+.fabCount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: #fff;
+}
+
+.fabBarWrap {
+  position: relative;
+  width: 60px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.fabBar {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #5227ff, #79c0ff, #ff9ffc);
+  transition: width 400ms ease;
+}
+
+/* ---------- Panel ---------- */
+.panelBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 10, 16, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 90;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1rem;
+  animation: bdIn 200ms ease-out;
+}
+
+.panel {
+  width: min(420px, 100%);
+  max-height: min(80vh, 640px);
+  overflow: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(121, 192, 255, 0.3);
+  background: rgba(14, 20, 29, 0.96);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+  padding: 1.2rem 1.2rem 1rem;
+  animation: panelIn 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.panelKicker {
+  margin: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  font-weight: 650;
+}
+
+.panelTitle {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.panelSub {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.panelClose {
+  background: transparent;
+  border: 1px solid rgba(121, 192, 255, 0.3);
+  color: #deebfb;
+  border-radius: 999px;
+  width: 32px;
+  height: 32px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panelClose:hover {
+  border-color: rgba(180, 140, 255, 0.7);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid rgba(121, 192, 255, 0.14);
+  background: rgba(18, 24, 33, 0.6);
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.rowOn {
+  border-color: rgba(180, 140, 255, 0.45);
+  background: linear-gradient(
+    135deg,
+    rgba(82, 39, 255, 0.18),
+    rgba(121, 192, 255, 0.1)
+  );
+}
+
+.rowOff {
+  opacity: 0.6;
+}
+
+.rowIcon {
+  font-size: 1.4rem;
+  width: 2rem;
+  text-align: center;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 6px rgba(121, 192, 255, 0.25));
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rowTitle {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.rowHint {
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.resetBtn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.55rem 0.8rem;
+  background: transparent;
+  color: var(--muted);
+  border: 1px dashed rgba(121, 192, 255, 0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+}
+
+.resetBtn:hover {
+  color: #deebfb;
+  border-color: rgba(180, 140, 255, 0.55);
+}
+
+@keyframes bdIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes panelIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ---------- Toast stack ---------- */
+.toastStack {
+  position: fixed;
+  bottom: 1.1rem;
+  left: 1.1rem;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  pointer-events: none;
+  max-width: min(360px, calc(100% - 2rem));
+}
+
+.toast {
+  pointer-events: auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-radius: 14px;
+  border: 1px solid rgba(180, 140, 255, 0.4);
+  background: rgba(14, 20, 29, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(82, 39, 255, 0.35);
+  cursor: pointer;
+  overflow: hidden;
+  animation: toastIn 380ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toastIcon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.5));
+}
+
+.toastKicker {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.toastTitle {
+  font-family: var(--font-display), sans-serif;
+  font-size: 1rem;
+  color: #fff;
+  margin-top: 0.1rem;
+}
+
+.toastHint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+
+.toastBar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, #5227ff, #79c0ff, #ff9ffc);
+  transform-origin: 0 50%;
+  animation: toastBar 4200ms linear forwards;
+}
+
+@keyframes toastIn {
+  from { transform: translateX(-30px) scale(0.95); opacity: 0; }
+  to { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+@keyframes toastBar {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+@media (max-width: 640px) {
+  .fab {
+    bottom: 0.8rem;
+    right: 0.8rem;
+    font-size: 0.75rem;
+  }
+  .fabBarWrap {
+    width: 40px;
+  }
+}

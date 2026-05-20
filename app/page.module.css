@@ -72,14 +72,25 @@
 
 .primaryBtn,
 .ghostBtn {
-  padding: 0.64rem 1rem;
+  padding: 0.64rem 1.05rem;
   border-radius: 999px;
   border: 1px solid rgba(121, 192, 255, 0.32);
   font-size: 0.9rem;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .primaryBtn {
-  background: rgba(121, 192, 255, 0.2);
+  background: linear-gradient(135deg, rgba(82, 39, 255, 0.45), rgba(121, 192, 255, 0.4));
+  box-shadow: 0 0 0 1px rgba(121, 192, 255, 0.15), 0 8px 24px rgba(82, 39, 255, 0.25);
+}
+
+.primaryBtn:hover,
+.ghostBtn:hover {
+  border-color: rgba(180, 140, 255, 0.7);
+  box-shadow: 0 0 0 1px rgba(180, 140, 255, 0.35), 0 10px 30px rgba(82, 39, 255, 0.35);
 }
 
 .ghostBtn {

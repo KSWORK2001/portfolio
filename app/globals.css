@@ -17,13 +17,24 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
   color: var(--text);
+}
+
+html {
+  background: var(--bg);
 }
 
 body {
   font-family: var(--font-body), sans-serif;
   min-height: 100vh;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 18% 10%, rgba(82, 39, 255, 0.28), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 86% 25%, rgba(255, 159, 252, 0.2), transparent 70%),
+    radial-gradient(ellipse 70% 70% at 8% 70%, rgba(121, 192, 255, 0.16), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 92% 90%, rgba(180, 140, 255, 0.22), transparent 70%);
+  background-attachment: fixed;
+  background-size: 100% 100%;
 }
 
 a {
@@ -45,6 +56,15 @@ main {
   padding: 5.5rem 0;
   position: relative;
   z-index: 2;
+}
+
+html.konami-on {
+  animation: konamiPulse 4s ease-out;
+}
+
+@keyframes konamiPulse {
+  0%, 100% { filter: none; }
+  10%, 30% { filter: hue-rotate(15deg) saturate(1.2); }
 }
 
 .section-title {

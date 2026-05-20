@@ -1,0 +1,234 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  z-index: 3;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bg {
+  display: none;
+}
+
+.header {
+  position: relative;
+  z-index: 4;
+  width: min(1120px, calc(100% - 3rem));
+  margin: 5rem auto 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 1.5rem;
+}
+
+.kicker {
+  margin: 0 0 0.4rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  font-weight: 650;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.accent {
+  background: linear-gradient(90deg, #79c0ff, #b48cff, #ff9ffc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.counter {
+  margin: 0;
+  font-family: var(--font-display), sans-serif;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: end;
+}
+
+.counterNum {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  background: linear-gradient(180deg, #ff9ffc, #79c0ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+}
+
+.counterSep {
+  font-size: 1.4rem;
+  color: rgba(155, 172, 191, 0.5);
+}
+
+.counterTotal {
+  font-size: 1.4rem;
+  color: var(--muted);
+}
+
+.stage {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  width: min(1120px, calc(100% - 3rem));
+  margin: 1rem auto 0;
+}
+
+.card {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2.2rem;
+  align-items: center;
+  transition: opacity 250ms ease, transform 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(180, 140, 255, 0.35);
+  background: rgba(14, 20, 29, 0.65);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mediaGlow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 22px;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(82, 39, 255, 0.25), transparent 50%, rgba(255, 159, 252, 0.2));
+  mix-blend-mode: screen;
+}
+
+.copy {
+  padding: 0.5rem 0;
+}
+
+.cardKicker {
+  margin: 0 0 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.cardTitle {
+  margin: 0 0 1rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.cardSummary {
+  margin: 0 0 1.4rem;
+  color: #d8e4f4;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 46ch;
+}
+
+.impact {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 159, 252, 0.5);
+  background: rgba(255, 159, 252, 0.08);
+  color: #ffd4f9;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.impactDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff9ffc;
+  box-shadow: 0 0 8px rgba(255, 159, 252, 0.9);
+  animation: blip 1.6s ease-in-out infinite;
+}
+
+@keyframes blip {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.7); }
+}
+
+.dots {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0 0 2.5rem;
+}
+
+.dot {
+  width: 28px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 300ms ease, width 300ms ease;
+}
+
+.dotOn {
+  width: 48px;
+  background: linear-gradient(90deg, #5227ff, #79c0ff, #ff9ffc);
+}
+
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: 1fr;
+  }
+  .counter {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 0.5rem;
+  }
+  .card {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    align-content: start;
+  }
+  .media {
+    aspect-ratio: 16 / 9;
+  }
+  .cardSummary {
+    font-size: 0.98rem;
+  }
+}

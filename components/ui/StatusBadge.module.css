@@ -1,0 +1,64 @@
+.badge {
+  position: fixed;
+  top: 1.1rem;
+  right: 1.2rem;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(14, 20, 29, 0.72);
+  border: 1px solid rgba(121, 192, 255, 0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 0.78rem;
+  color: #deebfb;
+  font-family: var(--font-body), sans-serif;
+  max-width: min(90vw, 420px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.9);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+.label strong {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.sep {
+  color: rgba(155, 172, 191, 0.6);
+}
+
+.quip {
+  color: var(--muted);
+  font-style: italic;
+  animation: fadeIn 400ms ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .quip,
+  .sep {
+    display: none;
+  }
+}

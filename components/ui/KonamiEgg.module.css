@@ -1,0 +1,52 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(11, 15, 20, 0.55), rgba(11, 15, 20, 0.95));
+  animation: fadeIn 400ms ease-out, fadeOut 600ms ease-in 3.6s forwards;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.signal {
+  width: min(420px, 80vw);
+  height: auto;
+  filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.5));
+  animation: zoomIn 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.line {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  color: #fff;
+  margin: 1rem 0 0.4rem;
+  max-width: 36ch;
+  letter-spacing: -0.01em;
+}
+
+.hint {
+  color: rgba(251, 191, 36, 0.8);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.4) rotate(-6deg); opacity: 0; }
+  to { transform: scale(1) rotate(0); opacity: 1; }
+}
