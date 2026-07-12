@@ -60,6 +60,16 @@ const CITIES: City[] = [
     lon: -84.388,
     blurb:
       "Shipping production agentic systems on Claude and Google Vertex AI for retail-scale workflows. Currently here."
+  },
+  {
+    name: "Washington, DC",
+    company: "Capital One",
+    role: "Software Engineer Intern",
+    period: "Jun 2026 – Aug 2026",
+    lat: 38.9072,
+    lon: -77.0369,
+    blurb:
+      "Summer software engineering internship in Capital One's DC-area engineering org."
   }
 ];
 
@@ -157,20 +167,13 @@ export function USAMap() {
     };
   }, []);
 
-  // Stages:
-  // 0.00 – 0.18: full USA (intro)
-  // 0.18 – 0.40: zoom into Denver
-  // 0.40 – 0.62: zoom into Dallas
-  // 0.62 – 0.84: zoom into Atlanta
-  // 0.84 – 1.00: stay on Atlanta (outro)
+  // Full USA intro, one zoom stage per city, hold on the last city (outro)
   const stages: ViewBox[] = [
     FULL_VB,
-    cityViewBox(CITIES[0]),
-    cityViewBox(CITIES[1]),
-    cityViewBox(CITIES[2]),
-    cityViewBox(CITIES[2])
+    ...CITIES.map((c) => cityViewBox(c)),
+    cityViewBox(CITIES[CITIES.length - 1])
   ];
-  const breakpoints = [0, 0.22, 0.5, 0.78, 1.0];
+  const breakpoints = stages.map((_, i) => i / (stages.length - 1));
 
   let segIdx = 0;
   for (let i = 0; i < breakpoints.length - 1; i++) {
@@ -193,7 +196,13 @@ export function USAMap() {
   const viewBoxStr = `${vb.x.toFixed(1)} ${vb.y.toFixed(1)} ${vb.w.toFixed(1)} ${vb.h.toFixed(1)}`;
 
   // Active city for overlay copy
-  const activeCityIdx = progress < 0.22 ? -1 : progress < 0.5 ? 0 : progress < 0.78 ? 1 : 2;
+  let activeCityIdx = CITIES.length - 1;
+  for (let i = 1; i < breakpoints.length - 1; i++) {
+    if (progress < breakpoints[i]) {
+      activeCityIdx = i - 2;
+      break;
+    }
+  }
 
   const outlinePath = buildOutlinePath();
   const pinPts = CITIES.map((c) => project(c.lat, c.lon));
@@ -214,7 +223,7 @@ export function USAMap() {
         <div className={styles.headerOverlay}>
           <p className={styles.kicker}>The Map</p>
           <h2 className={styles.heading}>
-            Three cities. <span className={styles.accent}>Three chapters.</span>
+            Four cities. <span className={styles.accent}>Four chapters.</span>
           </h2>
         </div>
 
@@ -231,8 +240,8 @@ export function USAMap() {
             </radialGradient>
             <linearGradient id="connectionGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#79c0ff" />
-              <stop offset="50%" stopColor="#b48cff" />
-              <stop offset="100%" stopColor="#ff9ffc" />
+              <stop offset="50%" stopColor="#2dd4bf" />
+              <stop offset="100%" stopColor="#5eead4" />
             </linearGradient>
             <filter id="pinGlow" x="-200%" y="-200%" width="500%" height="500%">
               <feGaussianBlur stdDeviation="2.4" result="blur" />
@@ -282,7 +291,7 @@ export function USAMap() {
             const active = i === activeCityIdx;
             const baseR = active ? 6.5 / zoom : 4.2 / zoom;
             const ringR = baseR * 2.4;
-            const color = active ? "#ff9ffc" : "#79c0ff";
+            const color = active ? "#5eead4" : "#79c0ff";
             return (
               <g key={city.name} filter="url(#pinGlow)">
                 <circle
@@ -330,16 +339,16 @@ export function USAMap() {
           {activeCityIdx === -1 && (
             <article className={`${styles.cityCard} ${styles.cityCardActive}`}>
               <p className={styles.cityKicker}>00 · USA</p>
-              <h3 className={styles.cityCompany}>Three pins. One country.</h3>
+              <h3 className={styles.cityCompany}>Four pins. One country.</h3>
               <p className={styles.cityBlurb}>
-                Cognizant in Denver. AT&amp;T in Dallas. Home Depot in Atlanta. Keep scrolling to fly between them.
+                Cognizant in Denver. AT&amp;T in Dallas. Home Depot in Atlanta. Capital One in DC. Keep scrolling to fly between them.
               </p>
             </article>
           )}
         </div>
 
         <div className={styles.dots} aria-hidden="true">
-          {[-1, 0, 1, 2].map((i) => (
+          {[-1, ...CITIES.map((_, i) => i)].map((i) => (
             <span
               key={i}
               className={`${styles.dot} ${i === activeCityIdx ? styles.dotOn : ""}`}

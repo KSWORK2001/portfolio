@@ -96,13 +96,16 @@ export function AchievementsProvider({ children }: { children: ReactNode }) {
   const [toastQueue, setToastQueue] = useState<Achievement[]>([]);
   const [panelOpen, setPanelOpen] = useState(false);
   const hydratedRef = useRef(false);
+  const unlockedRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const ids = JSON.parse(raw) as string[];
-        setUnlocked(new Set(ids));
+        const stored = new Set(ids);
+        unlockedRef.current = stored;
+        setUnlocked(stored);
       }
     } catch {
       // ignore
@@ -120,19 +123,18 @@ export function AchievementsProvider({ children }: { children: ReactNode }) {
   }, [unlocked]);
 
   const unlock = useCallback((id: string) => {
-    setUnlocked((prev) => {
-      if (prev.has(id)) return prev;
-      const next = new Set(prev);
-      next.add(id);
-      const achievement = ACHIEVEMENTS.find((a) => a.id === id);
-      if (achievement) {
-        setToastQueue((q) => [...q, achievement]);
-      }
-      return next;
-    });
+    if (unlockedRef.current.has(id)) return;
+    const achievement = ACHIEVEMENTS.find((a) => a.id === id);
+    if (!achievement) return;
+    const next = new Set(unlockedRef.current);
+    next.add(id);
+    unlockedRef.current = next;
+    setUnlocked(next);
+    setToastQueue((q) => (q.some((t) => t.id === id) ? q : [...q, achievement]));
   }, []);
 
   const reset = useCallback(() => {
+    unlockedRef.current = new Set();
     setUnlocked(new Set());
     setToastQueue([]);
     try {

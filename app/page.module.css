@@ -72,29 +72,31 @@
 
 .primaryBtn,
 .ghostBtn {
-  padding: 0.64rem 1.05rem;
-  border-radius: 999px;
-  border: 1px solid rgba(121, 192, 255, 0.32);
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
   font-size: 0.9rem;
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transition: border-color 220ms ease, box-shadow 220ms ease;
+  font-weight: 500;
+  transition: background-color 150ms ease, border-color 150ms ease;
 }
 
 .primaryBtn {
-  background: linear-gradient(135deg, rgba(82, 39, 255, 0.45), rgba(121, 192, 255, 0.4));
-  box-shadow: 0 0 0 1px rgba(121, 192, 255, 0.15), 0 8px 24px rgba(82, 39, 255, 0.25);
+  background: var(--accent-strong);
+  border: 1px solid var(--accent-strong);
+  color: var(--bg);
 }
 
-.primaryBtn:hover,
-.ghostBtn:hover {
-  border-color: rgba(180, 140, 255, 0.7);
-  box-shadow: 0 0 0 1px rgba(180, 140, 255, 0.35), 0 10px 30px rgba(82, 39, 255, 0.35);
+.primaryBtn:hover {
+  background: #5c9bf7;
+  border-color: #5c9bf7;
 }
 
 .ghostBtn {
-  background: rgba(18, 24, 33, 0.66);
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
+.ghostBtn:hover {
+  border-color: var(--muted);
 }
 
 .statsGrid {

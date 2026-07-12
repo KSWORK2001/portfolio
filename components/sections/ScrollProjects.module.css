@@ -112,7 +112,7 @@
   aspect-ratio: 4 / 3;
   border-radius: 22px;
   overflow: hidden;
-  border: 1px solid rgba(180, 140, 255, 0.35);
+  border: 1px solid rgba(121, 192, 255, 0.25);
   background: rgba(14, 20, 29, 0.65);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
 }
@@ -129,7 +129,7 @@
   inset: -1px;
   border-radius: 22px;
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(82, 39, 255, 0.25), transparent 50%, rgba(255, 159, 252, 0.2));
+  background: linear-gradient(135deg, rgba(94, 234, 212, 0.14), transparent 50%, rgba(121, 192, 255, 0.12));
   mix-blend-mode: screen;
 }
 

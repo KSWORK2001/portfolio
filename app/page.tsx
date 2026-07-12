@@ -55,8 +55,8 @@ export default function HomePage() {
   return (
     <main>
       <LightPillar
-        topColor="#5227FF"
-        bottomColor="#FF9FFC"
+        topColor="#0f766e"
+        bottomColor="#5eead4"
         intensity={0.85}
         rotationSpeed={0.3}
         glowAmount={0.002}

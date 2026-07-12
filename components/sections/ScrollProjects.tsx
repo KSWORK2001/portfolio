@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ProjectMockup } from "@/components/projects/ProjectMockups";
 import styles from "./ScrollProjects.module.css";
 
 type Project = {
@@ -8,7 +9,8 @@ type Project = {
   stack: string;
   summary: string;
   impact: string;
-  image: string;
+  image?: string;
+  mockup?: string;
 };
 
 type ScrollProjectsProps = {
@@ -121,8 +123,14 @@ export function ScrollProjects({ projects }: ScrollProjectsProps) {
                 aria-hidden={!isActive}
               >
                 <div className={styles.media}>
-                  <img src={p.image} alt={p.title} loading="lazy" />
-                  <div className={styles.mediaGlow} />
+                  {p.mockup ? (
+                    <ProjectMockup kind={p.mockup} label={p.title} />
+                  ) : (
+                    <>
+                      <img src={p.image} alt={p.title} loading="lazy" />
+                      <div className={styles.mediaGlow} />
+                    </>
+                  )}
                 </div>
                 <div className={styles.copy}>
                   <p className={styles.cardKicker}>{p.stack}</p>

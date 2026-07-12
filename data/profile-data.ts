@@ -125,7 +125,7 @@ export const profile = {
       summary:
         "Deterministic AI workflow engine with retrieval, triage, validation, and error correction layers for enterprise business processes.",
       impact: ">80% first-pass acceptance",
-      image: asset("/images/agentic.png")
+      mockup: "agentic"
     },
     {
       title: "Real-time Speech Platform",
@@ -133,7 +133,7 @@ export const profile = {
       summary:
         "GPU-accelerated speech-to-text and voice synthesis prototypes deployed to Azure app services for fast, local inference.",
       impact: "FP16 production accuracy",
-      image: asset("/images/voiceflow.png")
+      mockup: "speech"
     },
     {
       title: "SpotMe!",
@@ -141,7 +141,7 @@ export const profile = {
       summary:
         "Social fitness application built and launched to early users with realtime interactions and scalable mobile backend.",
       impact: "200+ active users",
-      image: asset("/images/spotme.png")
+      mockup: "spotme"
     },
     {
       title: "Echo",
