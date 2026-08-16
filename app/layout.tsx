@@ -1,32 +1,37 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Sora } from "next/font/google";
+import { Bricolage_Grotesque, JetBrains_Mono, Public_Sans } from "next/font/google";
 import type { ReactNode } from "react";
-import { AchievementHooks } from "@/components/achievements/AchievementHooks";
-import { AchievementToasts } from "@/components/achievements/AchievementToasts";
-import { AchievementsPanel } from "@/components/achievements/AchievementsPanel";
-import { AchievementsProvider } from "@/components/achievements/AchievementsContext";
+import { Bar } from "@/components/site/Bar";
+import { Footer } from "@/components/site/Footer";
+import { ScrollFX } from "@/components/site/ScrollFX";
 import { ConsoleEgg } from "@/components/ui/ConsoleEgg";
-import { CursorGlow } from "@/components/ui/CursorGlow";
-import { KonamiEgg } from "@/components/ui/KonamiEgg";
-import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { StatusBadge } from "@/components/ui/StatusBadge";
-import { VisitTracker } from "@/components/ui/VisitTracker";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-display"
 });
 
-const sora = Sora({
+const body = Public_Sans({
   subsets: ["latin"],
   variable: "--font-body"
 });
 
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono"
+});
+
 export const metadata: Metadata = {
-  title: "Karan Shrivastava | AI Engineer",
+  title: "Karan Shrivastava — Applied AI Engineer",
   description:
-    "Portfolio profile for Karan Shrivastava, Machine Learning Engineer and Software Developer."
+    "I build agents that check their own work. Production multi-agent systems at The Home Depot and AT&T — retrieval, tool use, and the validation layers that catch failures before a person has to.",
+  openGraph: {
+    title: "Karan Shrivastava — Applied AI Engineer",
+    description:
+      "Production multi-agent systems, and the validation layers that catch their failures before a person has to.",
+    type: "website"
+  }
 };
 
 export default function RootLayout({
@@ -35,20 +40,36 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${spaceGrotesk.variable} ${sora.variable}`}>
-        <AchievementsProvider>
-          <ScrollProgress />
-          <StatusBadge />
-          <VisitTracker />
-          <CursorGlow />
-          <KonamiEgg />
-          <ConsoleEgg />
-          <AchievementHooks />
-          {children}
-          <AchievementToasts />
-          <AchievementsPanel />
-        </AchievementsProvider>
+    /* The `js` class below is added before React hydrates, so the class
+       list on <html> is expected to differ from the server render. */
+    /* The font variables go on <html>, not <body>: globals.css composes
+       them into --display/--body/--mono on :root, and a custom property
+       set on body is not visible to :root — the whole stack would
+       invalidate and fall back to Times. */
+    <html
+      lang="en"
+      className={`${display.variable} ${body.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Scroll reveals are an enhancement, never a requirement. The
+            hidden state is scoped to .js, so if scripting never runs the
+            page is simply visible rather than blank. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add("js")`
+          }}
+        />
+      </head>
+      <body>
+        <a className="skip" href="#main">
+          Skip to content
+        </a>
+        <Bar />
+        {children}
+        <Footer />
+        <ScrollFX />
+        <ConsoleEgg />
       </body>
     </html>
   );

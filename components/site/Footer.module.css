@@ -1,0 +1,66 @@
+.foot {
+  background: var(--ink);
+  color: var(--tx-on-dark-2);
+  padding-block: 2.2rem;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.word {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--tx-on-dark);
+  letter-spacing: -0.03em;
+}
+
+.nav {
+  display: flex;
+  gap: 1.3rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.nav a {
+  font-size: 0.87rem;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+.nav a:hover {
+  color: var(--tx-on-dark);
+}
+
+.copy {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  opacity: 0.6;
+}
+
+@media (max-width: 700px) {
+  .nav {
+    margin-left: 0;
+  }
+}

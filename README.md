@@ -1,172 +1,123 @@
-# Karan Portfolio (Next.js + Electron)
+# Karan Shrivastava — portfolio
 
-Modern portfolio app built with **Next.js** for the UI and **Electron** for desktop packaging.
+A static Next.js site, with an Electron shell for packaging it as a desktop app.
 
-## Tech Stack
+## The design, in one line
 
-### Core
-- **Next.js** `15.1.7`
-- **React** `19.0.0`
-- **TypeScript** `5.7.3`
-- **Electron** `34.0.0`
+**The page is paper and ink, and colour only appears inside the machine.**
 
-### Animation / Visual Libraries
-- **GSAP** `3.12.5` (Flowing menu and motion)
-- **Three.js** `0.173.0` (LightPillar background shader)
+Nothing on the surface is tinted — no gradients, no glows, no accent headings.
+The only saturated pixels on the site live inside the dark window chrome, where
+they carry meaning: green passed, amber is waiting on a human, red failed, blue
+is still running. So the only things that light up as you scroll are the systems
+actually running.
 
-### Tooling
-- **concurrently** `9.1.2` (run web + Electron together in dev)
-- **wait-on** `8.0.1` (wait for localhost before launching Electron)
-- **electron-builder** `25.1.8` (desktop packaging)
-- `@types/node`, `@types/react`, `@types/react-dom`
+Two consequences worth knowing before editing:
 
----
+- **There are no screenshots.** Every visual — the run trace, the workflow
+  graph, the Echo bar, the terminal — is DOM and CSS. If you need new artwork,
+  build the interface rather than pasting a picture of one.
+- **Colour is a state, not a decoration.** `--pass`, `--gate`, `--run`, `--fail`
+  belong inside `.win` and the dark sections. Putting one on the paper surface
+  is a bug, not a style choice.
 
-## Prerequisites
+## Tech
 
-Install these first:
-1. **Node.js 20+** (LTS recommended)
-2. **npm 10+**
-3. **Windows** (for the packaged desktop target in this repo)
+- **Next.js** `15` / **React** `19` / **TypeScript** `5.7` — static export
+- **Bricolage Grotesque** (display), **Public Sans** (body), **JetBrains Mono**
+  (eyebrows, chrome, metrics), all via `next/font/google`
+- **Electron** `34` + **electron-builder** `25` for the desktop target
 
-Check versions:
+No animation libraries. Motion is a scroll observer and CSS.
 
-```bash
-node -v
-npm -v
-```
-
----
-
-## Project Setup
-
-From the project root (`c:/Users/Karan/Documents/Git/Portfolio`):
+## Running it
 
 ```bash
 npm install
 ```
 
-This installs all dependencies listed in `package.json`.
-
----
-
-## Run the App
-
-### 1) Web only (Next.js dev server)
+Web only:
 
 ```bash
 npm run dev:web
 ```
 
-- Starts Next.js at `http://localhost:3000`
-
-### 2) Web + Electron desktop together (recommended for local desktop dev)
+Web plus the Electron shell:
 
 ```bash
 npm run dev
 ```
 
-- Starts Next.js
-- Waits for port 3000
-- Launches Electron shell with the portfolio loaded
-
----
-
-## Production Build
-
-### Build web app
+Production build (static export to `out/`):
 
 ```bash
 npm run build
 ```
 
-### Run production web server locally
-
-```bash
-npm run start
-```
-
----
-
-## Desktop Build (Electron Installer)
+Desktop installer into `release/`:
 
 ```bash
 npm run build:desktop
 ```
 
-This will:
-1. Build the Next.js app
-2. Package Electron using `electron-builder`
-3. Output installer artifacts to the `release/` directory
+## Deploying
 
----
+GitHub Actions builds and publishes to Pages on every push to `main`, with
+`NEXT_PUBLIC_BASE_PATH=/portfolio`. To reproduce that build locally:
 
-## Static Assets (Images)
-
-Place your custom images in:
-
-```text
-public/images/
+```bash
+NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
 ```
 
-Examples used by the app:
-- `public/images/karan-headshot.jpg`
-- `public/images/agentic.png`
-- `public/images/VoiceFlow.png`
-- `public/images/spotme.png`
-- `public/images/lang-english-placeholder.jpg`
-- `public/images/lang-hindi-placeholder.jpg`
-- `public/images/lang-punjabi-placeholder.jpg`
-- `public/images/lang-spanish-placeholder.jpg`
+Asset URLs go through the `asset()` helper in `data/profile-data.ts` so they
+pick up the base path. Use it for anything you add under `public/`.
 
----
-
-## Main Project Structure
+## Structure
 
 ```text
 app/
-  page.tsx                    # Main landing page and section composition
-  page.module.css             # Page-specific styling (hero, FAQ, sections)
+  globals.css                 # Design system: tokens, primitives, .win chrome
+  layout.tsx                  # Fonts (on <html>), bar, footer, scroll observer
+  page.tsx                    # Section composition
+  page.module.css             # Per-section layout
 components/
-  animations/                 # DecryptedText, TrueFocus, CountUp, CardSwap, FlowingMenu, LogoLoop
-  backgrounds/                # LightPillar (Three.js shader)
-  sections/                   # StickyScrollReveal
+  site/                       # Bar, Footer, ScrollFX
+  work/                       # AgentRun, WorkflowMap, ProjectArt — the artwork
+  ui/                         # ConsoleEgg
 data/
-  profile-data.ts             # Portfolio content model (skills, projects, FAQ contact, etc.)
+  profile-data.ts             # All copy and content
 electron/
-  main.cjs                    # Electron main process / desktop window bootstrap
+  main.cjs                    # Desktop window bootstrap
 public/
-  images/                     # Static image assets
+  Karan_Shrivastava_resume.pdf
+  images/karan-headshot.jpg   # The only photograph on the site
 ```
 
----
+## Notes
 
-## Useful Notes
-
-- FAQ uses native `<details>`/`<summary>` with smooth CSS expansion.
-- Flowing Languages section uses GSAP and profile-driven phrase/image content.
-- LightPillar uses Three.js and can be tuned via props in `app/page.tsx`.
-
----
+- Font variables are set on `<html>`, not `<body>`. `globals.css` composes them
+  into `--display` / `--body` / `--mono` on `:root`, and a custom property set
+  on `body` is not visible to `:root` — put them on `body` and the whole stack
+  invalidates and silently falls back to Times.
+- Scroll reveals are scoped to `html.js`, which is added by an inline script in
+  `layout.tsx`. If scripting never runs the page is simply visible rather than
+  blank. `<html>` carries `suppressHydrationWarning` for that reason.
+- `WorkflowMap` positions HTML nodes in percentages over an SVG with a fixed
+  `viewBox`. The canvas holds that aspect ratio exactly and scrolls on narrow
+  screens — squashing it would letterbox the SVG and drift the nodes off their
+  edges.
+- The FAQ is native `<details>` / `<summary>`.
 
 ## Troubleshooting
 
-### `Cannot find module 'gsap'`
-Run:
+**Everything renders in Times.** The `next/font` variable classes came off
+`<html>`. See the note above.
 
-```bash
-npm install
-```
+**Electron opens a blank window.** Use `npm run dev`, not `npm run desktop`
+alone, so Next starts first. Confirm `http://localhost:3000` is reachable.
 
-### Electron opens blank window in dev
-- Ensure `npm run dev` is used (not `npm run desktop` alone), so Next starts first.
-- Confirm `http://localhost:3000` is reachable.
-
-### Images not showing
-- Verify files exist under `public/images/`
-- Ensure paths start with `/images/...` (leading slash)
-
----
+**`next build` breaks a running dev server.** They share `.next`. Stop the dev
+server first, or `rm -rf .next` afterwards.
 
 ## License
 

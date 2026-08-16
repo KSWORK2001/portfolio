@@ -1,213 +1,379 @@
-import {
-  EmailTrigger,
-  FaqTracker,
-  HeadshotClickTracker
-} from "@/components/achievements/InteractiveTriggers";
-import { DecryptedText } from "@/components/animations/DecryptedText";
-import { FlowingMenu } from "@/components/animations/FlowingMenu";
-import { LogoLoop } from "@/components/animations/LogoLoop";
-import { TrueFocus } from "@/components/animations/TrueFocus";
-import { LightPillar } from "@/components/backgrounds/LightPillar";
-import { NeuralMesh } from "@/components/backgrounds/NeuralMesh";
-import { CareerTimeline } from "@/components/sections/CareerTimeline";
-import { ScrollMorph } from "@/components/sections/ScrollMorph";
-import { ScrollProjects } from "@/components/sections/ScrollProjects";
-import { ScrollStats } from "@/components/sections/ScrollStats";
-import { USAMap } from "@/components/sections/USAMap";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { TiltCard } from "@/components/ui/TiltCard";
+import type { ReactNode } from "react";
+import { AgentRun } from "@/components/work/AgentRun";
+import { EchoArt, TokenLessArt } from "@/components/work/ProjectArt";
+import { WorkflowMap } from "@/components/work/WorkflowMap";
 import { profile } from "@/data/profile-data";
 import styles from "./page.module.css";
 
+/** The stack copy leads with the tool, so `**like this**` gets emphasis. */
+function emphasize(text: string): ReactNode[] {
+  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 === 1 ? <b key={i}>{part}</b> : <span key={i}>{part}</span>
+  );
+}
+
+const DownloadIcon = () => (
+  <svg viewBox="0 0 16 16" aria-hidden="true" className="btn__i">
+    <path
+      d="M8 1v9m0 0L4.5 6.5M8 10l3.5-3.5M2 13h12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const LOOP = [
+  {
+    n: "1",
+    title: "Retrieve",
+    text: "Ground the step in documents it is allowed to see, rather than in whatever it remembers."
+  },
+  {
+    n: "2",
+    title: "Reason",
+    text: "One decision at a time, with the reason attached, so a bad run can be read afterwards."
+  },
+  {
+    n: "3",
+    title: "Validate",
+    text: "Every tool call is checked against a schema before it runs. Failing loudly beats passing something malformed downstream."
+  },
+  {
+    n: "4",
+    title: "Repair",
+    text: "A rejected call goes back to the agent with the reason attached — three times, then a person."
+  }
+];
+
 export default function HomePage() {
-  const faqItems = [
-    {
-      question: "Are you authorized to work in USA?",
-      answer: "Yes, US Citizen."
-    },
-    {
-      question: "Are you willing to relocate?",
-      answer: "Yes, just not to Arkansas."
-    },
-    {
-      question: "What kind of role do you prefer?",
-      answer: "Software Engineering roles with strong AI/ML focus."
-    },
-    {
-      question: "What is the best way to reach you?",
-      answer: `Email: ${profile.email}`
-    },
-    {
-      question: "Pineapple on Pizza?",
-      answer: "Nah. (Non-negotiable)"
-    },
-    {
-      question: "Marvel or DC?",
-      answer: "DC all the way!! (Psst — try the Konami code anywhere on this page.)"
-    },
-    {
-      question: "Are the background particles judging me?",
-      answer:
-        "Yes (unless you get me an offer)"
-    }
-  ];
-
   return (
-    <main>
-      <LightPillar
-        topColor="#0f766e"
-        bottomColor="#5eead4"
-        intensity={0.85}
-        rotationSpeed={0.3}
-        glowAmount={0.002}
-        pillarWidth={3}
-        pillarHeight={0.4}
-        noiseIntensity={0.35}
-        pillarRotation={25}
-        interactive={false}
-        mixBlendMode="screen"
-        quality="high"
-      />
-      <NeuralMesh />
+    <main id="main">
+      <span id="top" />
 
-      <section className={`section ${styles.hero}`}>
-        <div className={`container ${styles.heroGrid}`}>
+      {/* ── Hero ──────────────────────────────────────────────── */}
+      <section className={styles.hero}>
+        <div className={`wrap ${styles.heroGrid}`}>
           <div>
-            <p className="section-kicker">Senior Applied AI Engineer</p>
-            <h1 className={styles.title}>
-              <DecryptedText text={profile.name} />
+            <p className="eyebrow" data-reveal>
+              <span className="rule" />
+              Applied AI engineer
+            </p>
+            <h1 className={styles.h1} data-reveal>
+              I build agents that check their own work.
             </h1>
-            <p className={styles.headline}>{profile.headline}</p>
-            <p className="muted">{profile.location}</p>
+            <p className={styles.sub} data-reveal>
+              Most of what I ship is not the model. It is the layer around it —
+              the retrieval it is allowed to see, the schema its tool calls have
+              to satisfy, and the gate that stops it before it writes to
+              anything that matters. That layer is the reason the systems stay
+              up.
+            </p>
 
-            <div className={styles.focusRow}>
-              <TrueFocus
-                words={[
-                  "Agentic Systems",
-                  "Applied NLP",
-                  "Cloud-Ready MLOps",
-                  "Full-Stack AI Products"
-                ]}
-              />
+            <div className={styles.actions} data-reveal>
+              <a className="btn btn--solid" href="#contact">
+                Email me
+              </a>
+              <a className="btn btn--ghost" href={profile.resume} download>
+                Résumé
+                <DownloadIcon />
+              </a>
             </div>
 
-            <p className={styles.summary}>{profile.summary[0]}</p>
-
-            <div className={styles.actions}>
-              <EmailTrigger>
-                <MagneticButton href={`mailto:${profile.email}`} className={styles.primaryBtn}>
-                  Email Me
-                </MagneticButton>
-              </EmailTrigger>
-              <MagneticButton
-                href={profile.linkedin}
-                className={styles.ghostBtn}
-                target="_blank"
-                rel="noreferrer"
-              >
-                LinkedIn
-              </MagneticButton>
-              <MagneticButton
-                href={profile.website}
-                className={styles.ghostBtn}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Personal Site
-              </MagneticButton>
-            </div>
+            <p className={styles.meta} data-reveal>
+              Atlanta, GA · Senior Applied AI Engineer at The Home Depot · MS CS
+              at Georgia Tech
+            </p>
           </div>
 
-          <HeadshotClickTracker>
-            <TiltCard className={styles.headshotCard} max={6}>
-              <img src={profile.headshot} alt="Karan Shrivastava" className={styles.headshot} />
-              <p className={styles.headshotCaption}>Building practical AI systems for production teams.</p>
-            </TiltCard>
-          </HeadshotClickTracker>
+          <div data-reveal>
+            <AgentRun />
+          </div>
         </div>
       </section>
 
-      <ScrollStats stats={profile.stats} />
-
-      <section className="section">
-        <div className="container">
-          <div className="section-kicker">Network</div>
-          <h2 className="section-title">Teams, platforms, and ecosystems</h2>
-          <LogoLoop items={profile.logos} />
+      {/* ── Now ───────────────────────────────────────────────── */}
+      <section className={`wrap ${styles.now}`}>
+        <p className="eyebrow" data-reveal>
+          <span className="rule" />
+          Right now
+        </p>
+        <div className={styles.nowRow}>
+          {profile.now.map((item) => (
+            <article className={styles.nowCell} key={item.key} data-reveal>
+              <h3>{item.key}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <ScrollMorph />
+      {/* ── Work ──────────────────────────────────────────────── */}
+      <section className="sec" id="work">
+        <div className="wrap">
+          <p className="eyebrow" data-reveal>
+            <span className="rule" />
+            Where I have worked
+          </p>
+          <h2 className="sec__h sec__h--wide" data-reveal>
+            Every role here ended with something in production.
+          </h2>
 
-      <CareerTimeline items={profile.experiences} />
+          <div className={styles.roles}>
+            {profile.experiences.map((job) => (
+              <article className={styles.role} key={job.company} data-reveal>
+                <div className={styles.roleMeta}>
+                  <p className={styles.rolePeriod}>{job.period}</p>
+                  <p className={styles.roleCompany}>{job.company}</p>
+                </div>
+                <div className={styles.roleBody}>
+                  <h3 className={styles.roleTitle}>{job.role}</h3>
+                  <p className={styles.roleDetail}>{job.detail}</p>
+                  <ul className={styles.roleList}>
+                    {job.bullets.map((b) => (
+                      <li key={b}>{b}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </div>
 
-      <ScrollProjects projects={profile.projects} />
-
-      <section className="section">
-        <div className="container">
-          <div className="section-kicker">Credentials</div>
-          <h2 className="section-title">Expanded certification portfolio</h2>
-          <div className={styles.certGrid}>
-            {profile.certifications.map((cert) => (
-              <TiltCard className={styles.certCard} key={cert.title} max={7}>
-                <h3>{cert.title}</h3>
-                <p className={styles.certIssuer}>{cert.issuer}</p>
-                <p className={styles.certFocus}>{cert.focus}</p>
-              </TiltCard>
+          <div className={styles.edu} data-reveal>
+            {profile.education.map((e) => (
+              <div className={styles.eduRow} key={e.school}>
+                <span className={styles.eduPeriod}>{e.period}</span>
+                <span className={styles.eduDegree}>{e.degree}</span>
+                <span className={styles.eduSchool}>{e.school}</span>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="section-kicker">Languages</div>
-          <h2 className="section-title">Flowing language profile</h2>
-          <div className={styles.languageMenuWrap}>
-            <FlowingMenu
-              items={profile.languages.map((lang) => ({
-                link: "#",
-                text: `${lang.name} — ${lang.level}`,
-                image: lang.image,
-                phrases: lang.phrases
-              }))}
-              speed={15}
-              textColor="#ffffff"
-              bgColor="#060010"
-              marqueeBgColor="#ffffff"
-              marqueeTextColor="#060010"
-              borderColor="#ffffff"
-            />
+      {/* ── The loop: the page hands over to the machine ──────── */}
+      <section className={styles.dark} id="loop">
+        <div className="wrap">
+          <div className={styles.darkHead}>
+            <p className="eyebrow eyebrow--on-dark" data-reveal>
+              <span className="rule" />
+              How I build
+            </p>
+            <h2 className="sec__h sec__h--on-dark" data-reveal>
+              The model proposes. The system decides.
+            </h2>
+            <p className="sec__p sec__p--on-dark" data-reveal>
+              A language model is the least predictable component in the stack,
+              so it gets the least authority. Everything around it is
+              deterministic: what it may retrieve, what shape its output has to
+              take, how many times it can try again, and the point past which it
+              has to stop and ask. The engineering worth talking about is in
+              that scaffolding, not in the prompt.
+            </p>
+          </div>
+
+          <ol className={styles.loop} data-reveal>
+            {LOOP.map((s) => (
+              <li className={styles.loopStep} key={s.title}>
+                <span className={styles.loopN}>{s.n}</span>
+                <b>{s.title}</b>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className={styles.mapGrid}>
+            <div data-reveal>
+              <h3 className={styles.mapTitle}>
+                Chain the failures, not just the happy path.
+              </h3>
+              <p className={styles.mapCopy}>
+                Most agent demos only draw the arrow that works. Production is
+                all the other arrows — what happens on a schema failure, on a
+                timeout, on the third retry, and who finds out about it.
+              </p>
+              <WorkflowMap />
+            </div>
+
+            <div className={styles.notes}>
+              <article className={styles.note} data-reveal>
+                <h4>It refuses to guess</h4>
+                <p>
+                  Tool arguments are Pydantic models, not free text. A call that
+                  will not validate never reaches the API, and the agent is told
+                  exactly which field was wrong so its next attempt is informed
+                  rather than random.
+                </p>
+              </article>
+              <article className={styles.note} data-reveal>
+                <h4>It asks before it acts</h4>
+                <p>
+                  Irreversible actions sit behind a human gate. Tightening what
+                  genuinely needed a person took interventions from the mid-400s
+                  to under 20 — the gate became worth trusting by being asked
+                  less often.
+                </p>
+              </article>
+              <article
+                className={`${styles.note} ${styles.noteGate}`}
+                data-reveal
+              >
+                <h4>It is graded, not vibe-checked</h4>
+                <p>
+                  Golden workflow datasets run under pytest with a model as
+                  judge on every change, so a prompt edit cannot quietly regress
+                  a flow that used to work.
+                </p>
+              </article>
+            </div>
           </div>
         </div>
       </section>
 
-      <USAMap />
+      {/* ── Projects ──────────────────────────────────────────── */}
+      <section className="sec" id="projects">
+        <div className="wrap">
+          <p className="eyebrow" data-reveal>
+            <span className="rule" />
+            Selected work
+          </p>
+          <h2 className="sec__h sec__h--wide" data-reveal>
+            Things I built end to end, and shipped to people who are not me.
+          </h2>
 
-      <section className="section">
-        <div className={`container ${styles.faqSection}`}>
+          {profile.projects.map((p, i) => (
+            <article
+              className={`${styles.project} ${i % 2 ? styles.projectFlip : ""}`}
+              key={p.title}
+            >
+              <div className={styles.projectCopy} data-reveal>
+                <div className={styles.projectHead}>
+                  <h3 className={styles.projectTitle}>{p.title}</h3>
+                  <span className={styles.projectYear}>{p.year}</span>
+                </div>
+                <p className={styles.projectStack}>{p.stack}</p>
+                <p className={styles.projectSummary}>{p.summary}</p>
+                <ul className={styles.projectMetrics}>
+                  {p.metrics.map((m) => (
+                    <li key={m}>{m}</li>
+                  ))}
+                </ul>
+                <a
+                  className={styles.projectLink}
+                  href={p.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {p.hrefLabel}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+
+              <div className={styles.projectArt} data-reveal>
+                {p.art === "echo" ? <EchoArt /> : <TokenLessArt />}
+              </div>
+            </article>
+          ))}
+
+          <div className={styles.alsoRow}>
+            {profile.alsoBuilt.map((p) => (
+              <article className={styles.also} key={p.title} data-reveal>
+                <h4>{p.title}</h4>
+                <p className={styles.alsoStack}>{p.stack}</p>
+                <p className={styles.alsoSummary}>{p.summary}</p>
+                <p className={styles.alsoMetric}>{p.metric}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Stack ─────────────────────────────────────────────── */}
+      <section className="sec sec--alt" id="stack">
+        <div className="wrap">
+          <p className="eyebrow" data-reveal>
+            <span className="rule" />
+            What I reach for
+          </p>
+          <h2 className="sec__h sec__h--wide" data-reveal>
+            The tools, and what I actually use them for.
+          </h2>
+
+          <div className="spec">
+            {profile.stack.map((row) => (
+              <div className="spec__r" key={row.key} data-reveal>
+                <span className="spec__k">{row.key}</span>
+                <span className="spec__v">{emphasize(row.text)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ───────────────────────────────────────────────── */}
+      <section className="sec">
+        <div className={`wrap ${styles.faqGrid}`}>
           <div>
-            <p className="section-kicker">FAQ</p>
-            <h2 className={styles.faqTitle}>Frequently asked questions</h2>
+            <p className="eyebrow" data-reveal>
+              <span className="rule" />
+              The usual questions
+            </p>
+            <h2 className="sec__h" data-reveal>
+              Asked often enough to answer here.
+            </h2>
           </div>
 
-          <FaqTracker total={faqItems.length}>
-            <div className={styles.faqList}>
-              {faqItems.map((item) => (
-                <details key={item.question} className={styles.faqItem} data-faq-id={item.question}>
-                  <summary>
-                    <span className={styles.faqIcon} aria-hidden="true" />
-                    {item.question}
-                  </summary>
-                  <div className={styles.faqAnswer}>
-                    <div className={styles.faqAnswerInner}>
-                      <p>{item.answer}</p>
-                    </div>
-                  </div>
-                </details>
-              ))}
-            </div>
-          </FaqTracker>
+          <div className={styles.faqList} data-reveal>
+            {profile.faq.map((item) => (
+              <details className={styles.faq} key={item.q}>
+                <summary>
+                  {item.q}
+                  <span className={styles.faqSign} aria-hidden="true" />
+                </summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Contact ───────────────────────────────────────────── */}
+      <section className={styles.contact} id="contact">
+        <div className={`wrap ${styles.contactInner}`}>
+          <img
+            className={styles.portrait}
+            src={profile.headshot}
+            alt="Karan Shrivastava"
+            width="1080"
+            height="1350"
+            loading="lazy"
+            data-reveal
+          />
+          <h2 className={styles.contactH} data-reveal>
+            Happily employed.
+            <br />
+            Still reading email.
+          </h2>
+          <p className={styles.contactP} data-reveal>
+            If you are building something where an agent has to be right rather
+            than impressive, I would like to hear about it.
+          </p>
+          <a
+            className="btn btn--solid btn--lg"
+            href={`mailto:${profile.email}`}
+            data-reveal
+          >
+            {profile.email}
+          </a>
+          <p className={styles.contactMeta} data-reveal>
+            <span>Atlanta, GA</span>
+            <i />
+            <span>US citizen</span>
+            <i />
+            <span>usually back within a day</span>
+          </p>
         </div>
       </section>
     </main>

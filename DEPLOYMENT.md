@@ -216,8 +216,11 @@ Access at `http://localhost:3000/portfolio`
 ## 10. Important Notes
 
 - **Electron is ignored** in this deployment (only Next.js web app is deployed)
-- **GSAP and Three.js** work fine in static export
+- **No runtime dependencies beyond React** — the visuals are DOM and CSS, so
+  there is nothing here that static export can trip over
 - **No server-side features** are used, so static export is safe
+- **`public/` is served from the base path** — the résumé PDF lands at
+  `/portfolio/Karan_Shrivastava_resume.pdf`
 - **Future changes**: Just push to `main` to redeploy
 
 ---

@@ -1,0 +1,233 @@
+.stage {
+  position: relative;
+  min-height: 440px;
+  padding-top: 1.6rem;
+  /* Deep enough that the eval card clears the run window's footer and
+     only laps its bottom corner. */
+  padding-bottom: 8rem;
+}
+
+/* The document the run is operating on. Paper, so it recedes. */
+.doc {
+  position: absolute;
+  inset: 4% 4% 14% 10%;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--edge);
+  padding: 2.2rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+.docLine {
+  display: block;
+  height: 9px;
+  width: var(--w);
+  border-radius: 3px;
+  background: var(--paper-3);
+}
+
+.run {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 460px;
+  margin-left: auto;
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0.45rem 0;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding: 0.6rem 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+}
+.step:last-child {
+  border-bottom: 0;
+}
+
+/* Held back until the window is on screen, so the run appears to
+   happen while you are watching it. */
+:global(.js) .steps:not(:global(.is-live)) .step {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.steps:global(.is-live) .step {
+  animation: stepIn 0.5s var(--ease) backwards;
+}
+.steps:global(.is-live) .step:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.steps:global(.is-live) .step:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.steps:global(.is-live) .step:nth-child(3) {
+  animation-delay: 0.75s;
+}
+.steps:global(.is-live) .step:nth-child(4) {
+  animation-delay: 1.25s;
+}
+.steps:global(.is-live) .step:nth-child(5) {
+  animation-delay: 1.7s;
+}
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.action {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+}
+.detail {
+  font-size: 0.88rem;
+  color: var(--tx-on-dark-2);
+  min-width: 0;
+}
+.state {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  padding: 0.16rem 0.42rem;
+  border-radius: 5px;
+  flex: none;
+}
+
+.pass {
+  color: var(--pass-lift);
+}
+.state.pass {
+  background: rgba(34, 197, 94, 0.13);
+}
+.fail {
+  color: var(--fail);
+}
+.state.fail {
+  background: rgba(251, 113, 133, 0.14);
+}
+.gate {
+  color: var(--gate);
+}
+.state.gate {
+  background: rgba(245, 158, 11, 0.14);
+}
+
+/* The row where the run catches itself gets a hairline in the margin —
+   it is the only step that matters to the argument. */
+.step:has(.state.fail) {
+  background: rgba(251, 113, 133, 0.05);
+  box-shadow: inset 2px 0 0 var(--fail);
+}
+.step:has(.state.gate) {
+  background: rgba(245, 158, 11, 0.06);
+  box-shadow: inset 2px 0 0 var(--gate);
+}
+
+/* The eval card laps this window's bottom-left corner, so the run's
+   summary sits over on the right where nothing covers it. */
+.runFoot {
+  justify-content: flex-end;
+}
+
+/* Sits below and to the left of the run, overlapping it. */
+.evalCard {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: 0;
+  width: min(255px, 72%);
+  padding: 0.95rem 1.1rem 1.1rem;
+  background: var(--chrome-2);
+}
+.evalCap {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pass-lift);
+  margin-bottom: 0.5rem;
+}
+.evalNum {
+  font-family: var(--display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.evalOf {
+  font-size: 1.05rem;
+  color: var(--tx-on-dark-2);
+  letter-spacing: -0.02em;
+}
+.evalSub {
+  font-size: 0.8rem;
+  color: var(--tx-on-dark-2);
+  margin-top: 0.3rem;
+}
+.evalBar {
+  display: block;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.09);
+  margin-top: 0.8rem;
+  overflow: hidden;
+}
+.evalBar i {
+  display: block;
+  height: 100%;
+  background: var(--pass);
+}
+
+@media (max-width: 1000px) {
+  .stage {
+    min-height: 0;
+    padding-bottom: 4.5rem;
+  }
+  .run {
+    max-width: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .doc {
+    display: none;
+  }
+  .stage {
+    padding-top: 0;
+    padding-bottom: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .step {
+    grid-template-columns: 76px minmax(0, 1fr);
+    row-gap: 0.2rem;
+  }
+  .state {
+    grid-column: 2;
+    justify-self: start;
+  }
+  .evalCard {
+    position: relative;
+    inset: auto;
+    width: 100%;
+  }
+  /* Nothing overlaps it once the card is stacked below. */
+  .runFoot {
+    justify-content: flex-start;
+  }
+}

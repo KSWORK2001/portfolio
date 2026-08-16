@@ -1,108 +1,430 @@
+/* ───────────────────────────────────────────────────────────────
+   Karan Shrivastava — portfolio
+
+   One rule holds the whole page together: the page is paper and
+   ink, and colour only appears inside the machine. Nothing on the
+   surface is tinted — no gradients, no glows, no accent headings.
+   The only saturated pixels on the site live inside the dark
+   window chrome, where they mean something: green passed, amber
+   is waiting on a human, red failed, blue is still running.
+
+   So when you scroll, the only things that light up are his
+   systems actually running. That is the argument the page makes.
+   ─────────────────────────────────────────────────────────────── */
+
 :root {
-  --bg: #0b0f14;
-  --surface: #121821;
-  --surface-elevated: #1a2230;
-  --line: #283447;
-  --text: #eef3f9;
-  --muted: #9bacbf;
-  --accent: #79c0ff;
-  --accent-strong: #3b82f6;
+  /* Surface: warm bone, not white. Paper takes ink better than
+     screen-white does, and it stops the page reading as a dashboard. */
+  --paper: #eceae5;
+  --paper-2: #e5e2db;
+  --paper-3: #d8d4cb;
+
+  /* Window chrome. Warm near-black so it sits on bone without
+     going blue, which is what makes dark-on-light look cheap. */
+  --ink: #14110e;
+  --chrome: #1c1815;
+  --chrome-2: #26211c;
+  --chrome-line: rgba(255, 255, 255, 0.09);
+
+  /* State colours. These are only ever used inside .win — never on
+     the paper. If one of these shows up on the surface, it is a bug. */
+  --pass: #22c55e;
+  --pass-lift: #86efac;
+  --gate: #f59e0b;
+  --run: #38bdf8;
+  --fail: #fb7185;
+
+  --tx: #14110e;
+  --tx-2: #55504a; /* 6.6:1 on paper */
+  --tx-3: #635d55; /* 5.4:1 on paper — small mono caps need >4.5 */
+  --tx-on-dark: #eae7e1;
+  --tx-on-dark-2: #a09a90;
+
+  --edge: rgba(20, 17, 14, 0.11);
+  --edge-2: rgba(20, 17, 14, 0.18);
+
+  --display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
+
+  /* Elevation, tuned for dark chrome hovering over bone. */
+  --lift-1: 0 1px 2px rgba(20, 17, 14, 0.07), 0 6px 16px -6px rgba(20, 17, 14, 0.16);
+  --lift-2: 0 1px 2px rgba(20, 17, 14, 0.08), 0 10px 28px -8px rgba(20, 17, 14, 0.2),
+    0 28px 68px -18px rgba(20, 17, 14, 0.26);
+
+  --wrap: 1140px;
+  --pad: clamp(1.15rem, 4vw, 2.5rem);
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background: var(--paper);
+}
+
 body {
   margin: 0;
-  padding: 0;
-  color: var(--text);
+  background: var(--paper);
+  color: var(--tx);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
-html {
-  background: var(--bg);
-}
-
-body {
-  font-family: var(--font-body), sans-serif;
-  min-height: 100vh;
-  background-color: var(--bg);
-  background-image:
-    radial-gradient(ellipse 80% 60% at 18% 10%, rgba(15, 118, 110, 0.3), transparent 70%),
-    radial-gradient(ellipse 70% 60% at 86% 25%, rgba(94, 234, 212, 0.12), transparent 70%),
-    radial-gradient(ellipse 70% 70% at 8% 70%, rgba(121, 192, 255, 0.1), transparent 70%),
-    radial-gradient(ellipse 80% 60% at 92% 90%, rgba(13, 148, 136, 0.24), transparent 70%);
-  background-attachment: fixed;
-  background-size: 100% 100%;
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
 a {
   color: inherit;
-  text-decoration: none;
 }
 
-main {
-  position: relative;
-  overflow-x: clip;
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--display);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.028em;
+  line-height: 1.06;
 }
 
-.container {
-  width: min(1120px, calc(100% - 3rem));
-  margin: 0 auto;
+p {
+  margin: 0;
 }
 
-.section {
-  padding: 5.5rem 0;
-  position: relative;
-  z-index: 2;
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--pad);
 }
 
-html.konami-on {
-  animation: konamiPulse 4s ease-out;
+.sec {
+  padding-block: clamp(4.5rem, 10vw, 8rem);
 }
 
-@keyframes konamiPulse {
-  0%, 100% { filter: none; }
-  10%, 30% { filter: hue-rotate(15deg) saturate(1.2); }
+.sec--alt {
+  background: var(--paper-2);
 }
 
-.section-title {
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(1.7rem, 4vw, 2.6rem);
-  margin: 0 0 1rem;
-  letter-spacing: -0.02em;
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--chrome);
+  color: var(--tx-on-dark);
+  padding: 0.7rem 1rem;
+  border-radius: 0 0 10px 0;
+  z-index: 999;
+}
+.skip:focus {
+  left: 0;
 }
 
-.section-kicker {
-  color: var(--accent);
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Eyebrow ─────────────────────────────────────────────────────
+   Mono, letterspaced, with a short rule. The rule is ink, not an
+   accent colour — that restraint is the whole point. */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.71rem;
+  font-weight: 500;
+  letter-spacing: 0.19em;
   text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.22em;
-  font-weight: 650;
-  margin-bottom: 0.75rem;
+  color: var(--tx-3);
+  margin-bottom: 1.5rem;
+}
+.rule {
+  width: 26px;
+  height: 1px;
+  background: var(--ink);
+  flex: none;
+}
+.eyebrow--on-dark {
+  color: var(--tx-on-dark-2);
+}
+.eyebrow--on-dark .rule {
+  background: var(--pass);
 }
 
-.muted {
-  color: var(--muted);
+/* ── Type scale ──────────────────────────────────────────────── */
+
+.sec__h {
+  font-size: clamp(1.85rem, 3.7vw, 3rem);
+  margin-bottom: 1.2rem;
+  max-width: 18ch;
+}
+.sec__h--wide {
+  max-width: 26ch;
+  margin-bottom: 2.6rem;
+}
+.sec__h--on-dark {
+  color: var(--tx-on-dark);
+}
+.sec__p {
+  font-size: 1.03rem;
+  color: var(--tx-2);
+  max-width: 36rem;
+}
+.sec__p--on-dark {
+  color: var(--tx-on-dark-2);
 }
 
-.grid-2 {
+/* ── Buttons ─────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 50px;
+  padding: 0 1.35rem;
+  border-radius: 12px;
+  font-family: var(--body);
+  font-size: 0.97rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.18s var(--ease), background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.btn__i {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.btn--solid {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: var(--lift-1);
+}
+.btn--solid:hover {
+  background: #241f1a;
+  transform: translateY(-2px);
+  box-shadow: var(--lift-2);
+}
+.btn--ghost {
+  border: 1px solid var(--edge-2);
+  color: var(--tx);
+}
+.btn--ghost:hover {
+  background: rgba(20, 17, 14, 0.05);
+  transform: translateY(-2px);
+}
+.btn--lg {
+  height: 60px;
+  padding: 0 1.9rem;
+  font-size: 1.06rem;
+}
+
+kbd {
+  font-family: var(--mono);
+  font-size: 0.72em;
+  padding: 0.16em 0.42em;
+  border-radius: 5px;
+  border: 1px solid var(--edge-2);
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--tx-2);
+  white-space: nowrap;
+}
+
+/* ── Window chrome ───────────────────────────────────────────────
+   Every piece of artwork on this site is a real interface built out
+   of DOM, not a screenshot and not a render. If it claims to show
+   something running, it is laid out the way that thing actually is. */
+
+.win {
+  margin: 0;
+  background: var(--chrome);
+  border: 1px solid var(--chrome-line);
+  border-radius: 14px;
+  box-shadow: var(--lift-2);
+  color: var(--tx-on-dark);
+  overflow: hidden;
+}
+
+.win__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--chrome-line);
+  background: rgba(255, 255, 255, 0.022);
+}
+.win__title {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--tx-on-dark-2);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.win__end {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--tx-on-dark-2);
+  flex: none;
+}
+.win__foot {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 0.95rem;
+  border-top: 1px solid var(--chrome-line);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--tx-on-dark-2);
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--tx-on-dark-2);
+  flex: none;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.chip--pass {
+  color: var(--pass-lift);
+}
+.chip--run {
+  color: var(--run);
+}
+.chip--gate {
+  color: var(--gate);
+}
+.chip--run .dot,
+.chip--pass .dot {
+  animation: breathe 1.6s ease-in-out infinite;
+}
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+}
+
+/* ── Facts list ──────────────────────────────────────────────── */
+
+.facts {
+  list-style: none;
+  margin: 1.8rem 0 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.2rem;
+  gap: 1.05rem;
+}
+.facts li {
+  font-size: 0.95rem;
+  color: var(--tx-2);
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--edge);
+}
+.facts b {
+  color: var(--tx);
+  font-weight: 700;
 }
 
-@media (max-width: 860px) {
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
+/* ── Spec rows ───────────────────────────────────────────────── */
 
-  .section {
-    padding: 4rem 0;
-  }
+.spec {
+  display: grid;
+  border-top: 1px solid var(--edge);
+}
+.spec__r {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--edge);
+  align-items: baseline;
+}
+.spec__k {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tx-3);
+}
+.spec__v {
+  font-size: 0.99rem;
+  color: var(--tx-2);
+  max-width: 52rem;
+}
+.spec__v b {
+  color: var(--tx);
+  font-weight: 700;
+}
 
-  .container {
-    width: min(1120px, calc(100% - 1.5rem));
+/* ── Reveal on scroll ────────────────────────────────────────────
+   Scoped to .js so that if the script never runs the page is simply
+   visible rather than blank. */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.62s var(--ease), transform 0.62s var(--ease);
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }

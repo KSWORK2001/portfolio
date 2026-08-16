@@ -4,239 +4,223 @@ const asset = (path: string) => `${basePath}${path}`;
 
 export const profile = {
   name: "Karan Shrivastava",
-  headline: "Senior Applied AI Engineer @ The Home Depot || MS CS @ Georgia Tech",
-  location: "Atlanta Metropolitan Area",
+  role: "Senior Applied AI Engineer",
+  location: "Atlanta, GA",
   headshot: asset("/images/karan-headshot.jpg"),
+  resume: asset("/Karan_Shrivastava_resume.pdf"),
   email: "work.karan2001@gmail.com",
   linkedin: "https://www.linkedin.com/in/kswork",
+  github: "https://github.com/KSWORK2001",
   website: "https://kswork2001.github.io",
-  summary: [
-    "Senior Applied AI Engineer at The Home Depot, building production agentic systems on Claude and Google Vertex AI for retail-scale workflows.",
-    "Previously shipped cloud-native AI products across telecom, enterprise energy, healthcare, and consulting — production ML, agentic orchestration, and full-stack delivery in Python, React, Node, and modern data infra.",
-    "MS Computer Science candidate at Georgia Tech, building practical AI that is reliable, measurable, and deployable at scale."
+
+  /* The three things that are true right now, in the order someone
+     reading this actually cares about them. */
+  now: [
+    {
+      key: "Shipping",
+      text: "Production agent systems at The Home Depot, on Claude and Vertex AI, for workflows that run at retail scale."
+    },
+    {
+      key: "Studying",
+      text: "MS Computer Science at Georgia Tech — alongside the job rather than instead of it."
+    },
+    {
+      key: "Building",
+      text: "Echo, a desktop assistant that runs on your own machine. Free, about 10 MB, no account."
+    }
   ],
-  topSkills: [
-    "Claude (Anthropic)",
-    "Google Vertex AI",
-    "LangGraph",
-    "Pydantic",
-    "PyTorch",
-    "PostgreSQL",
-    "Next.js",
-    "Docker"
-  ],
-  stats: [
-    { value: 50, suffix: "+", label: "Prototypes delivered" },
-    { value: 90, suffix: "%", label: "Manual hand-offs reduced" },
-    { value: 65, suffix: "%", label: "Runtime errors reduced" },
-    { value: 40, suffix: "%", label: "IoT preprocessing improvement" }
-  ],
-  logos: [
-    "The Home Depot",
-    "Southern Company",
-    "AT&T",
-    "Georgia Tech",
-    "Cognizant",
-    "Elevance Health",
-    "Anthropic Claude",
-    "Google Vertex AI",
-    "LangGraph",
-    "Snowflake"
-  ],
+
   experiences: [
     {
       role: "Senior Applied AI Engineer",
       company: "The Home Depot",
-      period: "Apr 2026 - Present",
+      period: "Apr 2026 — Present",
       detail:
-        "Designing and shipping production-grade agentic systems for retail and associate-facing workflows, built on Anthropic's Claude and Google Vertex AI with tool use, RAG, and human-in-the-loop guardrails.",
+        "Production agentic systems for retail and associate-facing workflows, built on Claude and Google Vertex AI with tool use, retrieval, and human-in-the-loop guardrails.",
       bullets: [
-        "Architect multi-step Claude agents (tool use, parallel tool calls, extended thinking, prompt caching) for high-volume operational and merchandising workflows.",
-        "Deploy and tune Vertex AI Gemini, embeddings, and Agent Builder pipelines on GCP, integrating Vector Search and BigQuery for retrieval-grounded reasoning.",
-        "Define evaluation harnesses, safety policies, and observability for agentic systems — latency budgets, hallucination guards, and offline regression suites.",
-        "Partner with platform, data, and security teams to take prototypes from POC to enterprise rollout with reliability-first deployment standards."
+        "Architect multi-step Claude agents — tool use, parallel tool calls, extended thinking, prompt caching — for high-volume operational and merchandising workflows.",
+        "Deploy and tune Vertex AI Gemini, embeddings, and Agent Builder pipelines, wiring Vector Search and BigQuery in as the grounding layer.",
+        "Own the evaluation harnesses, safety policies, and observability: latency budgets, hallucination guards, and offline regression suites.",
+        "Take prototypes from POC to enterprise rollout with platform, data, and security teams."
       ]
     },
     {
       role: "Generative AI Architect",
       company: "AT&T",
-      period: "Oct 2025 - Mar 2026",
+      period: "Oct 2025 — Mar 2026",
       detail:
-        "Built an agentic orchestration system with retrieval, validation, and remediation layers, eliminating up to 90% of manual hand-offs.",
+        "Built the agentic orchestration system behind customer support workflows — retrieval, validation, and remediation layers that removed up to 90% of manual hand-offs.",
       bullets: [
-        "Designed deterministic, tool-driven LLM agents with LangChain and LangGraph.",
-        "Implemented validation layers that reduced runtime parameter failures by around 65%.",
-        "Shipped guarded human-gate approvals for critical autonomous actions in enterprise flow."
+        "Designed deterministic, tool-driven agents in LangChain and LangGraph, where the graph is fixed and only the nodes are probabilistic.",
+        "Added the validation layer that cut runtime parameter failures by roughly 65%.",
+        "Shipped human-gate approvals for irreversible actions, then tightened what actually needed a person."
       ]
     },
     {
       role: "AI Integration Engineer",
       company: "Southern Company",
-      period: "Aug 2025 - Dec 2025",
+      period: "Aug 2025 — Dec 2025",
       detail:
-        "Designed and deployed Databricks ML workflows using Spark ML and Delta Lake, reducing preprocessing time by 40% for energy forecasting and IoT workloads.",
+        "Databricks ML workflows on Spark ML and Delta Lake for energy forecasting and IoT workloads, cutting preprocessing time by 40%.",
       bullets: [
-        "Built and maintained low-latency .NET Core APIs to serve production ML inference.",
-        "Integrated model outputs into enterprise systems with reliability-first deployment standards.",
-        "Prototyped Swift iOS interfaces to surface real-time monitoring insights for energy teams."
+        "Built low-latency .NET Core APIs to serve production inference.",
+        "Integrated model output into enterprise systems under reliability-first deployment standards.",
+        "Prototyped Swift iOS interfaces surfacing real-time monitoring for energy teams."
       ]
     },
     {
       role: "Machine Learning Engineer",
       company: "Cognizant",
-      period: "Jun 2025 - Aug 2025",
+      period: "Jun 2025 — Aug 2025",
       detail:
-        "Optimized LLM inference across A100/V100/T4 GPUs using ONNX conversion and precision tuning, cutting latency by 32%.",
+        "Optimized LLM inference across A100, V100, and T4 GPUs using ONNX conversion and precision tuning, cutting latency by 32%.",
       bullets: [
-        "Benchmarked model performance across multiple NVIDIA GPU generations for throughput tuning.",
-        "Applied quantization and pruning strategies for reduced memory footprint and stable latency.",
-        "Contributed custom runtime optimization approaches in C++ and ONNX Runtime."
+        "Benchmarked throughput across NVIDIA generations to find where the money actually went.",
+        "Applied quantization and pruning for a smaller memory footprint at stable latency.",
+        "Contributed runtime optimizations in C++ and ONNX Runtime."
       ]
     },
     {
       role: "Data Science Intern",
       company: "Elevance Health",
-      period: "May 2025 - Aug 2025",
+      period: "May 2025 — Aug 2025",
       detail:
-        "Automated enrollment flag resolution and containerized NLP PDF extraction, reducing processing from hours to seconds.",
+        "Automated enrollment flag resolution and containerized NLP extraction from 50-page PDFs, taking processing from hours to seconds.",
       bullets: [
         "Designed rule-based anomaly checks across policy, provider, and coverage fields.",
-        "Built PDF-to-structured-data pipelines with pandas and robust extraction logging.",
-        "Containerized workflow in Docker for consistent handoff to operations and DevOps teams."
+        "Built PDF-to-structured-data pipelines in pandas with extraction logging that made failures debuggable.",
+        "Containerized the workflow in Docker so operations could run it without me."
       ]
     },
     {
       role: "Software Engineer Intern",
       company: "Nexcen Global",
-      period: "Aug 2023 - Dec 2023",
+      period: "Aug 2023 — Dec 2023",
       detail:
-        "Overhauled low-level framework internals to improve startup speed and runtime reliability for C++ tooling used by internal engineering teams.",
+        "Low-level C++ framework work: startup speed and runtime reliability for tooling used across internal engineering teams.",
       bullets: [
-        "Reduced binary startup time by 35% and crash frequency by 30% by reworking memory allocation patterns and fixing 20+ concurrency and lifetime defects.",
-        "Diagnosed and resolved critical memory safety issues using gdb, ASan/TSan, valgrind, and Linux core dump analysis.",
-        "Improved build pipeline reliability by refactoring CMake configurations and integrating sanitizer passes into CI for faster developer feedback."
+        "Cut binary startup time by 35% and crash frequency by 30% by reworking memory allocation and fixing 20+ concurrency and lifetime defects.",
+        "Chased memory safety bugs with gdb, ASan/TSan, valgrind, and Linux core dumps.",
+        "Refactored CMake configs and put sanitizer passes in CI for faster feedback."
       ]
     }
   ],
+
   projects: [
     {
-      title: "Agentic Workflow Orchestration",
-      stack: "LangGraph, Python, Postgres",
-      summary:
-        "Deterministic AI workflow engine with retrieval, triage, validation, and error correction layers for enterprise business processes.",
-      impact: ">80% first-pass acceptance",
-      mockup: "agentic"
-    },
-    {
-      title: "Real-time Speech Platform",
-      stack: "Whisper, CUDA, XTTS",
-      summary:
-        "GPU-accelerated speech-to-text and voice synthesis prototypes deployed to Azure app services for fast, local inference.",
-      impact: "FP16 production accuracy",
-      mockup: "speech"
-    },
-    {
-      title: "SpotMe!",
-      stack: "React Native, Firebase",
-      summary:
-        "Social fitness application built and launched to early users with realtime interactions and scalable mobile backend.",
-      impact: "200+ active users",
-      mockup: "spotme"
-    },
-    {
       title: "Echo",
-      stack: "Tauri 2.x, Rust, React 19, TypeScript, SQLite, TailwindCSS, Whisper STT",
+      year: "2026",
+      stack: "Tauri · Rust · React · SQLite · Whisper",
       summary:
-        "Privacy-first desktop AI meeting assistant (~10MB) with sub-100ms cold starts and lower memory footprint than Electron, including stealth overlay behavior and real-time transcription.",
-      impact: "300+ public-release downloads • 8+ LLM providers",
-      image: asset("/images/echo.png")
+        "A desktop AI assistant that floats over whatever you already have open — drafting replies mid-call, holding a task list in the corner, and driving the mouse and keyboard through routines. Speech runs on-device; replies go through your own provider account. Nothing is metered in between.",
+      metrics: ["~10 MB installed", "sub-100 ms cold start", "8+ LLM providers", "300+ downloads"],
+      art: "echo",
+      href: "https://github.com/KSWORK2001/Echo-releases/releases/latest",
+      hrefLabel: "Releases"
     },
     {
       title: "TokenLess",
-      stack: "Node.js, TypeScript, OpenAI-compatible APIs, CLI",
+      year: "2024",
+      stack: "Node · TypeScript · CLI",
       summary:
-        "HackGT 2024 (2nd place) npm CLI that compresses agent command output through an LLM before forwarding downstream, with universal provider abstraction and enterprise-friendly integration patterns.",
-      impact: "Up to 80% token reduction • 10+ provider backends",
-      image: asset("/images/tokenless.png")
+        "An npm CLI that sits between an agent and its tools, compressing command output through a model before it reaches the context window — while keeping failures verbatim, because a truncated stack trace is worse than no stack trace. Second place at HackGT 2024.",
+      metrics: ["up to 80% fewer tokens", "10+ provider backends", "HackGT 2024 — 2nd"],
+      art: "tokenless",
+      href: "https://github.com/KSWORK2001",
+      hrefLabel: "Source"
     }
   ],
-  certifications: [
+
+  /* Smaller things, kept short on purpose. */
+  alsoBuilt: [
     {
-      title: "PyTorch Essential Training: Deep Learning",
-      issuer: "LinkedIn Learning",
-      focus: "Model architecture and practical neural network development"
+      title: "Agentic Workflow Orchestration",
+      stack: "LangGraph · Python · Postgres",
+      summary:
+        "The engine behind the section above — retrieval, triage, validation, and repair as explicit graph nodes.",
+      metric: ">80% first-pass acceptance"
     },
     {
-      title: "Hackerrank: Software Engineer Intern",
-      issuer: "HackerRank",
-      focus: "Algorithmic problem solving and engineering fundamentals"
+      title: "Real-time Speech Platform",
+      stack: "Whisper · CUDA · XTTS",
+      summary:
+        "GPU-accelerated transcription and voice synthesis, tuned to FP16 and deployed to Azure app services.",
+      metric: "50× lower dispatch latency"
     },
     {
-      title: "Introduction to Prompt Engineering for Generative AI",
-      issuer: "Coursera",
-      focus: "Prompt strategy design for reliable LLM output"
-    },
-    {
-      title: "Advanced NLP with Python for Machine Learning",
-      issuer: "Udemy",
-      focus: "Tokenization, embeddings, and NLP pipeline optimization"
-    },
-    {
-      title: "Cloud Systems Software",
-      issuer: "Academic Certification",
-      focus: "Distributed systems, deployment, and cloud runtime patterns"
-    },
-    {
-      title: "Databricks and Spark ML Workshop Completion",
-      issuer: "Enterprise Internal Program",
-      focus: "Large-scale data processing and ML workflow orchestration"
-    },
-    {
-      title: "GPU Optimization for Inference Pipelines",
-      issuer: "Industry Workshop",
-      focus: "ONNX Runtime acceleration, precision tuning, and CUDA optimization"
-    },
-    {
-      title: "Agentic Systems Design with LangGraph",
-      issuer: "Professional Learning Track",
-      focus: "Deterministic agent graphs, tool selection, and validation layers"
+      title: "SpotMe!",
+      stack: "React Native · Firebase",
+      summary:
+        "A social fitness app that found real users — matching lifters at the same gym for a spot.",
+      metric: "200+ active users"
     }
   ],
-  languages: [
+
+  stack: [
     {
-      name: "English",
-      level: "Native or Bilingual",
-      image: asset("/images/lang-english-placeholder.jpg"),
-      phrases: ["Hello", "Great to connect", "Let us build this"]
+      key: "Models",
+      text: "**Claude for anything agentic** — tool use, parallel calls, extended thinking, prompt caching. Vertex AI Gemini and embeddings where the data already lives in GCP."
     },
     {
-      name: "Hindi",
-      level: "Native or Bilingual",
-      image: asset("/images/lang-hindi-placeholder.jpg"),
-      phrases: ["नमस्ते", "कैसे हो", "शुक्रिया"]
+      key: "Orchestration",
+      text: "**LangGraph and LangChain** for the graph, Pydantic for the contracts between nodes. The graph is deterministic; only the nodes are not."
     },
     {
-      name: "Punjabi",
-      level: "Professional Working",
-      image: asset("/images/lang-punjabi-placeholder.jpg"),
-      phrases: ["ਸਤ ਸ੍ਰੀ ਅਕਾਲ", "ਤੂਸੀ ਕੀਦਾਨ", "ਧਾਨਵਾਦ"]
+      key: "Serving",
+      text: "**Python and FastAPI** by default. .NET Core and C++ where the latency budget made it worth the trouble, with ONNX Runtime and precision tuning on GPU."
     },
     {
-      name: "Spanish",
-      level: "Professional Working",
-      image: asset("/images/lang-spanish-placeholder.jpg"),
-      phrases: ["Hola", "Mucho gusto", "Gracias"]
+      key: "Data",
+      text: "**Postgres with pgvector**, BigQuery, Snowflake, Delta Lake on Databricks. Spark when the job is genuinely big enough to deserve it."
     },
     {
-      name: "French",
-      level: "Learning (thanks, Duolingo)",
-      image: asset("/images/lang-french-placeholder.jpg"),
-      phrases: ["Bonjour", "Comment ça va", "Merci"]
+      key: "Interfaces",
+      text: "**Next.js and React** for the web. Tauri and Rust when it has to be a desktop app that opens instantly."
+    },
+    {
+      key: "Ship",
+      text: "**Docker, GitHub Actions, Azure DevOps**, AWS Lambda and DynamoDB. CI that runs the eval suite, not only the unit tests."
+    },
+    {
+      key: "Spoken",
+      text: "**English and Hindi** natively, Punjabi and Spanish professionally, French badly but improving."
     }
   ],
+
   education: [
-    "Georgia Institute of Technology — MS Computer Science (2025-2026)",
-    "Georgia State University — BS Computer Science (2023-2024)",
-    "Gwinnett Technical College — AAS Computer Programming (2020-2022)"
+    { school: "Georgia Institute of Technology", degree: "MS Computer Science", period: "2025 — 2026" },
+    { school: "Georgia State University", degree: "BS Computer Science", period: "2023 — 2024" },
+    { school: "Gwinnett Technical College", degree: "AAS Computer Programming", period: "2020 — 2022" }
+  ],
+
+  faq: [
+    {
+      q: "Are you authorized to work in the US?",
+      a: "Yes — US citizen. No sponsorship needed, now or later."
+    },
+    {
+      q: "Would you relocate?",
+      a: "Yes. Just not to Arkansas."
+    },
+    {
+      q: "What kind of role are you after?",
+      a: "Senior software or applied AI engineering, on a team that puts agents in front of real users and has to live with the consequences."
+    },
+    {
+      q: "Best way to reach you?",
+      a: "Email. I answer."
+    },
+    {
+      q: "Pineapple on pizza?",
+      a: "No. Non-negotiable."
+    },
+    {
+      q: "Marvel or DC?",
+      a: "DC, and I will take that argument any day of the week."
+    },
+    {
+      q: "Any easter eggs on this site?",
+      a: "One, in the console. Everything you see here is DOM and CSS — no screenshots, no renders — so the inspector is a fair place to check."
+    }
   ]
 };
