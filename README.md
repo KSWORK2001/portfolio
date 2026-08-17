@@ -82,7 +82,14 @@ app/
   page.module.css             # Per-section layout
 components/
   site/                       # Bar, Footer, ScrollFX
-  work/                       # AgentRun, PullRequest, WorkflowMap, ProjectArt
+  work/                       # All the artwork, plus useInView
+                              #   AgentRun      hero, interactive
+                              #   QuotaPanel    Home Depot — Galaxy
+                              #   PullRequest   Capital One — agent-authored PR
+                              #   GateCollapse  AT&T — intervention drop
+                              #   WorkflowMap   the loop — agent graph
+                              #   EvalMatrix    the loop — 420 golden workflows
+                              #   ProjectArt    Echo, TokenLess, Market
   ui/                         # ConsoleEgg
 data/
   profile-data.ts             # All copy and content
@@ -100,6 +107,16 @@ public/
   halt before doing something expensive, so it halts on you. Both outcomes
   are real: approve commits, deny writes nothing. Keep it that way; a gate
   that always approves would be a worse lie than not having one.
+- **Animated artwork waits for the reader.** Charts that fill in before you
+  scroll to them have not shown you anything, so `useInView` gates each one
+  and they animate on arrival. It returns `true` immediately under reduced
+  motion, and has a 3s failsafe — an artwork should never be stuck at zero.
+- **The numbers inside the artwork are illustrative, the claims are not.**
+  Run IDs, ticker prices, the 412/420 eval split and its named failures are
+  invented to depict the kind of system being described. Anything stated as
+  fact — 20×, 95%, mid-400s to under 20, 30+ merged PRs — comes from the
+  résumé. `GateCollapse` shows only the two real numbers for that reason,
+  rather than a smoother five-point curve.
 - `AgentRun` owns its own entrance animation instead of using the shared
   `[data-reveal]` observer, because replaying has to restart it and a class
   applied from outside would not survive the reset. The hidden state is

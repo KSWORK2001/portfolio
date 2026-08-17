@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
 import { AgentRun } from "@/components/work/AgentRun";
+import { EvalMatrix } from "@/components/work/EvalMatrix";
+import { GateCollapse } from "@/components/work/GateCollapse";
 import { EchoArt, MarketArt, TokenLessArt } from "@/components/work/ProjectArt";
 import { PullRequest } from "@/components/work/PullRequest";
+import { QuotaPanel } from "@/components/work/QuotaPanel";
 import { WorkflowMap } from "@/components/work/WorkflowMap";
 import { profile } from "@/data/profile-data";
 import styles from "./page.module.css";
@@ -49,6 +52,13 @@ const ART = {
   echo: EchoArt,
   tokenless: TokenLessArt,
   market: MarketArt
+};
+
+/** Artwork that belongs to a role rather than a project. */
+const ROLE_ART = {
+  quota: QuotaPanel,
+  pr: PullRequest,
+  gate: GateCollapse
 };
 
 const LOOP = [
@@ -142,7 +152,9 @@ export default function HomePage() {
           </h2>
 
           <div className={styles.roles}>
-            {profile.experiences.map((job) => (
+            {profile.experiences.map((job) => {
+              const RoleArt = ROLE_ART[job.art as keyof typeof ROLE_ART];
+              return (
               <article className={styles.role} key={job.company + job.period}>
                 <div className={styles.roleMeta} data-reveal>
                   <p className={styles.rolePeriod}>{job.period}</p>
@@ -160,14 +172,15 @@ export default function HomePage() {
                       <li key={b}>{b}</li>
                     ))}
                   </ul>
-                  {job.art === "pr" && (
+                  {RoleArt && (
                     <div className={styles.roleArt}>
-                      <PullRequest />
+                      <RoleArt />
                     </div>
                   )}
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
 
           <div className={styles.earlier} data-reveal>
@@ -278,6 +291,19 @@ export default function HomePage() {
                 </p>
               </article>
             </div>
+          </div>
+
+          <div className={styles.evalBlock} data-reveal>
+            <div className={styles.evalCopy}>
+              <h3 className={styles.mapTitle}>Every workflow, every night.</h3>
+              <p className={styles.mapCopy}>
+                A pass rate on its own is not evidence — it hides the failures
+                that matter. These three are the kind a percentage would have
+                buried: right steps and the wrong policy, right answer and a
+                skipped gate.
+              </p>
+            </div>
+            <EvalMatrix />
           </div>
         </div>
       </section>

@@ -344,6 +344,16 @@
   box-shadow: inset 3px 0 0 var(--gate);
 }
 
+/* The suite gets the full width — 420 cells need the room, and it is the
+   last thing the dark section says. */
+.evalBlock {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+.evalCopy {
+  max-width: 40rem;
+  margin-bottom: 1.4rem;
+}
+
 /* ── Projects ────────────────────────────────────────────────── */
 
 .project {

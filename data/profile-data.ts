@@ -41,6 +41,7 @@ export const profile = {
       period: "Apr 2026 — Present",
       detail:
         "Agent platform work: getting Claude into the hands of 50+ teams, and building the Go services and control plane that keep model access governed once they have it.",
+      art: "quota",
       bullets: [
         "Drove organization-wide adoption of Claude, owning rollout strategy and implementation across 50+ teams, and partnering directly with Anthropic engineers to benchmark agent capabilities against internal evals.",
         "Built Go services in Vantage, the internal API management platform, integrating Google ADK and Vertex AI model endpoints; extended Galaxy, the control plane governing GPU and inference quota across 10+ GCP projects.",
@@ -70,6 +71,7 @@ export const profile = {
       period: "Oct 2025 — Mar 2026",
       detail:
         "The first enterprise-scale multi-agent orchestration framework at AT&T, running against a customer base of 100M+ — and the evaluation harness that made anyone willing to trust it.",
+      art: "gate",
       bullets: [
         "Cut end-to-end customer support request processing time by 20× for 100M+ customers, architecting the orchestration framework in LangGraph, Python, and Node.",
         "Reduced agent deployment time by 95% by integrating agentic systems with mainframe infrastructure and enterprise APIs, backed by a semantic knowledge graph and vector store.",

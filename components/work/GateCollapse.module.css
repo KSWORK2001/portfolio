@@ -1,0 +1,82 @@
+.chart {
+  width: 100%;
+}
+
+.drop {
+  color: var(--pass-lift);
+}
+
+.body {
+  padding: 1.15rem 1.05rem 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) 5.5rem;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+}
+
+.label {
+  color: var(--tx-on-dark-2);
+}
+
+.track {
+  display: block;
+  height: 22px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+.track i {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  /* Grown from the observer, so the collapse happens while you watch. */
+  transition: width 1.1s var(--ease);
+}
+
+.barGate {
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.55),
+    rgba(245, 158, 11, 0.9)
+  );
+}
+.barPass {
+  background: var(--pass);
+  /* At 4% of the width the bar is a sliver, so it gets a minimum size —
+     otherwise the good outcome reads as a rendering failure. */
+  min-width: 8px;
+}
+
+.valGate {
+  color: var(--gate);
+  text-align: right;
+}
+.valPass {
+  color: var(--pass-lift);
+  text-align: right;
+}
+
+@media (max-width: 620px) {
+  .row {
+    grid-template-columns: 3.6rem minmax(0, 1fr);
+    row-gap: 0.3rem;
+  }
+  .valGate,
+  .valPass {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track i {
+    transition: none;
+  }
+}

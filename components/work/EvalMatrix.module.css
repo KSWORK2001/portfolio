@@ -1,0 +1,105 @@
+.matrix {
+  width: 100%;
+}
+
+.gridWrap {
+  padding: 1.1rem 1.05rem 1rem;
+}
+
+.grid {
+  display: grid;
+  /* 60 × 7 = 420, one cell per workflow. The columns are fractional so
+     the cells grow with the panel instead of leaving a gutter. */
+  grid-template-columns: repeat(60, 1fr);
+  gap: 3px;
+  /* Swept in from the left rather than fading — a suite runs in an
+     order, and the wipe is that order. */
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.5s var(--ease);
+}
+.gridIn {
+  clip-path: inset(0 0 0 0);
+}
+
+.grid i {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 1.5px;
+}
+.cellPass {
+  background: rgba(34, 197, 94, 0.42);
+}
+.cellFail {
+  background: var(--fail);
+  box-shadow: 0 0 0 1px rgba(251, 113, 133, 0.35);
+}
+
+.tally {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--tx-on-dark-2);
+}
+.pass {
+  color: var(--pass-lift);
+}
+.fail {
+  color: var(--fail);
+}
+.sep {
+  opacity: 0.4;
+}
+.rate {
+  margin-left: auto;
+  color: var(--tx-on-dark);
+}
+
+.failures {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0 0.5rem;
+  border-top: 1px solid var(--chrome-line);
+  background: rgba(255, 255, 255, 0.022);
+}
+.failures li {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  gap: 0.9rem;
+  padding: 0.5rem 1.05rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+}
+.fName {
+  color: var(--fail);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fWhy {
+  color: var(--tx-on-dark-2);
+}
+.more .fName {
+  color: var(--tx-on-dark-2);
+  opacity: 0.7;
+}
+
+@media (max-width: 700px) {
+  .grid {
+    /* Fewer, larger cells — at 60 columns on a phone each one is under a
+       pixel wide and the whole thing reads as a smear. */
+    grid-template-columns: repeat(30, 1fr);
+  }
+  .failures li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid {
+    transition: none;
+  }
+}
