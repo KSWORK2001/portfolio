@@ -109,6 +109,13 @@
   letter-spacing: -0.02em;
 }
 
+.rolePlace {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--tx-3);
+  margin-top: 0.25rem;
+}
+
 .roleTitle {
   font-size: clamp(1.3rem, 2.2vw, 1.6rem);
   margin-bottom: 0.6rem;
@@ -142,6 +149,54 @@
   background: var(--tx-3);
 }
 
+/* The receipt for the headline, sitting inside the role that earned it. */
+.roleArt {
+  margin-top: 1.6rem;
+  max-width: 44rem;
+}
+
+/* ── Earlier roles, one line each ────────────────────────────── */
+
+.earlier {
+  margin-top: 2.6rem;
+}
+.earlierLabel {
+  font-family: var(--mono);
+  font-size: 0.71rem;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  color: var(--tx-3);
+  margin-bottom: 1rem;
+}
+.earlierRow {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--edge);
+  align-items: baseline;
+}
+.earlierRow:last-child {
+  border-bottom: 1px solid var(--edge);
+}
+.earlierPeriod {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--tx-3);
+}
+.earlierRole {
+  font-size: 0.95rem;
+  color: var(--tx-2);
+}
+.earlierRole b {
+  color: var(--tx);
+}
+.earlierText {
+  font-size: 0.92rem;
+  color: var(--tx-2);
+}
+
 .edu {
   margin-top: 2.6rem;
   display: grid;
@@ -168,6 +223,36 @@
 .eduSchool {
   color: var(--tx-2);
   font-size: 0.9rem;
+}
+.eduSchool i {
+  font-style: normal;
+  color: var(--tx-3);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+/* ── The statement ───────────────────────────────────────────────
+   One full-width line at display size, with nothing else on screen.
+   It breaks the page's rhythm on purpose, right before the section
+   that spends two thousand words explaining it. */
+
+.statement {
+  background: var(--paper-2);
+  border-block: 1px solid var(--edge);
+  padding-block: clamp(4rem, 11vw, 9rem);
+}
+.statementText {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 5.6vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+.statementText em {
+  font-style: normal;
+  color: var(--tx-3);
 }
 
 /* ── The loop (dark) ─────────────────────────────────────────── */
@@ -547,8 +632,12 @@
   .loop {
     grid-template-columns: minmax(0, 1fr);
   }
-  .eduRow {
+  .eduRow,
+  .earlierRow {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.15rem;
+  }
+  .earlierRow {
+    gap: 0.3rem;
   }
 }

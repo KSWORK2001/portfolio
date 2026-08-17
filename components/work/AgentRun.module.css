@@ -53,29 +53,36 @@
   border-bottom: 0;
 }
 
-/* Held back until the window is on screen, so the run appears to
-   happen while you are watching it. */
-:global(.js) .steps:not(:global(.is-live)) .step {
+/* Held back until the window is on screen, so the run appears to happen
+   while you are watching it. `.live` comes from the component's own
+   state, so replaying can take it away and put it back. */
+/* Scoped to .js so that with scripting off — where `live` can never be
+   set — the run is simply visible rather than a blank window. */
+:global(.js) .steps:not(.live) .step {
   opacity: 0;
   transform: translateY(6px);
 }
-.steps:global(.is-live) .step {
+.live .step {
   animation: stepIn 0.5s var(--ease) backwards;
 }
-.steps:global(.is-live) .step:nth-child(1) {
+.live .step:nth-child(1) {
   animation-delay: 0.05s;
 }
-.steps:global(.is-live) .step:nth-child(2) {
+.live .step:nth-child(2) {
   animation-delay: 0.4s;
 }
-.steps:global(.is-live) .step:nth-child(3) {
+.live .step:nth-child(3) {
   animation-delay: 0.75s;
 }
-.steps:global(.is-live) .step:nth-child(4) {
+.live .step:nth-child(4) {
   animation-delay: 1.25s;
 }
-.steps:global(.is-live) .step:nth-child(5) {
+.live .step:nth-child(5) {
   animation-delay: 1.7s;
+}
+/* The outcome row is a reply to your click, so it lands immediately. */
+.live .step.outcome {
+  animation-delay: 0s;
 }
 @keyframes stepIn {
   from {
@@ -138,10 +145,87 @@
   box-shadow: inset 2px 0 0 var(--gate);
 }
 
-/* The eval card laps this window's bottom-left corner, so the run's
-   summary sits over on the right where nothing covers it. */
-.runFoot {
+/* The last row to arrive, once you have made the call. */
+.outcome {
+  border-top: 1px solid var(--chrome-line);
+}
+
+/* ── The gate ─────────────────────────────────────────────────────
+   The eval card laps this window's bottom-left corner, so everything
+   in here sits over on the right where nothing covers it. */
+
+.gateBar {
+  display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  padding: 0.7rem 0.95rem;
+  border-top: 1px solid var(--chrome-line);
+  background: rgba(245, 158, 11, 0.07);
+}
+
+.gateAsk {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--tx-on-dark-2);
+  text-align: right;
+}
+
+.gateBtns {
+  display: inline-flex;
+  gap: 0.4rem;
+  flex: none;
+}
+
+.gateBtn {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.34rem 0.7rem;
+  border-radius: 7px;
+  border: 1px solid var(--chrome-line);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--tx-on-dark);
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease,
+    transform 0.16s var(--ease);
+}
+.gateBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+.approve {
+  background: var(--pass);
+  border-color: var(--pass);
+  color: #06210f;
+  font-weight: 700;
+}
+.approve:hover {
+  background: var(--pass-lift);
+  border-color: var(--pass-lift);
+}
+.gateBtn:focus-visible {
+  outline: 2px solid var(--pass-lift);
+  outline-offset: 2px;
+}
+
+.replay {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--tx-on-dark-2);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--chrome-line);
+  padding: 0 0 2px;
+  cursor: pointer;
+  flex: none;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+.replay:hover {
+  color: var(--tx-on-dark);
+  border-color: var(--tx-on-dark-2);
 }
 
 /* Sits below and to the left of the run, overlapping it. */
@@ -226,8 +310,11 @@
     inset: auto;
     width: 100%;
   }
-  /* Nothing overlaps it once the card is stacked below. */
-  .runFoot {
-    justify-content: flex-start;
+  /* Nothing overlaps the window once the card is stacked below it. */
+  .gateBar {
+    justify-content: space-between;
+  }
+  .gateAsk {
+    text-align: left;
   }
 }

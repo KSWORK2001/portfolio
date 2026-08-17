@@ -113,3 +113,61 @@ export function TokenLessArt() {
     </figure>
   );
 }
+
+/**
+ * The market analyzer. The chip in the corner is the whole point of the
+ * project: the inference server is on localhost and nothing leaves.
+ */
+const TICKERS = [
+  { sym: "AAPL", price: "241.30", move: "+1.2%", up: true, bars: [3, 4, 6, 5, 7, 6, 9] },
+  { sym: "EURUSD", price: "1.0842", move: "−0.3%", up: false, bars: [8, 7, 5, 6, 4, 5, 3] },
+  { sym: "BTC", price: "68,412", move: "+4.1%", up: true, bars: [2, 4, 3, 6, 5, 8, 9] }
+];
+
+export function MarketArt() {
+  return (
+    <figure className={`win ${styles.market}`}>
+      <div className="win__bar">
+        <span className="chip chip--pass">
+          <span className="dot" />
+          offline
+        </span>
+        <span className="win__title">llama.cpp · localhost:8080</span>
+        <span className="win__end">no egress</span>
+      </div>
+
+      <div className={styles.tickers}>
+        {TICKERS.map((t) => (
+          <p className={styles.ticker} key={t.sym}>
+            <span className={styles.sym}>{t.sym}</span>
+            <span className={styles.price}>{t.price}</span>
+            <span className={t.up ? styles.up : styles.down}>{t.move}</span>
+            <span className={styles.spark} aria-hidden="true">
+              {t.bars.map((h, i) => (
+                <i
+                  key={i}
+                  className={t.up ? styles.barUp : styles.barDown}
+                  style={{ height: `${h * 11}%` }}
+                />
+              ))}
+            </span>
+          </p>
+        ))}
+      </div>
+
+      <div className={styles.sentiment}>
+        <p className={styles.sentLabel}>News sentiment · 412 headlines, parsed locally</p>
+        <span className={styles.sentBar} aria-hidden="true">
+          <i className={styles.sentPos} style={{ width: "62%" }} />
+          <i className={styles.sentNeu} style={{ width: "24%" }} />
+          <i className={styles.sentNeg} style={{ width: "14%" }} />
+        </span>
+        <p className={styles.sentKeys}>
+          <span className={styles.up}>62% positive</span>
+          <span>24% neutral</span>
+          <span className={styles.down}>14% negative</span>
+        </p>
+      </div>
+    </figure>
+  );
+}

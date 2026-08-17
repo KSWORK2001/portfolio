@@ -82,7 +82,7 @@ app/
   page.module.css             # Per-section layout
 components/
   site/                       # Bar, Footer, ScrollFX
-  work/                       # AgentRun, WorkflowMap, ProjectArt — the artwork
+  work/                       # AgentRun, PullRequest, WorkflowMap, ProjectArt
   ui/                         # ConsoleEgg
 data/
   profile-data.ts             # All copy and content
@@ -95,6 +95,18 @@ public/
 
 ## Notes
 
+- **The hero run is the point of the page.** It stops at a billing write
+  and makes the reader approve or deny it — the site argues these systems
+  halt before doing something expensive, so it halts on you. Both outcomes
+  are real: approve commits, deny writes nothing. Keep it that way; a gate
+  that always approves would be a worse lie than not having one.
+- `AgentRun` owns its own entrance animation instead of using the shared
+  `[data-reveal]` observer, because replaying has to restart it and a class
+  applied from outside would not survive the reset. The hidden state is
+  scoped to `html.js` so the run is visible with scripting off.
+- The bar drops the clock when it tightens on scroll. There is not room for
+  both it and the nav at the narrow width, and they collide otherwise. The
+  clock has a fixed width so a two-digit hour cannot shove the nav either.
 - Font variables are set on `<html>`, not `<body>`. `globals.css` composes them
   into `--display` / `--body` / `--mono` on `:root`, and a custom property set
   on `body` is not visible to `:root` — put them on `body` and the whole stack

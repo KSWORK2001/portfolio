@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   gap: 0.85rem;
-  width: min(720px, 100%);
+  width: min(760px, 100%);
   height: 54px;
   padding: 0 0.45rem 0 0.5rem;
   border-radius: 15px;
@@ -30,7 +30,14 @@
 /* Gives ground once you are past the hero. */
 :global(.is-tight) .inner {
   height: 46px;
-  width: min(580px, 100%);
+  width: min(600px, 100%);
+}
+
+/* At the narrower width there is not room for both the clock and the
+   nav, and the nav is what you steer the page with — so the clock is
+   what the bar drops. Without this the two run into each other. */
+:global(.is-tight) .clock {
+  display: none;
 }
 
 .brand {
@@ -91,9 +98,12 @@
   font-size: 0.7rem;
   color: var(--tx-on-dark-2);
   flex: none;
-  /* Reserve the width so the bar does not jump when the clock mounts. */
-  min-width: 5.6rem;
+  /* Fixed, not min-width: it has to hold the widest time it can show
+     ("12:38 PM ATL") so the bar neither jumps when the clock mounts nor
+     grows an hour later and shoves the nav. */
+  width: 6.6rem;
   justify-content: flex-end;
+  white-space: nowrap;
 }
 .clockDot {
   width: 6px;

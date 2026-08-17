@@ -44,29 +44,6 @@ export function ScrollFX() {
       cleanups.push(() => window.clearTimeout(failsafe));
     }
 
-    /* Step feeds only start advancing once you can actually see them, so
-       the run appears to happen while you are watching rather than
-       having already finished before you scrolled down. */
-    const feeds = Array.from(document.querySelectorAll("[data-feed]"));
-    if (feeds.length) {
-      if (!("IntersectionObserver" in window) || reduced) {
-        feeds.forEach((f) => f.classList.add("is-live"));
-      } else {
-        const runFeed = new IntersectionObserver(
-          (entries) => {
-            for (const e of entries) {
-              if (!e.isIntersecting) continue;
-              e.target.classList.add("is-live");
-              runFeed.unobserve(e.target);
-            }
-          },
-          { threshold: 0.3 }
-        );
-        feeds.forEach((f) => runFeed.observe(f));
-        cleanups.push(() => runFeed.disconnect());
-      }
-    }
-
     /* The bar gives ground once you leave the hero. */
     const bar = document.getElementById("bar");
     if (bar) {

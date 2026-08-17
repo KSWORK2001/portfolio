@@ -1,14 +1,34 @@
 import type { ReactNode } from "react";
 import { AgentRun } from "@/components/work/AgentRun";
-import { EchoArt, TokenLessArt } from "@/components/work/ProjectArt";
+import { EchoArt, MarketArt, TokenLessArt } from "@/components/work/ProjectArt";
+import { PullRequest } from "@/components/work/PullRequest";
 import { WorkflowMap } from "@/components/work/WorkflowMap";
 import { profile } from "@/data/profile-data";
 import styles from "./page.module.css";
 
 /** The stack copy leads with the tool, so `**like this**` gets emphasis. */
 function emphasize(text: string): ReactNode[] {
-  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
-    i % 2 === 1 ? <b key={i}>{part}</b> : <span key={i}>{part}</span>
+  return text
+    .split(/\*\*(.+?)\*\*/g)
+    .map((part, i) => (i % 2 === 1 ? <b key={i}>{part}</b> : <span key={i}>{part}</span>));
+}
+
+/** Numbered eyebrow. The index is what gives the page its cadence. */
+function Eyebrow({
+  n,
+  children,
+  onDark
+}: {
+  n: string;
+  children: ReactNode;
+  onDark?: boolean;
+}) {
+  return (
+    <p className={`eyebrow ${onDark ? "eyebrow--on-dark" : ""}`} data-reveal>
+      <span className="eyebrow__n">{n}</span>
+      <span className="rule" />
+      {children}
+    </p>
   );
 }
 
@@ -24,6 +44,12 @@ const DownloadIcon = () => (
     />
   </svg>
 );
+
+const ART = {
+  echo: EchoArt,
+  tokenless: TokenLessArt,
+  market: MarketArt
+};
 
 const LOOP = [
   {
@@ -62,14 +88,14 @@ export default function HomePage() {
               Applied AI engineer
             </p>
             <h1 className={styles.h1} data-reveal>
-              I build agents that check their own work.
+              I teach machines to do my job.
             </h1>
             <p className={styles.sub} data-reveal>
-              Most of what I ship is not the model. It is the layer around it —
-              the retrieval it is allowed to see, the schema its tool calls have
-              to satisfy, and the gate that stops it before it writes to
-              anything that matters. That layer is the reason the systems stay
-              up.
+              An autonomous SWE agent that pulls Jira stories and ships merged
+              pull requests nobody wrote. A Scrum Master that runs itself.
+              Orchestration serving 100M+ customers. The model is never the
+              interesting part — the validation, the evals, and the gate that
+              stops it are.
             </p>
 
             <div className={styles.actions} data-reveal>
@@ -83,8 +109,8 @@ export default function HomePage() {
             </div>
 
             <p className={styles.meta} data-reveal>
-              Atlanta, GA · Senior Applied AI Engineer at The Home Depot · MS CS
-              at Georgia Tech
+              Atlanta, GA · {profile.role} at The Home Depot · MS CS at Georgia
+              Tech
             </p>
           </div>
 
@@ -96,10 +122,7 @@ export default function HomePage() {
 
       {/* ── Now ───────────────────────────────────────────────── */}
       <section className={`wrap ${styles.now}`}>
-        <p className="eyebrow" data-reveal>
-          <span className="rule" />
-          Right now
-        </p>
+        <Eyebrow n="01">Right now</Eyebrow>
         <div className={styles.nowRow}>
           {profile.now.map((item) => (
             <article className={styles.nowCell} key={item.key} data-reveal>
@@ -113,22 +136,23 @@ export default function HomePage() {
       {/* ── Work ──────────────────────────────────────────────── */}
       <section className="sec" id="work">
         <div className="wrap">
-          <p className="eyebrow" data-reveal>
-            <span className="rule" />
-            Where I have worked
-          </p>
+          <Eyebrow n="02">Where I have worked</Eyebrow>
           <h2 className="sec__h sec__h--wide" data-reveal>
             Every role here ended with something in production.
           </h2>
 
           <div className={styles.roles}>
             {profile.experiences.map((job) => (
-              <article className={styles.role} key={job.company} data-reveal>
-                <div className={styles.roleMeta}>
+              <article className={styles.role} key={job.company + job.period}>
+                <div className={styles.roleMeta} data-reveal>
                   <p className={styles.rolePeriod}>{job.period}</p>
                   <p className={styles.roleCompany}>{job.company}</p>
+                  <p className={styles.rolePlace}>
+                    {job.place}
+                    {job.note ? ` · ${job.note}` : ""}
+                  </p>
                 </div>
-                <div className={styles.roleBody}>
+                <div className={styles.roleBody} data-reveal>
                   <h3 className={styles.roleTitle}>{job.role}</h3>
                   <p className={styles.roleDetail}>{job.detail}</p>
                   <ul className={styles.roleList}>
@@ -136,8 +160,26 @@ export default function HomePage() {
                       <li key={b}>{b}</li>
                     ))}
                   </ul>
+                  {job.art === "pr" && (
+                    <div className={styles.roleArt}>
+                      <PullRequest />
+                    </div>
+                  )}
                 </div>
               </article>
+            ))}
+          </div>
+
+          <div className={styles.earlier} data-reveal>
+            <p className={styles.earlierLabel}>Before that</p>
+            {profile.earlier.map((job) => (
+              <div className={styles.earlierRow} key={job.company + job.period}>
+                <span className={styles.earlierPeriod}>{job.period}</span>
+                <span className={styles.earlierRole}>
+                  <b>{job.role}</b>, {job.company}
+                </span>
+                <span className={styles.earlierText}>{job.text}</span>
+              </div>
             ))}
           </div>
 
@@ -146,10 +188,22 @@ export default function HomePage() {
               <div className={styles.eduRow} key={e.school}>
                 <span className={styles.eduPeriod}>{e.period}</span>
                 <span className={styles.eduDegree}>{e.degree}</span>
-                <span className={styles.eduSchool}>{e.school}</span>
+                <span className={styles.eduSchool}>
+                  {e.school} <i>· {e.note}</i>
+                </span>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── The line the whole page turns on ──────────────────── */}
+      <section className={styles.statement}>
+        <div className="wrap">
+          <p className={styles.statementText} data-reveal>
+            The model is the least trustworthy thing in the stack.
+            <em> It gets the least authority.</em>
+          </p>
         </div>
       </section>
 
@@ -157,10 +211,9 @@ export default function HomePage() {
       <section className={styles.dark} id="loop">
         <div className="wrap">
           <div className={styles.darkHead}>
-            <p className="eyebrow eyebrow--on-dark" data-reveal>
-              <span className="rule" />
+            <Eyebrow n="03" onDark>
               How I build
-            </p>
+            </Eyebrow>
             <h2 className="sec__h sec__h--on-dark" data-reveal>
               The model proposes. The system decides.
             </h2>
@@ -201,7 +254,7 @@ export default function HomePage() {
               <article className={styles.note} data-reveal>
                 <h4>It refuses to guess</h4>
                 <p>
-                  Tool arguments are Pydantic models, not free text. A call that
+                  Tool arguments are typed models, not free text. A call that
                   will not validate never reaches the API, and the agent is told
                   exactly which field was wrong so its next attempt is informed
                   rather than random.
@@ -216,10 +269,7 @@ export default function HomePage() {
                   less often.
                 </p>
               </article>
-              <article
-                className={`${styles.note} ${styles.noteGate}`}
-                data-reveal
-              >
+              <article className={`${styles.note} ${styles.noteGate}`} data-reveal>
                 <h4>It is graded, not vibe-checked</h4>
                 <p>
                   Golden workflow datasets run under pytest with a model as
@@ -235,68 +285,54 @@ export default function HomePage() {
       {/* ── Projects ──────────────────────────────────────────── */}
       <section className="sec" id="projects">
         <div className="wrap">
-          <p className="eyebrow" data-reveal>
-            <span className="rule" />
-            Selected work
-          </p>
+          <Eyebrow n="04">Selected work</Eyebrow>
           <h2 className="sec__h sec__h--wide" data-reveal>
             Things I built end to end, and shipped to people who are not me.
           </h2>
 
-          {profile.projects.map((p, i) => (
-            <article
-              className={`${styles.project} ${i % 2 ? styles.projectFlip : ""}`}
-              key={p.title}
-            >
-              <div className={styles.projectCopy} data-reveal>
-                <div className={styles.projectHead}>
-                  <h3 className={styles.projectTitle}>{p.title}</h3>
-                  <span className={styles.projectYear}>{p.year}</span>
+          {profile.projects.map((p, i) => {
+            const Art = ART[p.art as keyof typeof ART];
+            return (
+              <article
+                className={`${styles.project} ${i % 2 ? styles.projectFlip : ""}`}
+                key={p.title}
+              >
+                <div className={styles.projectCopy} data-reveal>
+                  <div className={styles.projectHead}>
+                    <h3 className={styles.projectTitle}>{p.title}</h3>
+                    <span className={styles.projectYear}>{p.year}</span>
+                  </div>
+                  <p className={styles.projectStack}>{p.stack}</p>
+                  <p className={styles.projectSummary}>{p.summary}</p>
+                  <ul className={styles.projectMetrics}>
+                    {p.metrics.map((m) => (
+                      <li key={m}>{m}</li>
+                    ))}
+                  </ul>
+                  <a
+                    className={styles.projectLink}
+                    href={p.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {p.hrefLabel}
+                    <span aria-hidden="true">→</span>
+                  </a>
                 </div>
-                <p className={styles.projectStack}>{p.stack}</p>
-                <p className={styles.projectSummary}>{p.summary}</p>
-                <ul className={styles.projectMetrics}>
-                  {p.metrics.map((m) => (
-                    <li key={m}>{m}</li>
-                  ))}
-                </ul>
-                <a
-                  className={styles.projectLink}
-                  href={p.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {p.hrefLabel}
-                  <span aria-hidden="true">→</span>
-                </a>
-              </div>
 
-              <div className={styles.projectArt} data-reveal>
-                {p.art === "echo" ? <EchoArt /> : <TokenLessArt />}
-              </div>
-            </article>
-          ))}
-
-          <div className={styles.alsoRow}>
-            {profile.alsoBuilt.map((p) => (
-              <article className={styles.also} key={p.title} data-reveal>
-                <h4>{p.title}</h4>
-                <p className={styles.alsoStack}>{p.stack}</p>
-                <p className={styles.alsoSummary}>{p.summary}</p>
-                <p className={styles.alsoMetric}>{p.metric}</p>
+                <div className={styles.projectArt} data-reveal>
+                  <Art />
+                </div>
               </article>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
 
       {/* ── Stack ─────────────────────────────────────────────── */}
       <section className="sec sec--alt" id="stack">
         <div className="wrap">
-          <p className="eyebrow" data-reveal>
-            <span className="rule" />
-            What I reach for
-          </p>
+          <Eyebrow n="05">What I reach for</Eyebrow>
           <h2 className="sec__h sec__h--wide" data-reveal>
             The tools, and what I actually use them for.
           </h2>
@@ -316,10 +352,7 @@ export default function HomePage() {
       <section className="sec">
         <div className={`wrap ${styles.faqGrid}`}>
           <div>
-            <p className="eyebrow" data-reveal>
-              <span className="rule" />
-              The usual questions
-            </p>
+            <Eyebrow n="06">The usual questions</Eyebrow>
             <h2 className="sec__h" data-reveal>
               Asked often enough to answer here.
             </h2>
@@ -368,9 +401,9 @@ export default function HomePage() {
             {profile.email}
           </a>
           <p className={styles.contactMeta} data-reveal>
-            <span>Atlanta, GA</span>
+            <span>{profile.phone}</span>
             <i />
-            <span>US citizen</span>
+            <span>Atlanta, GA · open to relocation</span>
             <i />
             <span>usually back within a day</span>
           </p>

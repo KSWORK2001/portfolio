@@ -164,6 +164,16 @@ p {
   background: var(--ink);
   flex: none;
 }
+/* The section index. Small, but it is what gives the page a cadence
+   rather than just a sequence of headings. */
+.eyebrow__n {
+  color: var(--tx);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.eyebrow--on-dark .eyebrow__n {
+  color: var(--tx-on-dark);
+}
 .eyebrow--on-dark {
   color: var(--tx-on-dark-2);
 }

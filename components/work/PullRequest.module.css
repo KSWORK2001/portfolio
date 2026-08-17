@@ -1,0 +1,81 @@
+.pr {
+  width: 100%;
+}
+
+.add {
+  color: var(--pass-lift);
+}
+.del {
+  color: var(--fail);
+}
+
+.body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--tx-on-dark-2);
+  margin-bottom: 0.75rem;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.14);
+  color: var(--run);
+  font-size: 0.8rem;
+  flex: none;
+}
+
+.handle {
+  color: var(--tx-on-dark);
+}
+
+.bot {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.36rem;
+  border-radius: 4px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: var(--run);
+}
+
+.action {
+  opacity: 0.85;
+}
+
+.title {
+  font-size: 1.12rem;
+  line-height: 1.25;
+  margin-bottom: 0.9rem;
+  color: var(--tx-on-dark);
+}
+
+.checks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.checks li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--tx-on-dark-2);
+}
+.tick {
+  color: var(--pass-lift);
+  flex: none;
+}
