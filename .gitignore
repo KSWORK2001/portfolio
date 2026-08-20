@@ -2,7 +2,7 @@ node_modules
 .next
 out
 *.tsbuildinfo
-release
 dist
 *.log
 .DS_Store
+.vercel

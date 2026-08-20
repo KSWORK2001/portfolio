@@ -2,14 +2,11 @@
   "name": "karan-portfolio",
   "version": "1.0.0",
   "private": true,
-  "main": "electron/main.cjs",
+  "description": "Personal portfolio site — static Next.js.",
   "scripts": {
-    "dev:web": "next dev",
-    "dev": "concurrently \"next dev\" \"wait-on tcp:3000 && electron .\"",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "desktop": "electron .",
-    "build:desktop": "next build && electron-builder"
+    "preview": "npx serve@latest out"
   },
   "dependencies": {
     "next": "^15.5.20",
@@ -20,27 +17,6 @@
     "@types/node": "22.10.6",
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
-    "concurrently": "9.1.2",
-    "electron": "34.0.0",
-    "electron-builder": "25.1.8",
-    "typescript": "5.7.3",
-    "wait-on": "8.0.1"
-  },
-  "build": {
-    "appId": "com.karan.profile",
-    "productName": "KaranProfile",
-    "files": [
-      ".next/**/*",
-      "electron/**/*",
-      "node_modules/**/*",
-      "package.json",
-      "public/**/*"
-    ],
-    "directories": {
-      "output": "release"
-    },
-    "win": {
-      "target": "nsis"
-    }
+    "typescript": "5.7.3"
   }
 }

@@ -1,6 +1,7 @@
 # Karan Shrivastava — portfolio
 
-A static Next.js site, with an Electron shell for packaging it as a desktop app.
+A static Next.js site. No server, no database, no build-time data fetching —
+it exports to plain HTML, CSS, and JavaScript and is hostable anywhere.
 
 ## The design, in one line
 
@@ -26,9 +27,10 @@ Two consequences worth knowing before editing:
 - **Next.js** `15` / **React** `19` / **TypeScript** `5.7` — static export
 - **Bricolage Grotesque** (display), **Public Sans** (body), **JetBrains Mono**
   (eyebrows, chrome, metrics), all via `next/font/google`
-- **Electron** `34` + **electron-builder** `25` for the desktop target
 
-No animation libraries. Motion is a scroll observer and CSS.
+Four devDependencies and three runtime ones. No animation libraries, no UI
+kit, no chart library — the motion is a scroll observer and CSS, and every
+visual is hand-built DOM.
 
 ## Running it
 
@@ -36,13 +38,7 @@ No animation libraries. Motion is a scroll observer and CSS.
 npm install
 ```
 
-Web only:
-
-```bash
-npm run dev:web
-```
-
-Web plus the Electron shell:
+Dev server on `http://localhost:3000`:
 
 ```bash
 npm run dev
@@ -54,16 +50,30 @@ Production build (static export to `out/`):
 npm run build
 ```
 
-Desktop installer into `release/`:
+Serve that build locally to check it before shipping:
 
 ```bash
-npm run build:desktop
+npm run preview
 ```
+
+There is no `start` script: `next start` refuses to run against
+`output: "export"` and tells you to serve the directory instead, which is
+what `preview` does.
 
 ## Deploying
 
-GitHub Actions builds and publishes to Pages on every push to `main`, with
-`NEXT_PUBLIC_BASE_PATH=/portfolio`. To reproduce that build locally:
+The site is fully static and hostable anywhere. Nothing hardcodes a path —
+`basePath` is driven entirely by `NEXT_PUBLIC_BASE_PATH`, so the same commit
+builds correctly for a subpath or for a domain root.
+
+**Vercel** (primary). Import the repo at vercel.com; it auto-deploys on every
+push to `main`. Zero configuration — Next.js is auto-detected, and with
+`NEXT_PUBLIC_BASE_PATH` unset the site builds at the domain root, which is
+what Vercel serves.
+
+**GitHub Pages** (kept as a fallback). GitHub Actions builds and publishes on
+every push to `main` with `NEXT_PUBLIC_BASE_PATH=/portfolio`. Reproduce that
+build locally with:
 
 ```bash
 NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
@@ -71,6 +81,10 @@ NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
 
 Asset URLs go through the `asset()` helper in `data/profile-data.ts` so they
 pick up the base path. Use it for anything you add under `public/`.
+
+Note that `https://kswork2001.github.io/` (no path) is a 404 — there is no
+user-site repo, only `/portfolio/`. The unused `website:` field in
+`profile-data.ts` still points at that root.
 
 ## Structure
 
@@ -93,8 +107,6 @@ components/
   ui/                         # ConsoleEgg
 data/
   profile-data.ts             # All copy and content
-electron/
-  main.cjs                    # Desktop window bootstrap
 public/
   Karan_Shrivastava_resume.pdf
   images/karan-headshot.jpg   # The only photograph on the site
@@ -141,9 +153,6 @@ public/
 
 **Everything renders in Times.** The `next/font` variable classes came off
 `<html>`. See the note above.
-
-**Electron opens a blank window.** Use `npm run dev`, not `npm run desktop`
-alone, so Next starts first. Confirm `http://localhost:3000` is reachable.
 
 **`next build` breaks a running dev server.** They share `.next`. Stop the dev
 server first, or `rm -rf .next` afterwards.
