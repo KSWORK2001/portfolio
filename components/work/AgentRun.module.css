@@ -1,30 +1,9 @@
 .stage {
   position: relative;
-  min-height: 440px;
   padding-top: 1.6rem;
   /* Deep enough that the eval card clears the run window's footer and
      only laps its bottom corner. */
   padding-bottom: 8rem;
-}
-
-/* The document the run is operating on. Paper, so it recedes. */
-.doc {
-  position: absolute;
-  inset: 4% 4% 14% 10%;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--edge);
-  padding: 2.2rem 1.8rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.95rem;
-}
-.docLine {
-  display: block;
-  height: 9px;
-  width: var(--w);
-  border-radius: 3px;
-  background: var(--paper-3);
 }
 
 .run {
@@ -288,9 +267,6 @@
 }
 
 @media (max-width: 620px) {
-  .doc {
-    display: none;
-  }
   .stage {
     padding-top: 0;
     padding-bottom: 0;

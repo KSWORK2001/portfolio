@@ -80,13 +80,6 @@ export function AgentRun() {
 
   return (
     <div className={styles.stage}>
-      {/* The workflow the agent is operating on, sitting underneath. */}
-      <div className={styles.doc} aria-hidden="true">
-        {[72, 94, 58, 86, 45, 78].map((w, i) => (
-          <span key={i} className={styles.docLine} style={{ ["--w" as string]: `${w}%` }} />
-        ))}
-      </div>
-
       <figure className={`win ${styles.run}`}>
         <div className="win__bar">
           {/* Green has to keep meaning "passed", so a denied run reads as
