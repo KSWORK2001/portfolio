@@ -1,0 +1,83 @@
+/* The personal page runs on the same paper and ink as the rest of the
+   site, with one rule relaxed: photographs are allowed on the surface
+   here. Everywhere else an image would break the "colour only inside
+   the machine" rule the site is built on — but a page about a person
+   with no pictures of that person is the problem, not the rule. */
+
+.hero {
+  padding-top: clamp(7rem, 14vw, 10rem);
+  padding-bottom: clamp(2.5rem, 6vw, 4rem);
+}
+
+.h1 {
+  font-size: clamp(2.3rem, 6vw, 4rem);
+  letter-spacing: -0.042em;
+  max-width: 16ch;
+  margin-bottom: 1.4rem;
+}
+
+.intro {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--tx-2);
+  max-width: 40rem;
+}
+
+/* Copy left, photograph right — and when there is no photograph the
+   single column simply takes the width rather than leaving a hole. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+.grid:has(.figure) {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+}
+
+.copy {
+  min-width: 0;
+}
+
+.para {
+  font-size: 1.03rem;
+  color: var(--tx-2);
+  max-width: 38rem;
+  margin-bottom: 1rem;
+}
+
+.figure {
+  margin: 0;
+  position: sticky;
+  top: 6rem;
+}
+
+.photo {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--edge);
+  box-shadow: var(--lift-2);
+}
+
+.caption {
+  margin-top: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--tx-3);
+}
+
+.back {
+  padding-block: clamp(3rem, 7vw, 5rem);
+  border-top: 1px solid var(--edge);
+}
+
+@media (max-width: 860px) {
+  .grid:has(.figure) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .figure {
+    position: static;
+    order: -1;
+    max-width: 26rem;
+  }
+}

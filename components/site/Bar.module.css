@@ -35,10 +35,18 @@
 
 /* At the narrower width there is not room for both the clock and the
    nav, and the nav is what you steer the page with — so the clock is
-   what the bar drops. Without this the two run into each other. */
+   what the bar gives up.
+
+   Animated to zero width rather than display:none on purpose. Toggling
+   display puts the clock back in one frame, but the bar takes 0.35s to
+   widen, so on the way back up the clock reappeared into a bar that was
+   still 600px and sat on top of "Personal". Sharing the bar's duration
+   keeps the two in step at every frame of the transition. */
 :global(.is-tight) .clock {
-  display: none;
+  width: 0;
+  opacity: 0;
 }
+
 
 .brand {
   display: inline-flex;
@@ -49,18 +57,19 @@
   min-width: 0;
 }
 
+/* Was the letters "KS" on a paper tile; now the photo itself. The size
+   and radius are unchanged so the bar's geometry does not move. */
 .mark {
-  display: grid;
-  place-items: center;
   width: 27px;
   height: 27px;
   border-radius: 8px;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  object-fit: cover;
+  /* Holds the square while the photo decodes so the bar does not reflow
+     around it on a cold load. */
+  background: var(--paper-3);
+  /* The crop's corners are a mid grey that dissolves into the chrome
+     behind it. A hairline gives the photo an edge of its own. */
+  border: 1px solid rgba(255, 255, 255, 0.18);
   flex: none;
 }
 
@@ -104,6 +113,8 @@
   width: 6.6rem;
   justify-content: flex-end;
   white-space: nowrap;
+  overflow: hidden;
+  transition: width 0.35s ease, opacity 0.22s ease;
 }
 .clockDot {
   width: 6px;
@@ -164,4 +175,18 @@
   .clockDot {
     animation: none;
   }
+}
+
+/* The Personal link when you are already on that page. */
+.navOn {
+  color: var(--tx-on-dark) !important;
+  font-weight: 700;
+}
+
+/* Five items in a 600px bar leaves about 16px spare, which is enough
+   until a fallback face renders a little wider during font swap and
+   clips "Personal". Closing the gaps slightly at the narrow state costs
+   nothing visually and roughly doubles the margin. */
+:global(.is-tight) .nav {
+  gap: 0.85rem;
 }

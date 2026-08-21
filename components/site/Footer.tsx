@@ -6,9 +6,16 @@ export function Footer() {
     <footer className={styles.foot}>
       <div className={`wrap ${styles.inner}`}>
         <span className={styles.brand}>
-          <span className={styles.mark} aria-hidden="true">
-            KS
-          </span>
+          {/* Same reasoning as the bar: the name is right beside it, so
+              the photo carries no alt text of its own. */}
+          <img
+            className={styles.mark}
+            src={profile.avatar}
+            alt=""
+            width="256"
+            height="256"
+            loading="lazy"
+          />
           <span className={styles.word}>Karan Shrivastava</span>
         </span>
 

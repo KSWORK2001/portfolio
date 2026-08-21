@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Eyebrow } from "@/components/site/Eyebrow";
 import { AgentRun } from "@/components/work/AgentRun";
 import { EvalMatrix } from "@/components/work/EvalMatrix";
 import { GateCollapse } from "@/components/work/GateCollapse";
@@ -14,25 +15,6 @@ function emphasize(text: string): ReactNode[] {
   return text
     .split(/\*\*(.+?)\*\*/g)
     .map((part, i) => (i % 2 === 1 ? <b key={i}>{part}</b> : <span key={i}>{part}</span>));
-}
-
-/** Numbered eyebrow. The index is what gives the page its cadence. */
-function Eyebrow({
-  n,
-  children,
-  onDark
-}: {
-  n: string;
-  children: ReactNode;
-  onDark?: boolean;
-}) {
-  return (
-    <p className={`eyebrow ${onDark ? "eyebrow--on-dark" : ""}`} data-reveal>
-      <span className="eyebrow__n">{n}</span>
-      <span className="rule" />
-      {children}
-    </p>
-  );
 }
 
 const DownloadIcon = () => (

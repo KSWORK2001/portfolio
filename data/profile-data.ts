@@ -7,6 +7,10 @@ export const profile = {
   role: "Senior Software Engineer, AI Integration",
   location: "Atlanta, GA",
   headshot: asset("/images/karan-headshot.jpg"),
+  /* A face-only crop of the same photo. The full frame is 1080x1350 and
+     renders the head about nine pixels tall inside a 27px mark, so the
+     bar and the footer get their own asset rather than a scaled portrait. */
+  avatar: asset("/images/karan-avatar.jpg"),
   resume: asset("/Karan_Shrivastava_resume.pdf"),
   email: "work.karan2001@gmail.com",
   phone: "(770) 710-5235",
