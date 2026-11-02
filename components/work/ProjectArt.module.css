@@ -472,3 +472,562 @@
     transition: none;
   }
 }
+
+/* ── Alpaca ─────────────────────────────────────────────────────
+   A second brand colour, same rule as Echo's green: it lives inside
+   the window and nowhere else. The sidebar is the product — every
+   chat, one local endpoint. */
+
+.alpaca {
+  --brand: #10a37f;
+  --brand-lift: #4fd1a8;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 10rem minmax(0, 1fr);
+}
+
+.alpSide {
+  display: flex;
+  flex-direction: column;
+  gap: 0.14rem;
+  padding: 0.85rem 0.6rem 0.7rem;
+  border-right: 1px solid var(--chrome-line);
+  background: rgba(255, 255, 255, 0.016);
+}
+.alpBrand {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.03em;
+  color: var(--brand-lift);
+  margin: 0.05rem 0.35rem 0.6rem;
+}
+.alpItem {
+  font-family: var(--body);
+  font-size: 0.8rem;
+  text-align: left;
+  padding: 0.42rem 0.55rem;
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--tx-on-dark-2);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+}
+.alpItem:hover {
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--tx-on-dark);
+}
+.alpItemOn {
+  background: rgba(16, 163, 127, 0.13);
+  border-left-color: var(--brand);
+  color: var(--tx-on-dark);
+}
+.alpSideFoot {
+  margin-top: auto;
+  padding: 0.55rem 0.55rem 0;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--tx-on-dark-2);
+  opacity: 0.85;
+}
+
+.alpMain {
+  padding: 0.95rem 1.1rem 0.9rem;
+}
+.alpChips {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+.alpChip {
+  color: var(--brand-lift);
+}
+.alpQ {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--tx-on-dark-2);
+  margin-bottom: 0.55rem;
+  animation: swapIn 0.28s var(--ease);
+}
+.alpA {
+  font-size: 0.9rem;
+  line-height: 1.52;
+  animation: swapIn 0.28s var(--ease);
+}
+.alpA em {
+  font-style: normal;
+  color: var(--brand-lift);
+}
+.alpStatus {
+  display: block;
+  margin-top: 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--brand-lift);
+  animation: swapIn 0.28s var(--ease);
+}
+.alpFoot {
+  display: block;
+  margin-top: 0.28rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--tx-on-dark-2);
+}
+
+/* ── Cellar ─────────────────────────────────────────────────────
+   The only wine is in the name. Warm wood rather than another dark
+   IDE, and amber for the one switch that decides whether the game
+   actually starts. */
+
+.cellar {
+  --wood: #1d1812;
+  --wood-2: #241d14;
+  --amber: #f5a623;
+  width: 100%;
+  background: var(--wood);
+}
+
+.celBody {
+  display: grid;
+  grid-template-columns: 9.6rem minmax(0, 1fr);
+}
+
+.celList {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.45rem;
+  border-right: 1px solid var(--chrome-line);
+  background: rgba(0, 0, 0, 0.14);
+}
+.celItem {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.5rem 0.6rem;
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+.celItem:hover {
+  background: rgba(245, 166, 35, 0.06);
+}
+.celItemOn {
+  background: rgba(245, 166, 35, 0.1);
+  border-left-color: var(--amber);
+}
+.celName {
+  font-size: 0.84rem;
+  color: var(--tx-on-dark);
+}
+.celItemOn .celName {
+  font-weight: 600;
+}
+.celSub {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  color: var(--tx-on-dark-2);
+}
+
+.celDetail {
+  padding: 1rem 1.15rem 0.95rem;
+  background: var(--wood-2);
+  animation: swapIn 0.28s var(--ease);
+}
+.celTitle {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.7rem;
+}
+.celMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.7rem;
+}
+.celChip {
+  color: var(--amber);
+}
+/* The DXVK stance reads as a switch because in the app it is one —
+   here it only reports, one position per bottle. */
+.celDxvk {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.2s ease;
+}
+.celDxvkOn {
+  background: rgba(245, 166, 35, 0.38);
+}
+.celKnob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--tx-on-dark-2);
+  transition: transform 0.2s var(--ease), background 0.2s ease;
+}
+.celDxvkOn .celKnob {
+  transform: translateX(16px);
+  background: var(--amber);
+}
+.celDxvkLabel {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--tx-on-dark-2);
+}
+.celLast {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--amber);
+  margin-bottom: 0.55rem;
+}
+.celNote {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--tx-on-dark-2);
+}
+
+/* ── Avenue ─────────────────────────────────────────────────────
+   A map, a staircase, a price. The route is fixed; the product chip
+   is the only variable, and it moves the fare. */
+
+.avenue {
+  --blue: #4c8dff;
+  --blue-lift: #82b3ff;
+  width: 100%;
+}
+
+.aveMap {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.05rem 1.1rem 0.9rem;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.aveRoute {
+  width: 100%;
+  color: var(--blue);
+  filter: drop-shadow(0 0 7px rgba(76, 141, 255, 0.35));
+}
+.aveLine {
+  stroke: currentColor;
+}
+.avePick,
+.aveDrop {
+  fill: currentColor;
+}
+.aveStops {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+}
+.aveStop {
+  display: grid;
+  grid-template-columns: 0.85rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+}
+.avePin {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 2px solid var(--blue);
+}
+.avePinEnd {
+  border-radius: 2px;
+  background: var(--blue);
+}
+.aveWhere {
+  color: var(--tx-on-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.aveWhen {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--tx-on-dark-2);
+}
+.aveTrip {
+  margin-top: 0.5rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--blue-lift);
+  animation: swapIn 0.28s var(--ease);
+}
+.aveCar {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--tx-on-dark-2);
+}
+
+.aveFoot {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.65rem 1.1rem;
+  border-top: 1px solid var(--chrome-line);
+  background: rgba(255, 255, 255, 0.022);
+}
+.aveBtn {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 0.34rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--chrome-line);
+  background: transparent;
+  color: var(--tx-on-dark-2);
+  cursor: pointer;
+  transition: border-color 0.16s ease, color 0.16s ease, background 0.16s ease;
+}
+.aveBtn:hover {
+  color: var(--tx-on-dark);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.aveBtnOn {
+  border-color: var(--blue);
+  color: var(--blue-lift);
+  background: rgba(76, 141, 255, 0.12);
+}
+
+/* ── EchoHQ ─────────────────────────────────────────────────────
+   Council violet for the verdict, house pass/fail for the stance
+   dots — a stance is a state, not a brand. */
+
+.hqStage {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.hq {
+  --violet: #a78bfa;
+  --violet-lift: #c4b1fd;
+  width: 100%;
+}
+
+.hqSeats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.95rem 1.1rem 0.2rem;
+}
+.hqSeat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  padding: 0.32rem 0.6rem;
+  border-radius: 7px;
+  border: 1px solid var(--chrome-line);
+  color: var(--tx-on-dark);
+  background: rgba(255, 255, 255, 0.028);
+}
+.hqDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.hqFor {
+  background: var(--pass);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.45);
+}
+.hqAgainst {
+  background: var(--fail);
+  box-shadow: 0 0 6px rgba(251, 113, 133, 0.4);
+}
+
+.hqVerdict {
+  margin: 0.75rem 1.1rem 1.05rem;
+  padding: 0.75rem 0.95rem;
+  border-left: 3px solid var(--violet);
+  border-radius: 0 10px 10px 0;
+  background: rgba(167, 139, 250, 0.12);
+  animation: swapIn 0.28s var(--ease);
+}
+.hqCall {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: -0.02em;
+  color: var(--violet-lift);
+}
+.hqNote {
+  margin-top: 0.3rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--tx-on-dark-2);
+}
+
+/* ── Optimize ───────────────────────────────────────────────────
+   Baseline bars never move — that is what makes them the baseline.
+   Verified only grows after the re-bench passes, which is the whole
+   product. */
+
+.opt {
+  --opt-green: #7fb069;
+  width: 100%;
+}
+
+.optBody {
+  padding: 0.95rem 1.1rem 1rem;
+}
+
+.optRow {
+  display: grid;
+  grid-template-columns: 4.6rem minmax(0, 1fr);
+  gap: 0.3rem 0.8rem;
+  align-items: center;
+}
+.optRow + .optRow {
+  margin-top: 0.85rem;
+}
+.optKey {
+  grid-row: span 2;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--tx-on-dark-2);
+}
+.optLine {
+  display: grid;
+  grid-template-columns: 3.6rem minmax(0, 1fr) 2.8rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+.optTag {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tx-on-dark-2);
+  opacity: 0.75;
+}
+.optTrack {
+  display: block;
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.optTrack i {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.55s var(--ease), background 0.35s ease;
+}
+.optFillBase {
+  background: rgba(255, 255, 255, 0.26);
+}
+.optFillNew {
+  background: var(--opt-green);
+  box-shadow: 0 0 8px rgba(127, 176, 105, 0.4);
+}
+.optVal {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--tx-on-dark);
+  text-align: right;
+  animation: swapIn 0.28s var(--ease);
+}
+.optValNew {
+  color: var(--opt-green);
+}
+
+.optPass {
+  color: var(--opt-green);
+}
+
+/* ── The newer five, folded down ─────────────────────────────────
+   Same cliff as the first three: rails and route tiles collapse to
+   rows first, numbers are the last thing to go. */
+
+@media (max-width: 620px) {
+  .alpaca {
+    grid-template-columns: 1fr;
+  }
+  .alpSide {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.6rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--chrome-line);
+  }
+  .alpBrand {
+    margin: 0 0.35rem 0 0;
+  }
+  .alpSideFoot {
+    display: none;
+  }
+  .celBody,
+  .aveMap {
+    grid-template-columns: 1fr;
+  }
+  .celList {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: 0;
+    border-bottom: 1px solid var(--chrome-line);
+  }
+  .celItem {
+    border-left: 0;
+    border-bottom: 2px solid transparent;
+  }
+  .celItemOn {
+    border-left-color: transparent;
+    border-bottom-color: var(--amber);
+  }
+  .aveRoute {
+    max-width: 96px;
+  }
+  .optRow {
+    grid-template-columns: 1fr;
+  }
+  .optKey {
+    grid-row: auto;
+  }
+  .hqSeat {
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alpQ,
+  .alpA,
+  .alpStatus,
+  .celDetail,
+  .aveTrip,
+  .hqVerdict,
+  .optVal {
+    animation: none;
+  }
+  .optTrack i,
+  .hqDot,
+  .celKnob {
+    transition: none;
+  }
+}

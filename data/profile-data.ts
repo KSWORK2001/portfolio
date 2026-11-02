@@ -140,6 +140,86 @@ export const profile = {
       hrefLabel: "Releases"
     },
     {
+      title: "Alpaca",
+      year: "2026",
+      stack: "Python · FastAPI · MLX · vanilla JS",
+      summary:
+        "A local model runtime for Apple Silicon — sort of like Ollama, but better. One gateway supervises the MLX server and speaks both API dialects at once (OpenAI /v1 and Ollama-native), with a chat UI, DuckDuckGo-grounded answers, one-click model switching, and a CLI designed so an AI agent can drive the whole thing from a shell. A playground mode repacks MoE experts onto SSD via mmap so models bigger than RAM still run — slowly, and it says so.",
+      metrics: [
+        "OpenAI + Ollama APIs at once",
+        "agent-first CLI, JSON everywhere",
+        "SSD offload for >RAM models",
+        "35 tok/s warm off a disk-backed MoE"
+      ],
+      art: "alpaca",
+      href: "https://kswork2001.github.io/alpaca-releases/",
+      hrefLabel: "Website"
+    },
+    {
+      title: "Cellar",
+      year: "2026",
+      stack: "Rust · Tauri · React · Wine",
+      summary:
+        "A Wine bottle manager for macOS in the spirit of CrossOver, written from scratch. The engine layer (Wine, DXVK, MoltenVK) is adopted as-is from its official distributors and wired: whole disc sets mount at once with true volume labels, games arrive by zip or plain folder, a UTM bridge runs the installers Wine can't, and saves can live on macOS storage while the game keeps writing to C:. Every installed copy updates itself from a signed feed. The site publishes an honest progress map against CrossOver 25 — 58% weighted, item by item.",
+      metrics: [
+        "signed in-place self-updates",
+        "Windows VM bridge via UTM",
+        "disc sets on D:, E:, F: at once",
+        "58% of CrossOver, in the open"
+      ],
+      art: "cellar",
+      href: "https://kswork2001.github.io/Cellar-releases/",
+      hrefLabel: "Website"
+    },
+    {
+      title: "Avenue",
+      year: "2026",
+      stack: "TypeScript · Next.js 15 · Expo · shared domain core",
+      summary:
+        "A cross-platform ride-hailing app — iOS, Android, and web — with one shared domain core and a built-in city simulation, so every feature works end to end with no backend at all. Fares and surge are computed deterministically from the same core on every platform; rider and driver are two perspectives on one live simulation; GPS, multi-stop trips, promos, and a wallet all run off the engine.",
+      metrics: [
+        "3 platforms, 1 domain core",
+        "zero backend — simulated city",
+        "deterministic fares + surge",
+        "rider and driver modes"
+      ],
+      art: "avenue",
+      href: "https://kswork2001.github.io/avenue-releases/",
+      hrefLabel: "Website"
+    },
+    {
+      title: "Echo HQ",
+      year: "2026",
+      stack: "TypeScript · LLM personas · markdown record",
+      summary:
+        "An AI council with a paper trail. A bench of personas — creative, critic, engineer, product, marketer, finance — debates startup ideas live in a dashboard: ask, watch the arguments, convene for a verdict, bury what dies. The entire history is plain markdown and JSON, so the council's record is readable, diffable, and version-controlled long after the ideas are dead.",
+      metrics: [
+        "7 seats, real stances",
+        "verdicts, not vibes",
+        "graveyard with honor",
+        "everything in markdown"
+      ],
+      art: "council",
+      href: "https://kswork2001.github.io/council-releases/",
+      hrefLabel: "Website"
+    },
+    {
+      title: "Optimize",
+      year: "2026",
+      stack: "Python · Windows · benchmarking",
+      summary:
+        "A hardware-aware PC game optimization engine. It profiles the machine, benchmarks the game, searches for better supported settings, applies only reversible changes, and benchmarks again — closing the gap between console consistency and PC variability by automating the tuning players do by hand. The rule the whole tool is built around: measure before changing anything, and never promise a magic FPS number.",
+      metrics: [
+        "profile → bench → apply → verify",
+        "supported changes only",
+        "reversible by default",
+        "no promised FPS gains"
+      ],
+      art: "optimize",
+      href: "https://github.com/KSWORK2001/Optimize",
+      hrefLabel: "Source"
+    },
+    {
       title: "TokenLess",
       year: "2024",
       stack: "Node · TypeScript · CLI",

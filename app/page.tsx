@@ -3,7 +3,16 @@ import { Eyebrow } from "@/components/site/Eyebrow";
 import { AgentRun } from "@/components/work/AgentRun";
 import { EvalMatrix } from "@/components/work/EvalMatrix";
 import { GateCollapse } from "@/components/work/GateCollapse";
-import { EchoArt, MarketArt, TokenLessArt } from "@/components/work/ProjectArt";
+import {
+  AlpacaArt,
+  AvenueArt,
+  CellarArt,
+  EchoArt,
+  EchoHQArt,
+  MarketArt,
+  OptimizeArt,
+  TokenLessArt
+} from "@/components/work/ProjectArt";
 import { PullRequest } from "@/components/work/PullRequest";
 import { QuotaPanel } from "@/components/work/QuotaPanel";
 import { WorkflowMap } from "@/components/work/WorkflowMap";
@@ -33,7 +42,12 @@ const DownloadIcon = () => (
 const ART = {
   echo: EchoArt,
   tokenless: TokenLessArt,
-  market: MarketArt
+  market: MarketArt,
+  alpaca: AlpacaArt,
+  cellar: CellarArt,
+  avenue: AvenueArt,
+  council: EchoHQArt,
+  optimize: OptimizeArt
 };
 
 /** Artwork that belongs to a role rather than a project. */
