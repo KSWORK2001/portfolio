@@ -234,17 +234,6 @@ export const profile = {
       art: "tokenless",
       href: "https://github.com/KSWORK2001",
       hrefLabel: "Source"
-    },
-    {
-      title: "Financial Market Analyzer",
-      year: "2026",
-      stack: "FastAPI · Next.js · llama.cpp · Docker",
-      summary:
-        "A market intelligence dashboard that never phones home. Equities, FX, crypto, and news sentiment all run through a local llama.cpp inference server with zero cloud dependency, and the whole thing comes up under one docker-compose command.",
-      metrics: ["fully offline", "zero cloud dependency", "one-command deploy"],
-      art: "market",
-      href: "https://github.com/KSWORK2001",
-      hrefLabel: "Source"
     }
   ],
 

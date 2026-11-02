@@ -9,7 +9,6 @@ import {
   CellarArt,
   EchoArt,
   EchoHQArt,
-  MarketArt,
   OptimizeArt,
   TokenLessArt
 } from "@/components/work/ProjectArt";
@@ -42,7 +41,6 @@ const DownloadIcon = () => (
 const ART = {
   echo: EchoArt,
   tokenless: TokenLessArt,
-  market: MarketArt,
   alpaca: AlpacaArt,
   cellar: CellarArt,
   avenue: AvenueArt,
