@@ -1,3 +1,4 @@
+/* Hallmark · part of the Ribbon redesign, full stamp in app/globals.css */
 .matrix {
   width: 100%;
 }
@@ -11,7 +12,7 @@
   /* 60 × 7 = 420, one cell per workflow. The columns are fractional so
      the cells grow with the panel instead of leaving a gutter. */
   grid-template-columns: repeat(60, 1fr);
-  gap: 3px;
+  gap: 4px;
   /* Swept in from the left rather than fading — a suite runs in an
      order, and the wipe is that order. */
   clip-path: inset(0 100% 0 0);
@@ -27,11 +28,11 @@
   border-radius: 1.5px;
 }
 .cellPass {
-  background: rgba(34, 197, 94, 0.42);
+  background: color-mix(in oklch, var(--pass) 42%, transparent);
 }
 .cellFail {
   background: var(--fail);
-  box-shadow: 0 0 0 1px rgba(251, 113, 133, 0.35);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--fail) 35%, transparent);
 }
 
 .tally {
@@ -62,7 +63,7 @@
   margin: 0;
   padding: 0.35rem 0 0.5rem;
   border-top: 1px solid var(--chrome-line);
-  background: rgba(255, 255, 255, 0.022);
+  background: color-mix(in oklch, var(--white) 2.2%, transparent);
 }
 .failures li {
   display: grid;

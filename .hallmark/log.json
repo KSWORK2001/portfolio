@@ -1,0 +1,34 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Long Document (kept)",
+  "theme": "ribbon",
+  "axes": "dark/grotesk-sans/chromatic-amber",
+  "hero": "Stage",
+  "nav": "floating pill",
+  "footer": "kept",
+  "imagery": "the product (built agent runs) and one portrait",
+  "photos": [],
+  "entry": "3D reveal from below the plane",
+  "fingerprint": "ribbon-night-3d-tilt",
+  "sections": [
+   "hero",
+   "now",
+   "work",
+   "statement",
+   "loop",
+   "projects",
+   "stack",
+   "faq",
+   "contact"
+  ],
+  "signature": "the approval gate leaning in 3D over a drawn night field",
+  "waived": [
+   "8"
+  ],
+  "prompt": "portfolio of an applied AI engineer, 3D effects",
+  "date": "2026-11-06"
+ }
+]

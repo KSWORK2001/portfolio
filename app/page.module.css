@@ -1,78 +1,106 @@
-/* ── Hero ────────────────────────────────────────────────────── */
+/* Hallmark · part of the Ribbon redesign, full stamp in app/globals.css */
+/* ── Hero ────────────────────────────────────────────────────────
+   The night field fills the first screen; the head sits on the left
+   and the run leans out of the right-hand side in 3D. */
 
 .hero {
-  padding-top: clamp(8rem, 17vh, 12rem);
-  padding-bottom: clamp(3rem, 7vw, 5rem);
+  position: relative;
+  isolation: isolate;
+  min-height: min(100svh, 980px);
+  display: grid;
+  align-items: center;
+  padding-top: clamp(6.5rem, 12vh, 8.5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  overflow: clip;
+}
+/* Land under the field, so the page below meets a horizon, not an edge. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 16%;
+  z-index: -1;
+  background: linear-gradient(transparent, var(--color-paper));
+  pointer-events: none;
 }
 
 .heroGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: var(--gap-columns);
   align-items: center;
 }
 
 .h1 {
-  font-size: clamp(2.5rem, 5.2vw, 4.15rem);
-  letter-spacing: -0.042em;
+  font-size: clamp(3rem, 6.4vw, 5.6rem);
   line-height: 0.98;
-  margin-bottom: 1.5rem;
-  /* Let the browser even out the rag rather than hard-coding breaks
-     that only look right at one width. */
-  text-wrap: balance;
-  max-width: 15ch;
+  margin-bottom: var(--space-lg);
+  max-width: 11ch;
 }
 
 .sub {
-  font-size: clamp(1.02rem, 1.35vw, 1.16rem);
-  color: var(--tx-2);
-  max-width: 34rem;
-  margin-bottom: 2.1rem;
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  color: var(--color-muted);
+  max-width: 30rem;
+  margin-bottom: 2.2rem;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-bottom: 1.4rem;
+  gap: var(--space-sm);
+  margin-bottom: 2rem;
 }
 
 .meta {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--tx-3);
-  line-height: 1.7;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* At rest the run leans in from the right, so the depth is there
+   before anyone moves a pointer. */
+.heroArt {
+  position: relative;
+  --lean-x: 6deg;
+  --lean-y: -14deg;
 }
 
 /* ── Right now ───────────────────────────────────────────────── */
 
 .now {
-  padding-block: clamp(2rem, 4vw, 3.2rem);
+  padding-block: clamp(2rem, 4vw, 3.5rem);
 }
 
 .nowRow {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--edge);
-  border-block: 1px solid var(--edge);
+  gap: var(--gap-columns);
+  border-top: 1px solid var(--edge);
 }
 
 .nowCell {
-  background: var(--paper);
-  padding: 1.8rem 1.6rem 1.9rem;
-  padding-inline-start: 1.6rem;
-}
-.nowRow > .nowCell:first-child {
-  padding-inline-start: 0;
+  padding-top: 1.8rem;
 }
 .nowCell h3 {
-  font-size: 1.18rem;
-  margin-bottom: 0.5rem;
+  font-size: var(--text-2xl);
+  margin-bottom: 0.7rem;
 }
 .nowCell p {
-  font-size: 0.94rem;
-  color: var(--tx-2);
+  font-size: 0.98rem;
+  color: var(--color-muted);
+}
+.nowCell:nth-child(2) {
+  transition-delay: 0.12s;
+}
+.nowCell:nth-child(3) {
+  transition-delay: 0.24s;
 }
 
 /* ── Work ────────────────────────────────────────────────────── */
@@ -83,59 +111,57 @@
 
 .role {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: clamp(1rem, 3vw, 2.5rem);
-  padding: 2rem 0;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: var(--gap-columns);
+  padding: 2.6rem 0;
   border-bottom: 1px solid var(--edge);
 }
 
 .roleMeta {
   position: sticky;
-  top: 6rem;
+  top: 6.5rem;
   align-self: start;
 }
 .rolePeriod {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--tx-3);
-  margin-bottom: 0.3rem;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.4rem;
 }
 .roleCompany {
   font-family: var(--display);
-  font-size: 1.02rem;
-  font-weight: 700;
+  font-size: var(--text-xl);
+  font-weight: 500;
   letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .rolePlace {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: var(--tx-3);
-  margin-top: 0.25rem;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  margin-top: 0.3rem;
 }
 
 .roleTitle {
-  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
-  margin-bottom: 0.6rem;
+  font-size: var(--text-title);
+  margin-bottom: 0.7rem;
 }
 .roleDetail {
-  font-size: 1rem;
-  color: var(--tx-2);
+  font-size: 1.05rem;
+  color: var(--color-ink-2);
   max-width: 44rem;
 }
 .roleList {
   list-style: none;
-  margin: 1.1rem 0 0;
+  margin: 1.2rem 0 0;
   padding: 0;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.7rem;
   max-width: 44rem;
 }
 .roleList li {
-  font-size: 0.92rem;
-  color: var(--tx-2);
+  font-size: 0.95rem;
+  color: var(--color-muted);
   padding-left: 1.1rem;
   position: relative;
 }
@@ -143,35 +169,32 @@
   content: "";
   position: absolute;
   left: 0;
-  top: 0.66em;
-  width: 4px;
+  top: 0.7em;
+  width: 5px;
   height: 1px;
-  background: var(--tx-3);
+  background: var(--color-accent);
 }
 
-/* The receipt for the headline, sitting inside the role that earned it. */
 .roleArt {
-  margin-top: 1.6rem;
+  margin-top: 1.8rem;
   max-width: 44rem;
 }
 
 /* ── Earlier roles, one line each ────────────────────────────── */
 
 .earlier {
-  margin-top: 2.6rem;
+  margin-top: 3rem;
 }
 .earlierLabel {
-  font-family: var(--mono);
-  font-size: 0.71rem;
-  letter-spacing: 0.19em;
-  text-transform: uppercase;
-  color: var(--tx-3);
-  margin-bottom: 1rem;
+  font-family: var(--display);
+  font-size: var(--text-xl);
+  color: var(--color-ink);
+  margin-bottom: var(--space-md);
 }
 .earlierRow {
   display: grid;
-  grid-template-columns: 140px minmax(0, 0.9fr) minmax(0, 1.4fr);
-  gap: clamp(1rem, 2.5vw, 2rem);
+  grid-template-columns: 160px minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: var(--gap-columns);
   padding: 1.1rem 0;
   border-top: 1px solid var(--edge);
   align-items: baseline;
@@ -180,190 +203,205 @@
   border-bottom: 1px solid var(--edge);
 }
 .earlierPeriod {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  color: var(--tx-3);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
 }
 .earlierRole {
-  font-size: 0.95rem;
-  color: var(--tx-2);
+  font-size: 0.97rem;
+  color: var(--color-muted);
 }
 .earlierRole b {
-  color: var(--tx);
+  color: var(--color-ink);
+  font-weight: 500;
 }
 .earlierText {
-  font-size: 0.92rem;
-  color: var(--tx-2);
+  font-size: 0.94rem;
+  color: var(--color-muted);
 }
 
 .edu {
-  margin-top: 2.6rem;
+  margin-top: 3rem;
   display: grid;
-  gap: 0;
 }
 .eduRow {
   display: grid;
-  grid-template-columns: 140px minmax(0, 1fr) auto;
-  gap: 1rem;
-  padding: 0.85rem 0;
+  grid-template-columns: 160px minmax(0, 1fr) auto;
+  gap: var(--gap-columns);
+  padding: 0.95rem 0;
   border-bottom: 1px solid var(--edge);
   align-items: baseline;
-  font-size: 0.93rem;
+  font-size: 0.97rem;
 }
 .eduPeriod {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  color: var(--tx-3);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
 }
 .eduDegree {
-  font-weight: 700;
+  font-weight: 500;
 }
 .eduSchool {
-  color: var(--tx-2);
-  font-size: 0.9rem;
+  color: var(--color-muted);
+  font-size: 0.94rem;
 }
 .eduSchool i {
   font-style: normal;
-  color: var(--tx-3);
-  font-family: var(--mono);
-  font-size: 0.72rem;
 }
 
 /* ── The statement ───────────────────────────────────────────────
-   One full-width line at display size, with nothing else on screen.
-   It breaks the page's rhythm on purpose, right before the section
-   that spends two thousand words explaining it. */
+   One line at display size. Where the browser can tie animation to
+   scroll, it rises off the floor and stands up as you reach it. */
 
 .statement {
-  background: var(--paper-2);
-  border-block: 1px solid var(--edge);
-  padding-block: clamp(4rem, 11vw, 9rem);
+  padding-block: var(--section-gap-l);
+  perspective: 900px;
+  overflow: clip;
 }
 .statementText {
   font-family: var(--display);
-  font-weight: 700;
-  font-size: clamp(2rem, 5.6vw, 4.4rem);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  max-width: 20ch;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6.8vw, 6rem);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  max-width: 18ch;
   text-wrap: balance;
+  transform-origin: 50% 100%;
 }
-.statementText em {
-  font-style: normal;
-  color: var(--tx-3);
+.statementText span {
+  color: var(--color-accent);
+}
+@supports (animation-timeline: view()) {
+  .statementText {
+    animation: standUp linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 45%;
+  }
+}
+@keyframes standUp {
+  from {
+    opacity: 0;
+    transform: translateY(30%) rotateX(62deg) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* ── The loop (dark) ─────────────────────────────────────────── */
+/* ── The loop ────────────────────────────────────────────────── */
 
 .dark {
-  background: var(--ink);
-  color: var(--tx-on-dark);
-  padding-block: clamp(4.5rem, 10vw, 8rem);
+  position: relative;
+  background: var(--color-band);
+  color: var(--color-ink);
+  border-block: 1px solid var(--edge);
+  padding-block: var(--section-gap);
 }
 
 .darkHead {
   max-width: 46rem;
-  margin-bottom: clamp(2.5rem, 5vw, 3.8rem);
+  margin-bottom: var(--space-2xl);
 }
 
 .loop {
   list-style: none;
-  margin: 0 0 clamp(2.5rem, 5vw, 3.6rem);
+  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
   padding: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--chrome-line);
-  border-block: 1px solid var(--chrome-line);
+  gap: var(--gap-columns);
+  perspective: 1000px;
 }
 .loopStep {
-  background: var(--ink);
-  padding: 1.4rem 1.2rem 1.5rem;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.45rem;
   align-content: start;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--edge-2);
+}
+.loopStep:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.loopStep:nth-child(3) {
+  transition-delay: 0.2s;
+}
+.loopStep:nth-child(4) {
+  transition-delay: 0.3s;
 }
 .loopN {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--pass);
-  letter-spacing: 0.1em;
+  font-family: var(--display);
+  font-size: var(--text-3xl);
+  line-height: 1;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.4rem;
 }
 .loopStep b {
   font-family: var(--display);
-  font-size: 1.06rem;
+  font-weight: 500;
+  font-size: var(--text-lg);
   letter-spacing: -0.02em;
 }
 .loopStep p {
-  font-size: 0.87rem;
-  color: var(--tx-on-dark-2);
+  font-size: 0.92rem;
+  color: var(--color-muted);
 }
 
 .mapGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  gap: clamp(1.4rem, 3vw, 2.4rem);
+  gap: var(--gap-columns);
   align-items: start;
 }
 
 .mapTitle {
-  font-size: 1.3rem;
-  margin-bottom: 0.55rem;
+  font-size: var(--text-2xl);
+  margin-bottom: 0.6rem;
 }
 .mapCopy {
-  font-size: 0.93rem;
-  color: var(--tx-on-dark-2);
+  font-size: 0.98rem;
+  color: var(--color-muted);
   max-width: 34rem;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .notes {
   display: grid;
-  gap: 1px;
-  background: var(--chrome-line);
-  border: 1px solid var(--chrome-line);
-  border-radius: 14px;
-  overflow: hidden;
+  border-top: 1px solid var(--edge-2);
 }
 .note {
-  background: var(--chrome);
-  padding: 1.25rem 1.35rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--edge-2);
 }
 .note h4 {
-  font-size: 1rem;
-  margin-bottom: 0.4rem;
+  font-size: var(--text-lg);
+  margin-bottom: 0.45rem;
 }
 .note p {
-  font-size: 0.89rem;
-  color: var(--tx-on-dark-2);
+  font-size: 0.94rem;
+  color: var(--color-muted);
 }
-.noteGate {
-  background: #1a1410;
-  box-shadow: inset 3px 0 0 var(--gate);
+.noteGate h4 {
+  color: var(--color-accent);
 }
 
-/* The suite gets the full width — 420 cells need the room, and it is the
-   last thing the dark section says. */
 .evalBlock {
-  margin-top: clamp(2.5rem, 5vw, 4rem);
+  margin-top: clamp(3rem, 6vw, 5rem);
 }
 .evalCopy {
   max-width: 40rem;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.6rem;
 }
 
 /* ── Projects ────────────────────────────────────────────────── */
 
 .project {
   display: grid;
-  /* Weighted toward the artwork — all three panels are interactive, so
-     they need room to be obviously touchable rather than decorative. */
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: var(--gap-columns);
   align-items: center;
-  padding-block: clamp(2.5rem, 5vw, 4rem);
+  padding-block: clamp(3rem, 6vw, 5rem);
   border-top: 1px solid var(--edge);
 }
 .projectFlip .projectCopy {
@@ -373,104 +411,66 @@
 .projectHead {
   display: flex;
   align-items: baseline;
-  gap: 0.8rem;
-  margin-bottom: 0.35rem;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xs);
 }
 .projectTitle {
-  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-size: clamp(2rem, 3.6vw, 3rem);
 }
 .projectYear {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--tx-3);
-  letter-spacing: 0.1em;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
 }
 .projectStack {
-  font-family: var(--mono);
-  font-size: 0.73rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--tx-3);
-  margin-bottom: 1rem;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  margin-bottom: var(--space-md);
 }
 .projectSummary {
-  font-size: 1rem;
-  color: var(--tx-2);
+  font-size: 1.03rem;
+  color: var(--color-ink-2);
   max-width: 34rem;
 }
 
 .projectMetrics {
   list-style: none;
-  margin: 1.3rem 0 1.4rem;
+  margin: 1.4rem 0 1.6rem;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 .projectMetrics li {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.02em;
-  padding: 0.28rem 0.6rem;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: 0.3rem var(--space-sm);
   border: 1px solid var(--edge-2);
-  border-radius: 6px;
-  color: var(--tx-2);
+  border-radius: var(--radius-pill);
+  color: var(--color-ink-2);
+  font-variant-numeric: tabular-nums;
 }
 
 .projectLink {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 0.93rem;
-  font-weight: 700;
-  text-decoration: none;
-  border-bottom: 1px solid var(--edge-2);
-  padding-bottom: 2px;
-  transition: gap 0.18s var(--ease), border-color 0.18s ease;
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklch, var(--color-accent) 40%, transparent);
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color var(--dur-short) ease;
 }
 .projectLink:hover {
-  gap: 0.75rem;
-  border-color: var(--ink);
+  text-decoration-color: var(--color-accent);
+}
+.projectLink:active {
+  opacity: 0.8;
 }
 
-.alsoRow {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--edge);
-  border-top: 1px solid var(--edge);
-  margin-top: clamp(2rem, 4vw, 3rem);
-}
-.also {
-  background: var(--paper);
-  padding: 1.7rem 1.4rem 1.8rem;
-  padding-inline-start: 1.4rem;
-}
-.alsoRow > .also:first-child {
-  padding-inline-start: 0;
-}
-.also h4 {
-  font-size: 1.08rem;
-  margin-bottom: 0.3rem;
-}
-.alsoStack {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--tx-3);
-  margin-bottom: 0.7rem;
-}
-.alsoSummary {
-  font-size: 0.91rem;
-  color: var(--tx-2);
-  margin-bottom: 0.8rem;
-}
-.alsoMetric {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--tx);
-  font-weight: 500;
+.projectArt {
+  min-width: 0;
 }
 
 /* ── FAQ ─────────────────────────────────────────────────────── */
@@ -478,7 +478,7 @@
 .faqGrid {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: clamp(2rem, 5vw, 4rem);
+  gap: var(--gap-columns);
   align-items: start;
 }
 
@@ -492,23 +492,31 @@
 .faq summary {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1.05rem 0;
-  font-size: 1rem;
-  font-weight: 700;
+  gap: var(--space-md);
+  padding: 1.2rem 0;
+  font-family: var(--display);
+  font-size: var(--text-lg);
+  font-weight: 400;
   cursor: pointer;
   list-style: none;
+  transition: color var(--dur-short) ease;
+}
+.faq summary:hover {
+  color: var(--color-accent);
+}
+.faq summary:active {
+  opacity: 0.8;
 }
 .faq summary::-webkit-details-marker {
   display: none;
 }
 
-/* A plus that becomes a minus. Two bars, one of which rotates away. */
+/* A plus that becomes a minus. */
 .faqSign {
   position: relative;
   margin-left: auto;
-  width: 11px;
-  height: 11px;
+  width: 12px;
+  height: 12px;
   flex: none;
 }
 .faqSign::before,
@@ -517,8 +525,8 @@
   position: absolute;
   inset: 50% 0 auto 0;
   height: 1.5px;
-  background: var(--tx-2);
-  transition: transform 0.24s var(--ease);
+  background: currentColor;
+  transition: transform var(--dur-long) var(--ease-out);
 }
 .faqSign::after {
   transform: rotate(90deg);
@@ -528,63 +536,60 @@
 }
 
 .faq p {
-  padding-bottom: 1.15rem;
-  font-size: 0.96rem;
-  color: var(--tx-2);
+  padding-bottom: 1.3rem;
+  font-size: 0.98rem;
+  color: var(--color-muted);
   max-width: 42rem;
 }
 
 /* ── Contact ─────────────────────────────────────────────────── */
 
 .contact {
-  background: var(--paper-2);
+  position: relative;
   border-top: 1px solid var(--edge);
-  padding-block: clamp(4.5rem, 9vw, 7rem);
+  padding-block: clamp(5rem, 10vw, 8rem);
 }
 .contactInner {
-  text-align: center;
   display: grid;
-  justify-items: center;
-  gap: 1.1rem;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  gap: var(--gap-columns);
+  align-items: center;
 }
-/* The only photograph on the site, and small on purpose — it is here so
-   you know who you would be emailing, not as a hero. */
+.portraitWrap {
+  max-width: 360px;
+}
 .portrait {
-  width: 76px;
-  height: 76px;
-  border-radius: 14px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-card);
   object-fit: cover;
   object-position: 50% 22%;
-  border: 1px solid var(--edge);
-  box-shadow: var(--lift-1);
-  margin-bottom: 0.4rem;
+  box-shadow: var(--shadow-panel);
 }
 
+.contactBody {
+  display: grid;
+  justify-items: start;
+  gap: 1.3rem;
+}
 .contactH {
-  font-size: clamp(2.1rem, 5vw, 3.4rem);
-  letter-spacing: -0.038em;
+  font-size: var(--text-display-s);
 }
 .contactP {
-  color: var(--tx-2);
+  color: var(--color-muted);
+  font-size: var(--text-lead);
   max-width: 32rem;
 }
 .contactMeta {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  align-items: center;
-  gap: 0.85rem;
+  gap: 0.4rem 1.4rem;
   flex-wrap: wrap;
-  justify-content: center;
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  color: var(--tx-3);
-  margin-top: 0.2rem;
-}
-.contactMeta i {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--tx-3);
-  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
 }
 
 /* ── Responsive ──────────────────────────────────────────────── */
@@ -593,8 +598,16 @@
   .heroGrid,
   .mapGrid,
   .project,
-  .faqGrid {
+  .faqGrid,
+  .contactInner {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .hero {
+    min-height: 0;
+  }
+  .heroArt {
+    --lean-x: 0deg;
+    --lean-y: 0deg;
   }
   .projectFlip .projectCopy {
     order: 0;
@@ -605,51 +618,26 @@
   }
   .roleMeta {
     position: static;
-    display: flex;
-    align-items: baseline;
-    gap: 0.8rem;
-  }
-  .rolePeriod {
-    margin-bottom: 0;
   }
   .loop {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .alsoRow {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-  .also {
-    padding-inline: 0;
-    border-bottom: 1px solid var(--edge);
-  }
-  .alsoRow > .also:last-child {
-    border-bottom: 0;
-  }
 }
 
 @media (max-width: 700px) {
-  .nowRow {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-  .nowCell {
-    padding: 1.4rem 0;
-    padding-inline-start: 0;
-    border-bottom: 1px solid var(--edge);
-  }
-  .nowRow > .nowCell:last-child {
-    border-bottom: 0;
-  }
+  .nowRow,
   .loop {
     grid-template-columns: minmax(0, 1fr);
   }
   .eduRow,
   .earlierRow {
     grid-template-columns: minmax(0, 1fr);
-    gap: 0.15rem;
-  }
-  .earlierRow {
     gap: 0.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statementText {
+    animation: none;
   }
 }

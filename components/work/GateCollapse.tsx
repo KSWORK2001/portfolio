@@ -31,7 +31,7 @@ export function GateCollapse() {
         <div className={styles.row}>
           <span className={styles.label}>before</span>
           <span className={styles.track} aria-hidden="true">
-            <i className={styles.barGate} style={{ width: inView ? "100%" : "0%" }} />
+            <i className={styles.barGate} style={{ transform: `scaleX(${inView ? 1 : 0})` }} />
           </span>
           <span className={styles.valGate}>mid-400s</span>
         </div>
@@ -41,7 +41,7 @@ export function GateCollapse() {
           <span className={styles.track} aria-hidden="true">
             <i
               className={styles.barPass}
-              style={{ width: inView ? "4.1%" : "0%" }}
+              style={{ transform: `scaleX(${inView ? 0.041 : 0})` }}
             />
           </span>
           <span className={styles.valPass}>under 20</span>

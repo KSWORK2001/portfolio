@@ -1,110 +1,94 @@
-/* ───────────────────────────────────────────────────────────────
-   Karan Shrivastava — portfolio
+/* Hallmark · shape: kept (Long Document) · genre: atmospheric · theme: Ribbon (deal 3/3, seed portfolio-applied-engineer-who-76de·780599fd·2026-11-06·r0) · redesign: full
+ * hero: Stage · nav: floating pill, wordmark and one action · footer: kept · imagery: the product (built agent runs) and one portrait · signature: the approval gate, a machined panel tilting in 3D over a drawn night field · ribbon: two-in-the-morning
+ * axes: dark/grotesk-sans/chromatic-amber · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R3 V4 · weakest: R, the work section is still long rows of bullets; kept because the words are the owner's */
+/* Hallmark · waive 8 · redesign: full, every section kept · the section order is the owner's content sequence, kept in a new composition */
+/* Hallmark · reworded "An autonomous SWE agent that pulls Jira stories…" (43 words) to "The model is never the point. The gate that stops it is." · 58 names the hero paragraph */
+/* Hallmark · dropped eyebrows "Applied AI engineer", "Right now", "Where I have worked", "How I build", "Selected work", "What I reach for", "The usual questions" · 54 names them; each heading below already says it */
+@import url("./tokens.css");
+@import url("./base.css");
 
-   One rule holds the whole page together: the page is paper and
-   ink, and colour only appears inside the machine. Nothing on the
-   surface is tinted — no gradients, no glows, no accent headings.
-   The only saturated pixels on the site live inside the dark
-   window chrome, where they mean something: green passed, amber
-   is waiting on a human, red failed, blue is still running.
-
-   So when you scroll, the only things that light up are his
-   systems actually running. That is the argument the page makes.
-   ─────────────────────────────────────────────────────────────── */
-
+/* The page used to be paper with colour only inside the machine. It is
+   now the night the machine runs in: one ground, one lit amber, and the
+   state colours still only ever inside a panel. */
 :root {
-  /* Surface: warm bone, not white. Paper takes ink better than
-     screen-white does, and it stops the page reading as a dashboard. */
-  --paper: #eceae5;
-  --paper-2: #e5e2db;
-  --paper-3: #d8d4cb;
+  --white: oklch(99% 0.005 85);
+  --black: oklch(4% 0.005 258);
 
-  /* Window chrome. Warm near-black so it sits on bone without
-     going blue, which is what makes dark-on-light look cheap. */
-  --ink: #14110e;
-  --chrome: #1c1815;
-  --chrome-2: #26211c;
-  --chrome-line: rgba(255, 255, 255, 0.09);
+  /* State colours. Inside panels only; on the ground they are a bug. */
+  --pass: oklch(72% 0.19 150);
+  --pass-lift: oklch(87% 0.13 150);
+  --gate: var(--color-accent);
+  --run: oklch(78% 0.13 230);
+  --fail: oklch(72% 0.17 10);
 
-  /* State colours. These are only ever used inside .win — never on
-     the paper. If one of these shows up on the surface, it is a bug. */
-  --pass: #22c55e;
-  --pass-lift: #86efac;
-  --gate: #f59e0b;
-  --run: #38bdf8;
-  --fail: #fb7185;
+  /* Artwork brand marks, one each, lifted out of the components. */
+  --art-blue: oklch(64% 0.18 260);
+  --art-blue-lift: oklch(76% 0.12 260);
+  --art-violet: oklch(70% 0.16 295);
+  --art-violet-lift: oklch(82% 0.1 295);
+  --art-teal: oklch(62% 0.13 170);
+  --art-mint: oklch(78% 0.13 170);
+  --art-moss: oklch(70% 0.1 135);
+  --art-amber: oklch(78% 0.16 75);
+  --art-ink-green: oklch(22% 0.05 150);
+  --art-deep-1: oklch(23% 0.012 258);
+  --art-deep-2: oklch(21% 0.014 258);
+  --art-deep-3: oklch(24% 0.02 150);
+  --art-deep-4: oklch(20% 0.014 258);
+  --art-deep-5: oklch(18% 0.014 258);
 
-  --tx: #14110e;
-  --tx-2: #55504a; /* 6.6:1 on paper */
-  --tx-3: #635d55; /* 5.4:1 on paper — small mono caps need >4.5 */
-  --tx-on-dark: #eae7e1;
-  --tx-on-dark-2: #a09a90;
-
-  --edge: rgba(20, 17, 14, 0.11);
-  --edge-2: rgba(20, 17, 14, 0.18);
+  /* The old names, kept so every component reads the new night. */
+  --paper: var(--color-paper);
+  --paper-2: var(--color-paper-2);
+  --paper-3: var(--color-paper-3);
+  --ink: var(--color-ink);
+  --chrome: oklch(17.5% 0.022 258);
+  --chrome-2: oklch(21% 0.022 258);
+  --chrome-line: color-mix(in oklch, var(--white) 8%, transparent);
+  --tx: var(--color-ink);
+  --tx-2: var(--color-muted);
+  --tx-3: var(--color-muted);
+  --tx-on-dark: var(--color-ink);
+  --tx-on-dark-2: var(--color-muted);
+  --edge: var(--color-rule);
+  --edge-2: oklch(34% 0.022 258);
 
   --display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  --mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
+  --mono: var(--font-mono), ui-monospace, monospace;
 
-  /* Elevation, tuned for dark chrome hovering over bone. */
-  --lift-1: 0 1px 2px rgba(20, 17, 14, 0.07), 0 6px 16px -6px rgba(20, 17, 14, 0.16);
-  --lift-2: 0 1px 2px rgba(20, 17, 14, 0.08), 0 10px 28px -8px rgba(20, 17, 14, 0.2),
-    0 28px 68px -18px rgba(20, 17, 14, 0.26);
+  --lift-1: var(--shadow-part);
+  --lift-2: var(--shadow-panel);
 
-  --wrap: 1140px;
+  --wrap: 1180px;
+  --container: var(--wrap);
   --pad: clamp(1.15rem, 4vw, 2.5rem);
-  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+  --ease: var(--ease-out);
 }
 
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  background: var(--paper);
+  background: var(--color-paper);
 }
 
 body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--tx);
-  font-family: var(--body);
   font-size: 1.0625rem;
-  line-height: 1.62;
+  line-height: 1.6;
+  color: var(--color-ink);
   font-synthesis-weight: none;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
 }
 
-img,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
-a {
-  color: inherit;
-}
-
-h1,
-h2,
-h3,
 h4 {
+  margin: 0;
   font-family: var(--display);
-  font-weight: 700;
-  margin: 0;
-  letter-spacing: -0.028em;
-  line-height: 1.06;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
-
-p {
-  margin: 0;
+h3 {
+  font-weight: 500;
 }
 
 .wrap {
@@ -115,11 +99,11 @@ p {
 }
 
 .sec {
-  padding-block: clamp(4.5rem, 10vw, 8rem);
+  position: relative;
+  padding-block: var(--section-gap);
 }
-
 .sec--alt {
-  background: var(--paper-2);
+  background: var(--color-paper-2);
 }
 
 .skip {
@@ -127,126 +111,99 @@ p {
   left: -9999px;
   top: 0;
   background: var(--chrome);
-  color: var(--tx-on-dark);
-  padding: 0.7rem 1rem;
+  color: var(--color-ink);
+  padding: 0.7rem var(--space-md);
   border-radius: 0 0 10px 0;
-  z-index: 999;
+  z-index: var(--z-modal);
 }
 .skip:focus {
   left: 0;
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--color-focus);
   outline-offset: 3px;
   border-radius: 4px;
-}
-
-/* ── Eyebrow ─────────────────────────────────────────────────────
-   Mono, letterspaced, with a short rule. The rule is ink, not an
-   accent colour — that restraint is the whole point. */
-
-.eyebrow {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-family: var(--mono);
-  font-size: 0.71rem;
-  font-weight: 500;
-  letter-spacing: 0.19em;
-  text-transform: uppercase;
-  color: var(--tx-3);
-  margin-bottom: 1.5rem;
-}
-.rule {
-  width: 26px;
-  height: 1px;
-  background: var(--ink);
-  flex: none;
-}
-/* The section index. Small, but it is what gives the page a cadence
-   rather than just a sequence of headings. */
-.eyebrow__n {
-  color: var(--tx);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
-.eyebrow--on-dark .eyebrow__n {
-  color: var(--tx-on-dark);
-}
-.eyebrow--on-dark {
-  color: var(--tx-on-dark-2);
-}
-.eyebrow--on-dark .rule {
-  background: var(--pass);
 }
 
 /* ── Type scale ──────────────────────────────────────────────── */
 
 .sec__h {
-  font-size: clamp(1.85rem, 3.7vw, 3rem);
+  font-size: var(--text-section);
   margin-bottom: 1.2rem;
   max-width: 18ch;
 }
 .sec__h--wide {
-  max-width: 26ch;
-  margin-bottom: 2.6rem;
+  max-width: 22ch;
+  margin-bottom: 3rem;
 }
 .sec__h--on-dark {
-  color: var(--tx-on-dark);
+  color: var(--color-ink);
 }
 .sec__p {
-  font-size: 1.03rem;
-  color: var(--tx-2);
+  font-size: 1.05rem;
+  color: var(--color-muted);
   max-width: 36rem;
 }
 .sec__p--on-dark {
-  color: var(--tx-on-dark-2);
+  color: var(--color-muted);
 }
 
-/* ── Buttons ─────────────────────────────────────────────────── */
+/* ── Buttons: machined pills, lit from above ─────────────────── */
 
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  height: 50px;
-  padding: 0 1.35rem;
-  border-radius: 12px;
-  font-family: var(--body);
-  font-size: 0.97rem;
-  font-weight: 700;
+  min-height: 52px;
+  padding: 0 var(--space-lg);
+  border: 1px solid var(--edge-2);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(var(--chrome-2), var(--chrome));
+  box-shadow: var(--edge-light), var(--shadow-part);
+  color: var(--color-ink);
+  font: 500 0.98rem/1 var(--body);
   text-decoration: none;
   white-space: nowrap;
-  transition: transform 0.18s var(--ease), background 0.18s ease,
-    box-shadow 0.18s ease;
+  cursor: pointer;
+  transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) ease,
+    background-color var(--dur-short) ease, border-color var(--dur-short) ease;
 }
 .btn__i {
   width: 15px;
   height: 15px;
   flex: none;
 }
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklch, var(--color-accent) 40%, var(--edge-2));
+}
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: var(--edge-light);
+}
 .btn--solid {
-  background: var(--ink);
-  color: var(--paper);
-  box-shadow: var(--lift-1);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, var(--white) 45%, transparent),
+    0 10px 30px -8px color-mix(in oklch, var(--color-accent) 55%, transparent);
 }
 .btn--solid:hover {
-  background: #241f1a;
-  transform: translateY(-2px);
-  box-shadow: var(--lift-2);
+  border-color: var(--color-accent);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, var(--white) 45%, transparent),
+    0 16px 40px -10px color-mix(in oklch, var(--color-accent) 70%, transparent);
 }
 .btn--ghost {
-  border: 1px solid var(--edge-2);
-  color: var(--tx);
+  background: transparent;
+  box-shadow: none;
 }
 .btn--ghost:hover {
-  background: rgba(20, 17, 14, 0.05);
-  transform: translateY(-2px);
+  background: color-mix(in oklch, var(--white) 5%, transparent);
 }
 .btn--lg {
-  height: 60px;
-  padding: 0 1.9rem;
+  min-height: 60px;
+  padding: 0 2rem;
   font-size: 1.06rem;
 }
 
@@ -256,23 +213,22 @@ kbd {
   padding: 0.16em 0.42em;
   border-radius: 5px;
   border: 1px solid var(--edge-2);
-  background: rgba(255, 255, 255, 0.5);
-  color: var(--tx-2);
+  background: color-mix(in oklch, var(--white) 6%, transparent);
+  color: var(--color-muted);
   white-space: nowrap;
 }
 
-/* ── Window chrome ───────────────────────────────────────────────
-   Every piece of artwork on this site is a real interface built out
-   of DOM, not a screenshot and not a render. If it claims to show
-   something running, it is laid out the way that thing actually is. */
+/* ── Panels ──────────────────────────────────────────────────────
+   Every piece of artwork is a real interface built out of DOM. They
+   are machined parts now: lit from above, one light, sunk in the night. */
 
 .win {
+  position: relative;
   margin: 0;
-  background: var(--chrome);
-  border: 1px solid var(--chrome-line);
-  border-radius: 14px;
-  box-shadow: var(--lift-2);
-  color: var(--tx-on-dark);
+  background: linear-gradient(var(--chrome-2), var(--chrome));
+  border-radius: var(--radius-card);
+  box-shadow: var(--edge-light), var(--shadow-panel);
+  color: var(--color-ink);
   overflow: hidden;
 }
 
@@ -280,14 +236,14 @@ kbd {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0.7rem 0.9rem;
+  padding: 0.8rem var(--space-md);
   border-bottom: 1px solid var(--chrome-line);
-  background: rgba(255, 255, 255, 0.022);
 }
 .win__title {
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  color: var(--tx-on-dark-2);
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--color-muted);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -295,34 +251,32 @@ kbd {
 }
 .win__end {
   margin-left: auto;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--tx-on-dark-2);
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
   flex: none;
 }
 .win__foot {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.7rem 0.95rem;
+  padding: var(--space-sm) var(--space-md);
   border-top: 1px solid var(--chrome-line);
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: var(--tx-on-dark-2);
-  background: rgba(255, 255, 255, 0.022);
+  font-size: 0.78rem;
+  color: var(--color-muted);
 }
 
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 0.42rem;
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.02em;
-  padding: 0.2rem 0.5rem;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--tx-on-dark-2);
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 0.76rem;
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklch, var(--white) 6%, transparent);
+  color: var(--color-muted);
   flex: none;
 }
 .dot {
@@ -330,6 +284,7 @@ kbd {
   height: 6px;
   border-radius: 50%;
   background: currentColor;
+  box-shadow: 0 0 8px currentColor;
   flex: none;
 }
 .chip--pass {
@@ -368,13 +323,13 @@ kbd {
 }
 .facts li {
   font-size: 0.95rem;
-  color: var(--tx-2);
+  color: var(--color-muted);
   padding-left: 1.1rem;
   border-left: 2px solid var(--edge);
 }
 .facts b {
-  color: var(--tx);
-  font-weight: 700;
+  color: var(--color-ink);
+  font-weight: 500;
 }
 
 /* ── Spec rows ───────────────────────────────────────────────── */
@@ -385,56 +340,92 @@ kbd {
 }
 .spec__r {
   display: grid;
-  grid-template-columns: 150px minmax(0, 1fr);
-  gap: clamp(1rem, 3vw, 2.5rem);
-  padding: 1.35rem 0;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: var(--gap-columns);
+  padding: var(--space-lg) 0;
   border-bottom: 1px solid var(--edge);
   align-items: baseline;
 }
 .spec__k {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--tx-3);
+  font-family: var(--display);
+  font-size: 1.15rem;
+  color: var(--color-ink);
 }
 .spec__v {
-  font-size: 0.99rem;
-  color: var(--tx-2);
+  font-size: 1rem;
+  color: var(--color-muted);
   max-width: 52rem;
 }
 .spec__v b {
-  color: var(--tx);
-  font-weight: 700;
+  color: var(--color-ink);
+  font-weight: 500;
 }
 
-/* ── Reveal on scroll ────────────────────────────────────────────
-   Scoped to .js so that if the script never runs the page is simply
-   visible rather than blank. */
+/* ── Depth ───────────────────────────────────────────────────────
+   The one motion idea: things arrive from below the plane and settle
+   flat, and the panels lean toward the pointer. Transform and opacity
+   only; scoped to .js so with scripting off nothing is hidden. */
 
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.62s var(--ease), transform 0.62s var(--ease);
+  transform: perspective(1000px) translateY(36px) rotateX(16deg);
+  transform-origin: 50% 100%;
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
 }
 .js [data-reveal].is-in {
   opacity: 1;
   transform: none;
 }
 
+/* The tilt sits on the child so it never fights the reveal on the
+   wrapper. ScrollFX writes --rx/--ry/--mx/--my from the pointer. */
+[data-tilt] {
+  perspective: 1200px;
+}
+[data-tilt] > * {
+  transform: rotateX(calc(var(--lean-x, 0deg) + var(--rx, 0deg)))
+    rotateY(calc(var(--lean-y, 0deg) + var(--ry, 0deg)));
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out);
+  will-change: transform;
+}
+[data-tilt].is-tilting > * {
+  transition-duration: 0.12s;
+}
+[data-tilt] .win::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--mx, 50%) var(--my, 0%),
+    color-mix(in oklch, var(--white) 9%, transparent),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+[data-tilt].is-tilting .win::after {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
   }
   .js [data-reveal] {
     opacity: 1;
     transform: none;
   }
+  [data-tilt] > * {
+    transform: none;
+  }
+}
+
+button:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
 }

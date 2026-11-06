@@ -5,28 +5,38 @@ it exports to plain HTML, CSS, and JavaScript and is hostable anywhere.
 
 ## The design, in one line
 
-**The page is paper and ink, and colour only appears inside the machine.**
+**The machine runs at night, and the only lit thing is a window.**
 
-Nothing on the surface is tinted — no gradients, no glows, no accent headings.
-The only saturated pixels on the site live inside the dark window chrome, where
-they carry meaning: green passed, amber is waiting on a human, red failed, blue
-is still running. So the only things that light up as you scroll are the systems
-actually running.
+One blue-black ground, Instrument Sans at 400 over Figtree, and one amber
+accent for the primary action, the focus ring and the few things worth
+reading first. The state colours (`--pass`, `--gate`, `--run`, `--fail`)
+still only appear inside a panel, where they mean something.
 
-Two consequences worth knowing before editing:
+The depth is the idea:
 
-- **There are no screenshots.** Every visual — the run trace, the workflow
-  graph, the Echo bar, the terminal — is DOM and CSS. If you need new artwork,
-  build the interface rather than pasting a picture of one.
-- **Colour is a state, not a decoration.** `--pass`, `--gate`, `--run`, `--fail`
-  belong inside `.win` and the dark sections. Putting one on the paper surface
-  is a bug, not a style choice.
+- **The hero field** (`components/site/NightField.tsx`) is a canvas plane of
+  points in perspective, rolling toward a lit horizon. The camera leans with
+  the pointer. It pauses off screen and draws one still frame under reduced
+  motion.
+- **Panels tilt.** Any wrapper with `data-tilt="<max degrees>"` makes its
+  first child lean toward a fine pointer, with a glare on `.win` panels.
+  `ScrollFX` writes `--rx/--ry/--mx/--my`. The hero run also sits at a
+  resting lean (`--lean-x/--lean-y`) with the eval card 80px in front of it.
+- **Reveals rise off the floor.** `[data-reveal]` comes up from a 16° tilt
+  and settles flat. The statement line stands up on scroll where the browser
+  supports `animation-timeline: view()`.
+
+The design system came from a Hallmark redesign (Ribbon theme,
+two-in-the-morning colourway): `app/tokens.css` holds the tokens,
+`app/base.css` the base rules, and the stamp at the top of `app/globals.css`
+records the decisions. **There are still no screenshots.** Every visual is
+DOM and CSS.
 
 ## Tech
 
 - **Next.js** `15` / **React** `19` / **TypeScript** `5.7` — static export
-- **Bricolage Grotesque** (display), **Public Sans** (body), **JetBrains Mono**
-  (eyebrows, chrome, metrics), all via `next/font/google`
+- **Instrument Sans** (display), **Figtree** (body), **JetBrains Mono**
+  (traces inside the agent panels), all via `next/font/google`
 
 Four devDependencies and three runtime ones. No animation libraries, no UI
 kit, no chart library — the motion is a scroll observer and CSS, and every

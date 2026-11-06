@@ -61,6 +61,35 @@ export function ScrollFX() {
       cleanups.push(() => window.removeEventListener("scroll", onScroll));
     }
 
+    /* Panels lean toward the pointer. Fine pointers only: on touch a tilt
+       would just follow the finger off the thing being tapped. */
+    if (!reduced && window.matchMedia("(pointer: fine)").matches) {
+      for (const el of Array.from(document.querySelectorAll<HTMLElement>("[data-tilt]"))) {
+        const max = Number(el.dataset.tilt) || 8;
+        const move = (e: PointerEvent) => {
+          const r = el.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          el.style.setProperty("--ry", `${(px - 0.5) * max * 2}deg`);
+          el.style.setProperty("--rx", `${(0.5 - py) * max * 2}deg`);
+          el.style.setProperty("--mx", `${px * 100}%`);
+          el.style.setProperty("--my", `${py * 100}%`);
+          el.classList.add("is-tilting");
+        };
+        const leave = () => {
+          el.style.setProperty("--rx", "0deg");
+          el.style.setProperty("--ry", "0deg");
+          el.classList.remove("is-tilting");
+        };
+        el.addEventListener("pointermove", move);
+        el.addEventListener("pointerleave", leave);
+        cleanups.push(() => {
+          el.removeEventListener("pointermove", move);
+          el.removeEventListener("pointerleave", leave);
+        });
+      }
+    }
+
     return () => cleanups.forEach((fn) => fn());
   }, []);
 

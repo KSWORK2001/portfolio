@@ -39,7 +39,7 @@ export function QuotaPanel() {
             <span className={styles.track} aria-hidden="true">
               <i
                 className={p.over ? styles.fillOver : styles.fill}
-                style={{ width: inView ? `${p.pct}%` : "0%" }}
+                style={{ transform: `scaleX(${inView ? p.pct / 100 : 0})` }}
               />
             </span>
             <span className={p.over ? styles.pctOver : styles.pct}>{p.pct}%</span>
@@ -51,7 +51,7 @@ export function QuotaPanel() {
       <div className="win__foot">
         <span className={styles.warn}>supply-forecast</span>
         <span className={styles.footText}>
-          over soft cap — throttled to burst, not cut off
+          over soft cap: throttled to burst, not cut off
         </span>
       </div>
     </figure>

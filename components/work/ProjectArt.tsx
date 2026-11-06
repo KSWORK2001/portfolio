@@ -73,7 +73,6 @@ export function EchoArt() {
         <EchoMark />
         <span className={styles.echoWord}>Echo</span>
         <span className={`chip chip--pass ${styles.echoChip}`}>
-          <span className="dot" />
           Listening
         </span>
         <span className={styles.echoField} key={i}>
@@ -169,7 +168,7 @@ export function TokenLessArt() {
           <i />
           <i />
         </span>
-        <span className="win__title">~/agent — pytest -q</span>
+        <span className="win__title">~/agent: pytest -q</span>
         <span className={styles.toggle}>
           <button
             type="button"
@@ -208,7 +207,7 @@ export function TokenLessArt() {
         <p className={styles.ctxRow}>
           <span className={styles.ctxKey}>context window</span>
           <span className={styles.ctxTrack} aria-hidden="true">
-            <i className={on ? styles.ctxFillOk : styles.ctxFillHot} style={{ width: `${pct}%` }} />
+            <i className={on ? styles.ctxFillOk : styles.ctxFillHot} style={{ transform: `scaleX(${pct / 100})` }} />
           </span>
           <span className={on ? styles.good : styles.hot}>
             {tokens.toLocaleString()} tok
@@ -274,7 +273,6 @@ export function MarketArt() {
     <figure className={`win ${styles.market}`}>
       <div className="win__bar">
         <span className="chip chip--pass">
-          <span className="dot" />
           offline
         </span>
         <span className="win__title">llama.cpp · localhost:8080</span>
@@ -393,8 +391,7 @@ export function AlpacaArt() {
       <div className={styles.alpMain} aria-live="polite">
         <div className={styles.alpChips}>
           <span className={`chip ${styles.alpChip}`}>
-            <span className="dot" />
-            qwen · 4-bit
+            qwen, 4-bit
           </span>
           <span className="chip">{c.tok}</span>
         </div>
@@ -455,7 +452,6 @@ export function CellarArt() {
     <figure className={`win ${styles.cellar}`}>
       <div className="win__bar">
         <span className={`chip ${styles.celChip}`}>
-          <span className="dot" />
           healthy
         </span>
         <span className="win__title">Cellar · ~/Cellar/bottles</span>
@@ -482,7 +478,6 @@ export function CellarArt() {
           <p className={styles.celTitle}>{b.name}</p>
           <div className={styles.celMeta}>
             <span className={`chip ${styles.celChip}`}>
-              <span className="dot" />
               {b.runner}
             </span>
             <span
@@ -501,7 +496,7 @@ export function CellarArt() {
       </div>
 
       <div className="win__foot">
-        one runner per bottle — a bad update cannot leak next door
+        one runner per bottle: a bad update cannot leak next door
       </div>
     </figure>
   );
@@ -619,10 +614,9 @@ export function EchoHQArt() {
       <figure className={`win ${styles.hq}`}>
         <div className="win__bar">
           <span className="chip chip--run">
-            <span className="dot" />
             seated
           </span>
-          <span className="win__title">EchoHQ · 7 members · quorum 5</span>
+          <span className="win__title">EchoHQ, 7 members, quorum 5</span>
           <span className="win__end">
             {motion ? `vote ${floor.run}` : "recess"}
           </span>
@@ -698,7 +692,7 @@ const METRICS = [
   { key: "1% low", base: 38.2, lifted: 51.7 }
 ];
 
-const pct = (v: number): string => `${(v / 80) * 100}%`;
+const pct = (v: number): string => `scaleX(${v / 80})`;
 
 /**
  * Optimize mid-loop: candidate applied, re-benched, and the verified
@@ -714,7 +708,6 @@ export function OptimizeArt() {
     <figure className={`win ${styles.opt}`}>
       <div className="win__bar">
         <span className="chip chip--pass">
-          <span className="dot" />
           loop 217
         </span>
         <span className="win__title">optima · bench → apply → re-bench</span>
@@ -739,7 +732,7 @@ export function OptimizeArt() {
               <span className={styles.optTrack}>
                 <i
                   className={styles.optFillBase}
-                  style={{ width: pct(mt.base) }}
+                  style={{ transform: pct(mt.base) }}
                 />
               </span>
               <b className={styles.optVal}>{mt.base.toFixed(1)}</b>
@@ -751,7 +744,7 @@ export function OptimizeArt() {
                   className={
                     applied ? styles.optFillNew : styles.optFillBase
                   }
-                  style={{ width: pct(applied ? mt.lifted : mt.base) }}
+                  style={{ transform: pct(applied ? mt.lifted : mt.base) }}
                 />
               </span>
               <b

@@ -1,5 +1,7 @@
+/* Hallmark · part of the Ribbon redesign, full stamp in app/globals.css */
 .stage {
   position: relative;
+  transform-style: preserve-3d;
   padding-top: 1.6rem;
   /* Deep enough that the eval card clears the run window's footer and
      only laps its bottom corner. */
@@ -26,7 +28,7 @@
   align-items: baseline;
   gap: 0.85rem;
   padding: 0.6rem 0.95rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+  border-bottom: 1px solid color-mix(in oklch, var(--white) 4.5%, transparent);
 }
 .step:last-child {
   border-bottom: 0;
@@ -35,12 +37,8 @@
 /* Held back until the window is on screen, so the run appears to happen
    while you are watching it. `.live` comes from the component's own
    state, so replaying can take it away and put it back. */
-/* Scoped to .js so that with scripting off — where `live` can never be
-   set — the run is simply visible rather than a blank window. */
-:global(.js) .steps:not(.live) .step {
-  opacity: 0;
-  transform: translateY(6px);
-}
+/* Visible at rest: the steps only animate in once `live` is set, so with
+   scripting off the run is simply visible rather than a blank window. */
 .live .step {
   animation: stepIn 0.5s var(--ease) backwards;
 }
@@ -77,7 +75,6 @@
 .action {
   font-family: var(--mono);
   font-size: 0.75rem;
-  letter-spacing: 0.01em;
 }
 .detail {
   font-size: 0.88rem;
@@ -87,8 +84,6 @@
 .state {
   font-family: var(--mono);
   font-size: 0.64rem;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
   padding: 0.16rem 0.42rem;
   border-radius: 5px;
   flex: none;
@@ -98,29 +93,29 @@
   color: var(--pass-lift);
 }
 .state.pass {
-  background: rgba(34, 197, 94, 0.13);
+  background: color-mix(in oklch, var(--pass) 13%, transparent);
 }
 .fail {
   color: var(--fail);
 }
 .state.fail {
-  background: rgba(251, 113, 133, 0.14);
+  background: color-mix(in oklch, var(--fail) 14%, transparent);
 }
 .gate {
   color: var(--gate);
 }
 .state.gate {
-  background: rgba(245, 158, 11, 0.14);
+  background: color-mix(in oklch, var(--gate) 14%, transparent);
 }
 
 /* The row where the run catches itself gets a hairline in the margin —
    it is the only step that matters to the argument. */
 .step:has(.state.fail) {
-  background: rgba(251, 113, 133, 0.05);
+  background: color-mix(in oklch, var(--fail) 5%, transparent);
   box-shadow: inset 2px 0 0 var(--fail);
 }
 .step:has(.state.gate) {
-  background: rgba(245, 158, 11, 0.06);
+  background: color-mix(in oklch, var(--gate) 6%, transparent);
   box-shadow: inset 2px 0 0 var(--gate);
 }
 
@@ -141,7 +136,7 @@
   flex-wrap: wrap;
   padding: 0.7rem 0.95rem;
   border-top: 1px solid var(--chrome-line);
-  background: rgba(245, 158, 11, 0.07);
+  background: color-mix(in oklch, var(--gate) 7%, transparent);
 }
 
 .gateAsk {
@@ -160,25 +155,23 @@
 .gateBtn {
   font-family: var(--mono);
   font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   padding: 0.34rem 0.7rem;
   border-radius: 7px;
   border: 1px solid var(--chrome-line);
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in oklch, var(--white) 6%, transparent);
   color: var(--tx-on-dark);
   cursor: pointer;
   transition: background 0.16s ease, border-color 0.16s ease,
     transform 0.16s var(--ease);
 }
 .gateBtn:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: color-mix(in oklch, var(--white) 12%, transparent);
   transform: translateY(-1px);
 }
 .approve {
   background: var(--pass);
   border-color: var(--pass);
-  color: #06210f;
+  color: var(--art-ink-green);
   font-weight: 700;
 }
 .approve:hover {
@@ -216,12 +209,12 @@
   width: min(255px, 72%);
   padding: 0.95rem 1.1rem 1.1rem;
   background: var(--chrome-2);
+  /* Floats in front of the run, so a tilt separates the two layers. */
+  transform: translateZ(80px);
 }
 .evalCap {
   font-family: var(--mono);
   font-size: 0.64rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--pass-lift);
   margin-bottom: 0.5rem;
 }
@@ -246,7 +239,7 @@
   display: block;
   height: 3px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.09);
+  background: color-mix(in oklch, var(--white) 9%, transparent);
   margin-top: 0.8rem;
   overflow: hidden;
 }

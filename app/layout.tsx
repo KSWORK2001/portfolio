@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono, Public_Sans } from "next/font/google";
+import { Figtree, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { Bar } from "@/components/site/Bar";
 import { Footer } from "@/components/site/Footer";
@@ -7,13 +7,15 @@ import { ScrollFX } from "@/components/site/ScrollFX";
 import { ConsoleEgg } from "@/components/ui/ConsoleEgg";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({
+const display = Instrument_Sans({
   subsets: ["latin"],
+  weight: ["400", "500"],
   variable: "--font-display"
 });
 
-const body = Public_Sans({
+const body = Figtree({
   subsets: ["latin"],
+  weight: ["400", "500"],
   variable: "--font-body"
 });
 

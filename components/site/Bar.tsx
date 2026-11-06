@@ -87,7 +87,6 @@ export function Bar() {
         </nav>
 
         <span className={styles.clock} aria-hidden={now === null}>
-          <span className={styles.clockDot} />
           {now ? `${now} ATL` : " "}
         </span>
 

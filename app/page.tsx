@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Eyebrow } from "@/components/site/Eyebrow";
+import { NightField } from "@/components/site/NightField";
 import { AgentRun } from "@/components/work/AgentRun";
 import { EvalMatrix } from "@/components/work/EvalMatrix";
 import { GateCollapse } from "@/components/work/GateCollapse";
@@ -74,7 +74,7 @@ const LOOP = [
   {
     n: "4",
     title: "Repair",
-    text: "A rejected call goes back to the agent with the reason attached — three times, then a person."
+    text: "A rejected call goes back to the agent with the reason attached: three times, then a person."
   }
 ];
 
@@ -85,21 +85,14 @@ export default function HomePage() {
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className={styles.hero}>
+        <NightField />
         <div className={`wrap ${styles.heroGrid}`}>
           <div>
-            <p className="eyebrow" data-reveal>
-              <span className="rule" />
-              Applied AI engineer
-            </p>
             <h1 className={styles.h1} data-reveal>
               I teach machines to do my job.
             </h1>
             <p className={styles.sub} data-reveal>
-              An autonomous SWE agent that pulls Jira stories and ships merged
-              pull requests nobody wrote. A Scrum Master that runs itself.
-              Orchestration serving 100M+ customers. The model is never the
-              interesting part — the validation, the evals, and the gate that
-              stops it are.
+              The model is never the point. The gate that stops it is.
             </p>
 
             <div className={styles.actions} data-reveal>
@@ -112,13 +105,14 @@ export default function HomePage() {
               </a>
             </div>
 
-            <p className={styles.meta} data-reveal>
-              Atlanta, GA · {profile.role} at The Home Depot · MS CS at Georgia
-              Tech
-            </p>
+            <ul className={styles.meta} data-reveal>
+              <li>Atlanta, GA</li>
+              <li>{profile.role} at The Home Depot</li>
+              <li>MS CS at Georgia Tech</li>
+            </ul>
           </div>
 
-          <div data-reveal>
+          <div className={styles.heroArt} data-reveal data-tilt="6">
             <AgentRun />
           </div>
         </div>
@@ -126,7 +120,6 @@ export default function HomePage() {
 
       {/* ── Now ───────────────────────────────────────────────── */}
       <section className={`wrap ${styles.now}`}>
-        <Eyebrow n="01">Right now</Eyebrow>
         <div className={styles.nowRow}>
           {profile.now.map((item) => (
             <article className={styles.nowCell} key={item.key} data-reveal>
@@ -140,7 +133,6 @@ export default function HomePage() {
       {/* ── Work ──────────────────────────────────────────────── */}
       <section className="sec" id="work">
         <div className="wrap">
-          <Eyebrow n="02">Where I have worked</Eyebrow>
           <h2 className="sec__h sec__h--wide" data-reveal>
             Every role here ended with something in production.
           </h2>
@@ -155,7 +147,7 @@ export default function HomePage() {
                   <p className={styles.roleCompany}>{job.company}</p>
                   <p className={styles.rolePlace}>
                     {job.place}
-                    {job.note ? ` · ${job.note}` : ""}
+                    {job.note ? `, ${job.note}` : ""}
                   </p>
                 </div>
                 <div className={styles.roleBody} data-reveal>
@@ -167,7 +159,7 @@ export default function HomePage() {
                     ))}
                   </ul>
                   {RoleArt && (
-                    <div className={styles.roleArt}>
+                    <div className={styles.roleArt} data-tilt="5">
                       <RoleArt />
                     </div>
                   )}
@@ -196,7 +188,7 @@ export default function HomePage() {
                 <span className={styles.eduPeriod}>{e.period}</span>
                 <span className={styles.eduDegree}>{e.degree}</span>
                 <span className={styles.eduSchool}>
-                  {e.school} <i>· {e.note}</i>
+                  {e.school}, <i>{e.note}</i>
                 </span>
               </div>
             ))}
@@ -207,9 +199,9 @@ export default function HomePage() {
       {/* ── The line the whole page turns on ──────────────────── */}
       <section className={styles.statement}>
         <div className="wrap">
-          <p className={styles.statementText} data-reveal>
-            The model is the least trustworthy thing in the stack.
-            <em> It gets the least authority.</em>
+          <p className={styles.statementText}>
+            The model is the least trustworthy thing in the stack.{" "}
+            <span>It gets the least authority.</span>
           </p>
         </div>
       </section>
@@ -218,9 +210,6 @@ export default function HomePage() {
       <section className={styles.dark} id="loop">
         <div className="wrap">
           <div className={styles.darkHead}>
-            <Eyebrow n="03" onDark>
-              How I build
-            </Eyebrow>
             <h2 className="sec__h sec__h--on-dark" data-reveal>
               The model proposes. The system decides.
             </h2>
@@ -234,9 +223,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <ol className={styles.loop} data-reveal>
+          <ol className={styles.loop}>
             {LOOP.map((s) => (
-              <li className={styles.loopStep} key={s.title}>
+              <li className={styles.loopStep} key={s.title} data-reveal>
                 <span className={styles.loopN}>{s.n}</span>
                 <b>{s.title}</b>
                 <p>{s.text}</p>
@@ -251,7 +240,7 @@ export default function HomePage() {
               </h3>
               <p className={styles.mapCopy}>
                 Most agent demos only draw the arrow that works. Production is
-                all the other arrows — what happens on a schema failure, on a
+                all the other arrows: what happens on a schema failure, on a
                 timeout, on the third retry, and who finds out about it.
               </p>
               <WorkflowMap />
@@ -272,7 +261,7 @@ export default function HomePage() {
                 <p>
                   Irreversible actions sit behind a human gate. Tightening what
                   genuinely needed a person took interventions from the mid-400s
-                  to under 20 — the gate became worth trusting by being asked
+                  to under 20. The gate became worth trusting by being asked
                   less often.
                 </p>
               </article>
@@ -291,7 +280,7 @@ export default function HomePage() {
             <div className={styles.evalCopy}>
               <h3 className={styles.mapTitle}>Every workflow, every night.</h3>
               <p className={styles.mapCopy}>
-                A pass rate on its own is not evidence — it hides the failures
+                A pass rate on its own is not evidence. It hides the failures
                 that matter. These three are the kind a percentage would have
                 buried: right steps and the wrong policy, right answer and a
                 skipped gate.
@@ -305,7 +294,6 @@ export default function HomePage() {
       {/* ── Projects ──────────────────────────────────────────── */}
       <section className="sec" id="projects">
         <div className="wrap">
-          <Eyebrow n="04">Selected work</Eyebrow>
           <h2 className="sec__h sec__h--wide" data-reveal>
             Things I built end to end, and shipped to people who are not me.
           </h2>
@@ -336,11 +324,10 @@ export default function HomePage() {
                     rel="noreferrer"
                   >
                     {p.hrefLabel}
-                    <span aria-hidden="true">→</span>
                   </a>
                 </div>
 
-                <div className={styles.projectArt} data-reveal>
+                <div className={styles.projectArt} data-reveal data-tilt="5">
                   <Art />
                 </div>
               </article>
@@ -352,7 +339,6 @@ export default function HomePage() {
       {/* ── Stack ─────────────────────────────────────────────── */}
       <section className="sec sec--alt" id="stack">
         <div className="wrap">
-          <Eyebrow n="05">What I reach for</Eyebrow>
           <h2 className="sec__h sec__h--wide" data-reveal>
             The tools, and what I actually use them for.
           </h2>
@@ -372,7 +358,6 @@ export default function HomePage() {
       <section className="sec">
         <div className={`wrap ${styles.faqGrid}`}>
           <div>
-            <Eyebrow n="06">The usual questions</Eyebrow>
             <h2 className="sec__h" data-reveal>
               Asked often enough to answer here.
             </h2>
@@ -395,38 +380,39 @@ export default function HomePage() {
       {/* ── Contact ───────────────────────────────────────────── */}
       <section className={styles.contact} id="contact">
         <div className={`wrap ${styles.contactInner}`}>
-          <img
-            className={styles.portrait}
-            src={profile.headshot}
-            alt="Karan Shrivastava"
-            width="1080"
-            height="1350"
-            loading="lazy"
-            data-reveal
-          />
-          <h2 className={styles.contactH} data-reveal>
-            Happily employed.
-            <br />
-            Still reading email.
-          </h2>
-          <p className={styles.contactP} data-reveal>
-            If you are building something where an agent has to be right rather
-            than impressive, I would like to hear about it.
-          </p>
-          <a
-            className="btn btn--solid btn--lg"
-            href={`mailto:${profile.email}`}
-            data-reveal
-          >
-            {profile.email}
-          </a>
-          <p className={styles.contactMeta} data-reveal>
-            <span>{profile.phone}</span>
-            <i />
-            <span>Atlanta, GA · open to relocation</span>
-            <i />
-            <span>usually back within a day</span>
-          </p>
+          <div className={styles.portraitWrap} data-reveal data-tilt="7">
+            <img
+              className={styles.portrait}
+              src={profile.headshot}
+              alt="Karan Shrivastava"
+              width="1080"
+              height="1350"
+              loading="lazy"
+            />
+          </div>
+          <div className={styles.contactBody}>
+            <h2 className={styles.contactH} data-reveal>
+              Happily employed.
+              <br />
+              Still reading email.
+            </h2>
+            <p className={styles.contactP} data-reveal>
+              If you are building something where an agent has to be right
+              rather than impressive, I would like to hear about it.
+            </p>
+            <a
+              className="btn btn--solid btn--lg"
+              href={`mailto:${profile.email}`}
+              data-reveal
+            >
+              {profile.email}
+            </a>
+            <ul className={styles.contactMeta} data-reveal>
+              <li>{profile.phone}</li>
+              <li>Atlanta, GA, open to relocation</li>
+              <li>Usually back within a day</li>
+            </ul>
+          </div>
         </div>
       </section>
     </main>
