@@ -14,12 +14,17 @@ still only appear inside a panel, where they mean something.
 
 The depth is the idea:
 
-- **The hero field** (`components/site/NightField.tsx`) is a three.js scene:
-  a valley of points rolling toward a lit portal arch on the horizon, two
-  rings turning around it, and sparks drifting out. The camera leans with the
-  pointer and pushes in as the hero scrolls away. three.js is imported lazily
-  after first paint; without WebGL the CSS gradient on the canvas stays. It
-  pauses off screen and draws one still frame under reduced motion.
+- **The world** (`components/site/world.ts`, mounted by `NightField.tsx`) is
+  one three.js scene fixed behind the whole home page. Scrolling flies the
+  camera along one path: a valley of points facing a lit portal (hero),
+  through the portal, down a tunnel of gate rings (Work and the loop), and
+  out to a planet of points (projects to contact). The tunnel shows only
+  through the portal until you cross it (a stencil mask). Bloom, grain,
+  vignette and chromatic aberration sit on top; fast scrolling widens the
+  lens; points brighten under the cursor. Each section's scroll position
+  picks a stop on the path, so the pacing follows the content. three.js loads
+  lazily after first paint; without WebGL the CSS gradient on the canvas
+  stays. Reduced motion draws one still frame.
 - **Panels tilt.** Any wrapper with `data-tilt="<max degrees>"` makes its
   first child lean toward a fine pointer, with a glare on `.win` panels.
   `ScrollFX` writes `--rx/--ry/--mx/--my`. The hero run also sits at a
@@ -31,17 +36,17 @@ The design system came from a Hallmark redesign (Ribbon theme,
 two-in-the-morning colourway): `app/tokens.css` holds the tokens,
 `app/base.css` the base rules, and the stamp at the top of `app/globals.css`
 records the decisions. **There are still no screenshots.** Every visual is
-DOM and CSS, apart from the hero's WebGL scene.
+DOM and CSS, apart from the WebGL world behind them.
 
 ## Tech
 
 - **Next.js** `15` / **React** `19` / **TypeScript** `5.7` — static export
-- **three.js** for the hero scene only, loaded as its own chunk
+- **three.js** for the 3D world only, loaded as its own chunk
 - **Instrument Sans** (display), **Figtree** (body), **JetBrains Mono**
   (traces inside the agent panels), all via `next/font/google`
 
 Five devDependencies and four runtime ones. No animation libraries, no UI
-kit, no chart library: apart from the hero scene, the motion is a scroll
+kit, no chart library: apart from the 3D world, the motion is a scroll
 observer and CSS, and every visual is hand-built DOM.
 
 ## Running it

@@ -82,10 +82,10 @@ export default function HomePage() {
   return (
     <main id="main">
       <span id="top" />
+      <NightField />
 
       {/* ── Hero ──────────────────────────────────────────────── */}
       <section className={styles.hero}>
-        <NightField />
         <div className={`wrap ${styles.heroGrid}`}>
           <div>
             <h1 className={styles.h1} data-reveal>

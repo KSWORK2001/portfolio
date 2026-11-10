@@ -13,16 +13,6 @@
   padding-bottom: clamp(3rem, 6vw, 5rem);
   overflow: clip;
 }
-/* Land under the field, so the page below meets a horizon, not an edge. */
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: 16%;
-  z-index: -1;
-  background: linear-gradient(transparent, var(--color-paper));
-  pointer-events: none;
-}
 
 .heroGrid {
   display: grid;
@@ -253,7 +243,8 @@
 
 .dark {
   position: relative;
-  background: var(--color-band);
+  /* See-through: this is where the camera is inside the tunnel. */
+  background: color-mix(in oklch, var(--color-band) 45%, transparent);
   color: var(--color-ink);
   border-block: 1px solid var(--edge);
   padding-block: var(--section-gap);
@@ -564,6 +555,19 @@
   }
   .hero {
     min-height: 0;
+  }
+  /* Stacked, the portal sits right behind the words; shade them from it. */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      color-mix(in oklch, var(--color-paper) 80%, transparent) 0%,
+      color-mix(in oklch, var(--color-paper) 70%, transparent) 32%,
+      transparent 55%
+    );
+    pointer-events: none;
   }
   .heroArt {
     --lean-x: 0deg;

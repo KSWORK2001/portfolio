@@ -74,6 +74,8 @@ html {
 }
 
 body {
+  /* html already paints the paper; a body background would cover the 3D world behind the page. */
+  background: none;
   font-size: 1.0625rem;
   line-height: 1.6;
   color: var(--color-ink);
@@ -103,7 +105,7 @@ h3 {
   padding-block: var(--section-gap);
 }
 .sec--alt {
-  background: var(--color-paper-2);
+  background: color-mix(in oklch, var(--color-paper-2) 55%, transparent);
 }
 
 .skip {

@@ -1,10 +1,10 @@
 /* Hallmark · part of the Ribbon redesign, full stamp in app/globals.css */
-/* A sky-to-land gradient under the canvas, so with scripting off the
-   hero is still a night, just a still one. */
+/* The world sits behind the whole page. The gradient is what shows
+   before WebGL starts, or if it never does. */
 .field {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: -1;
   width: 100%;
   height: 100%;
   display: block;
@@ -15,19 +15,4 @@
     ),
     linear-gradient(var(--color-band), var(--color-paper) 52%, var(--color-paper-2));
   pointer-events: none;
-  /* The field thins out under the copy so no point ever sits on a word. */
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    color-mix(in oklch, var(--black) 25%, transparent) 30%,
-    var(--black) 62%
-  );
-}
-@media (max-width: 1000px) {
-  .field {
-    mask-image: linear-gradient(
-      color-mix(in oklch, var(--black) 20%, transparent),
-      color-mix(in oklch, var(--black) 20%, transparent)
-    );
-  }
 }
