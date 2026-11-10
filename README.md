@@ -14,33 +14,35 @@ still only appear inside a panel, where they mean something.
 
 The depth is the idea:
 
-- **The hero field** (`components/site/NightField.tsx`) is a canvas plane of
-  points in perspective, rolling toward a lit horizon. The camera leans with
-  the pointer. It pauses off screen and draws one still frame under reduced
-  motion.
+- **The hero field** (`components/site/NightField.tsx`) is a three.js scene:
+  a valley of points rolling toward a lit portal arch on the horizon, two
+  rings turning around it, and sparks drifting out. The camera leans with the
+  pointer and pushes in as the hero scrolls away. three.js is imported lazily
+  after first paint; without WebGL the CSS gradient on the canvas stays. It
+  pauses off screen and draws one still frame under reduced motion.
 - **Panels tilt.** Any wrapper with `data-tilt="<max degrees>"` makes its
   first child lean toward a fine pointer, with a glare on `.win` panels.
   `ScrollFX` writes `--rx/--ry/--mx/--my`. The hero run also sits at a
   resting lean (`--lean-x/--lean-y`) with the eval card 80px in front of it.
 - **Reveals rise off the floor.** `[data-reveal]` comes up from a 16° tilt
-  and settles flat. The statement line stands up on scroll where the browser
-  supports `animation-timeline: view()`.
+  and settles flat.
 
 The design system came from a Hallmark redesign (Ribbon theme,
 two-in-the-morning colourway): `app/tokens.css` holds the tokens,
 `app/base.css` the base rules, and the stamp at the top of `app/globals.css`
 records the decisions. **There are still no screenshots.** Every visual is
-DOM and CSS.
+DOM and CSS, apart from the hero's WebGL scene.
 
 ## Tech
 
 - **Next.js** `15` / **React** `19` / **TypeScript** `5.7` — static export
+- **three.js** for the hero scene only, loaded as its own chunk
 - **Instrument Sans** (display), **Figtree** (body), **JetBrains Mono**
   (traces inside the agent panels), all via `next/font/google`
 
-Four devDependencies and three runtime ones. No animation libraries, no UI
-kit, no chart library — the motion is a scroll observer and CSS, and every
-visual is hand-built DOM.
+Five devDependencies and four runtime ones. No animation libraries, no UI
+kit, no chart library: apart from the hero scene, the motion is a scroll
+observer and CSS, and every visual is hand-built DOM.
 
 ## Running it
 

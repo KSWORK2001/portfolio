@@ -249,46 +249,6 @@
   font-style: normal;
 }
 
-/* ── The statement ───────────────────────────────────────────────
-   One line at display size. Where the browser can tie animation to
-   scroll, it rises off the floor and stands up as you reach it. */
-
-.statement {
-  padding-block: var(--section-gap-l);
-  perspective: 900px;
-  overflow: clip;
-}
-.statementText {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: clamp(2.4rem, 6.8vw, 6rem);
-  line-height: 1;
-  letter-spacing: var(--tracking-display);
-  max-width: 18ch;
-  text-wrap: balance;
-  transform-origin: 50% 100%;
-}
-.statementText span {
-  color: var(--color-accent);
-}
-@supports (animation-timeline: view()) {
-  .statementText {
-    animation: standUp linear both;
-    animation-timeline: view();
-    animation-range: entry 10% cover 45%;
-  }
-}
-@keyframes standUp {
-  from {
-    opacity: 0;
-    transform: translateY(30%) rotateX(62deg) scale(0.92);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 /* ── The loop ────────────────────────────────────────────────── */
 
 .dark {
@@ -633,11 +593,5 @@
   .earlierRow {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.3rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .statementText {
-    animation: none;
   }
 }

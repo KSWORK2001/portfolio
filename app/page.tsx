@@ -89,10 +89,11 @@ export default function HomePage() {
         <div className={`wrap ${styles.heroGrid}`}>
           <div>
             <h1 className={styles.h1} data-reveal>
-              I teach machines to do my job.
+              I build AI agents for production.
             </h1>
             <p className={styles.sub} data-reveal>
-              The model is never the point. The gate that stops it is.
+              Multi-agent systems for The Home Depot, Capital One and AT&amp;T,
+              and the evaluation and validation code around them.
             </p>
 
             <div className={styles.actions} data-reveal>
@@ -196,30 +197,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── The line the whole page turns on ──────────────────── */}
-      <section className={styles.statement}>
-        <div className="wrap">
-          <p className={styles.statementText}>
-            The model is the least trustworthy thing in the stack.{" "}
-            <span>It gets the least authority.</span>
-          </p>
-        </div>
-      </section>
-
       {/* ── The loop: the page hands over to the machine ──────── */}
       <section className={styles.dark} id="loop">
         <div className="wrap">
           <div className={styles.darkHead}>
             <h2 className="sec__h sec__h--on-dark" data-reveal>
-              The model proposes. The system decides.
+              How the agents are built.
             </h2>
             <p className="sec__p sec__p--on-dark" data-reveal>
-              A language model is the least predictable component in the stack,
-              so it gets the least authority. Everything around it is
-              deterministic: what it may retrieve, what shape its output has to
-              take, how many times it can try again, and the point past which it
-              has to stop and ask. The engineering worth talking about is in
-              that scaffolding, not in the prompt.
+              Everything around the model is deterministic: what it may
+              retrieve, what shape its output has to take, how many times it
+              can try again, and the point past which it has to stop and ask.
+              Most of the work is in that scaffolding, not in the prompt.
             </p>
           </div>
 
