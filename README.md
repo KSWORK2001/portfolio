@@ -17,9 +17,13 @@ The depth is the idea:
 - **The world** (`components/site/world.ts`, mounted by `NightField.tsx`) is
   one three.js scene fixed behind the whole home page. Scrolling flies the
   camera along one path: a valley of points facing a lit portal (hero),
-  through the portal, down a tunnel of gate rings (Work and the loop), and
-  out to a planet of points (projects to contact). The tunnel shows only
-  through the portal until you cross it (a stencil mask). Bloom, grain,
+  through the portal, then sunward through the inner solar system: past
+  Earth and the Moon (Work), Venus (the loop), Mercury (projects), and into
+  the light of the Sun (contact). Everything beyond the portal shows only
+  through it until you cross (a stencil mask). Bodies are lit by the Sun's
+  position in the scene; Earth uses two public-domain NASA maps in
+  `public/textures/`, and Venus, Mercury, the Moon and the Sun are drawn in
+  their shaders. Bloom, grain,
   vignette and chromatic aberration sit on top; fast scrolling widens the
   lens; points brighten under the cursor. Each section's scroll position
   picks a stop on the path, so the pacing follows the content. three.js loads
@@ -37,6 +41,11 @@ two-in-the-morning colourway): `app/tokens.css` holds the tokens,
 `app/base.css` the base rules, and the stamp at the top of `app/globals.css`
 records the decisions. **There are still no screenshots.** Every visual is
 DOM and CSS, apart from the WebGL world behind them.
+
+Earth textures: NASA Goddard Space Flight Center, "Whole world – land and
+oceans" (`earth-day.jpg`), and NASA Earth Observatory, "The Earth at night"
+(`earth-night.jpg`), both public domain via Wikimedia Commons, resized to
+2048×1024.
 
 ## Tech
 
