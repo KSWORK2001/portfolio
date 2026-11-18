@@ -17,16 +17,18 @@ The depth is the idea:
 - **The world** (`components/site/world.ts`, mounted by `NightField.tsx`) is
   one three.js scene fixed behind the whole home page. Scrolling flies the
   camera along one path: a valley of points facing a lit portal (hero),
-  through the portal, then sunward through the inner solar system: past
-  Earth and the Moon (Work), Venus (the loop), Mercury (projects), and into
-  the light of the Sun (contact). Everything beyond the portal shows only
-  through it until you cross (a stencil mask). Bodies are lit by the Sun's
-  position in the scene; Earth uses two public-domain NASA maps in
-  `public/textures/`, and Venus, Mercury, the Moon and the Sun are drawn in
-  their shaders. Bloom, grain,
-  vignette and chromatic aberration sit on top; fast scrolling widens the
-  lens; points brighten under the cursor. Each section's scroll position
-  picks a stop on the path, so the pacing follows the content. three.js loads
+  through the portal to the edge of the solar system, then sunward past
+  every planet: Neptune, Uranus and a ringed Saturn (Work), Jupiter (the
+  loop), through the asteroid belt to Mars, Earth and the Moon (projects),
+  Venus and Mercury (stack), and into the light of the Sun (contact).
+  Everything beyond the portal shows only through it until you cross (a
+  stencil mask). Bodies are lit by the Sun's position in the scene; Earth
+  uses two public-domain NASA maps in `public/textures/`, and everything
+  else is drawn in its shader. Dust rides with the camera and streaks when
+  you scroll fast. Bloom, grain, vignette and chromatic aberration sit on
+  top; fast scrolling widens the lens; points brighten under the cursor.
+  Each section's scroll position picks its share of stops on the path, so
+  the pacing follows the content. three.js loads
   lazily after first paint; without WebGL the CSS gradient on the canvas
   stays. Reduced motion draws one still frame.
 - **Panels tilt.** Any wrapper with `data-tilt="<max degrees>"` makes its

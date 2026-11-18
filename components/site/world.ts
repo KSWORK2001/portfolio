@@ -2,15 +2,18 @@
  * The 3D world behind the whole home page, loaded lazily by NightField.
  *
  * Scrolling flies one camera along one path: a valley of points facing a
- * lit portal (hero), through the portal, then sunward through the inner
- * solar system: past Earth and the Moon (Work), Venus (the loop), Mercury
- * (projects), and into the light of the Sun (contact). Until you cross
- * the portal, everything beyond it only shows through the ring.
+ * lit portal (hero), through the portal to the edge of the solar system,
+ * then sunward past every planet: Neptune, Uranus and Saturn (Work),
+ * Jupiter (the loop), through the asteroid belt to Mars, Earth and the
+ * Moon (projects), Venus and Mercury (stack), and into the light of the
+ * Sun (contact). Until you cross the portal, everything beyond it only
+ * shows through the ring.
  *
  * Bodies are lit by the Sun's real position in the scene. Earth uses two
  * public-domain NASA maps (public/textures); everything else is drawn in
- * the shaders. Bloom, grain, a vignette and chromatic aberration sit on
- * top; fast scrolling widens the lens.
+ * the shaders. Dust rides with the camera and streaks with speed. Bloom,
+ * grain, a vignette and chromatic aberration sit on top; fast scrolling
+ * widens the lens.
  *
  * Every shader writes sRGB values straight to the screen (no output
  * conversion), so the page tokens render as the same colours as the CSS.
@@ -28,37 +31,50 @@ const PORTAL = new THREE.Vector3(0, R * 0.3, -40);
 /* Bodies, placed along the line from the hero camera through the portal:
    [distance past the portal, to the right, up]. Not to scale; arranged so
    each one passes beside the camera rather than through the words. */
-const EARTH = { at: [130, 0, 0], r: 14 };
+const NEPTUNE = { at: [130, 0, 0], r: 16 };
+const URANUS = { at: [330, 45, 5], r: 17 };
+const SATURN = { at: [580, -5, -5], r: 30 };
+const JUPITER = { at: [870, 40, -10], r: 46 };
+/** A slab of rocks with a lane [side, rise] left clear for the camera. */
+const BELT = { from: 1030, to: 1240, lane: [-15, 5], rocks: 800 };
+const MARS = { at: [1350, 24, 0], r: 7 };
+const EARTH = { at: [1550, 0, 0], r: 14 };
 const MOON = { orbit: 34, r: 3.6 };
-const VENUS = { at: [330, 40, 10], r: 13 };
-const MERCURY = { at: [500, -30, -4], r: 5.5 };
-const SUN = { at: [900, 75, 25], r: 100 };
+const VENUS = { at: [1750, 40, 10], r: 13 };
+const MERCURY = { at: [1920, -30, -4], r: 5.5 };
+const SUN = { at: [2320, 75, 25], r: 100 };
 
 /* The camera's stops after the portal, and where it looks at each one.
-   It passes each planet on its left, a little sunward, looking out
-   sideways like a window, so every planet shows its lit half. */
+   It passes most planets on their left, a little sunward, looking out
+   sideways like a window, so each shows its lit half. */
 const STOPS_AT = [
-  [110, -38, 14],
-  [150, -40, 16],
-  [372, 0, 24],
-  [430, -20, 30],
-  [508, -52, 6],
-  [640, -30, 30],
-  [680, -10, 10]
+  [140, -46, 14], [185, -36, 22], // Neptune
+  [372, 0, 20], [430, -30, 30], // Uranus
+  [630, -115, 55], [700, -80, -40], // Saturn: over the rings, then under
+  [880, -75, 25], [960, -60, 30], // Jupiter
+  [1050, -15, 6], [1220, -15, 5], // through the belt
+  [1358, -2, 7], // Mars
+  [1530, -38, 14], [1570, -40, 16], // Earth and the Moon
+  [1792, 0, 24], [1850, -20, 30], // Venus
+  [1928, -52, 6], // Mercury
+  [2060, -30, 30], [2100, -10, 10] // the Sun
 ];
+/** Where the camera looks, from the point after the hero to the last stop. */
 const LOOKS_AT = [
-  [60, 0, 0],
-  [120, -4, 2],
-  [125, -4, 4],
-  [150, -6, 6],
-  [352, 32, 12],
-  [440, 20, 10],
-  [506, -30, -1],
-  [900, 60, 25],
-  [900, 75, 215]
+  [60, 0, 0], [118, -5, 2],
+  [142, -4, 4], [130, 0, 0],
+  [352, 40, 6], [500, -10, 10],
+  [585, -5, -5], [600, -5, -5],
+  [880, 30, -8], [890, 30, -8],
+  [1150, 50, 0], [1280, 75, -5],
+  [1349, 21, 0],
+  [1545, -4, 4], [1570, -6, 6],
+  [1772, 32, 12], [1860, 20, 10],
+  [1926, -30, -1],
+  [2320, 60, 25], [2320, 75, 215]
 ];
 /** Scene brightness at each camera stop, dimmer where the page is mostly words. */
-const EXPOSURE = [1, 1, 1.1, 0.8, 0.8, 0.85, 0.8, 0.9, 0.8, 0.75];
+const EXPOSURE = [1, 1, 1.1, 1.05, 1, 0.85, 0.85, 0.9, 0.9, 1.1, 1, 0.85, 0.85, 0.85, 0.8, 0.8, 0.95, 0.9, 0.9, 0.8, 0.75];
 
 const smooth = (a: number, b: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - a) / (b - a)));
@@ -204,11 +220,15 @@ export function mount(canvas: HTMLCanvasElement) {
         uniform vec3 uBand, uPaper, uPaper2, uLit, uSunDir;
         uniform float uSun, uSpace;
         varying vec3 vDir;
+        ${NOISE}
         void main() {
           vec3 d = normalize(vDir);
           vec3 c = d.y > 0.0 ? mix(uPaper, uBand, smoothstep(0.0, 0.4, d.y))
                              : mix(uPaper, uPaper2, smoothstep(0.0, -0.3, d.y));
           c = mix(c, uBand * 0.5, uSpace);
+          // The Milky Way, once you are out in space.
+          float galaxy = exp(-pow(dot(d, normalize(vec3(0.35, 0.85, -0.4))) * 4.0, 2.0));
+          c += vec3(0.6, 0.65, 0.8) * galaxy * (0.2 + 0.8 * fbm(d * 7.0)) * 0.07 * uSpace;
           float sun = max(dot(d, uSunDir), 0.0);
           c += uLit * (pow(sun, 30.0) * 0.14 + pow(sun, 5.0) * 0.035) * uSun;
           c += uLit * pow(sun, 4.0) * 0.05 * uSpace;
@@ -416,7 +436,8 @@ export function mount(canvas: HTMLCanvasElement) {
     })
   );
 
-  /* ── The inner solar system. ── */
+  /* ── The solar system. ── */
+  const v3 = (a: number[]) => ({ value: new THREE.Vector3().fromArray(a) });
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const loader = new THREE.TextureLoader();
   const maxAniso = renderer.capabilities.getMaxAnisotropy();
@@ -434,14 +455,14 @@ export function mount(canvas: HTMLCanvasElement) {
     return m;
   };
   /** A soft shell of air around a planet, brightest at the limb and when the Sun is behind it. */
-  const atmosphere = (radius: number, tint: number[], strength: number) => {
+  const atmosphere = (planet: THREE.Object3D, radius: number, tint: number[], strength: number) => {
     const k = 1.07;
-    return sphere(
+    const air = sphere(
       radius * k,
       new THREE.ShaderMaterial({
         ...glow,
         side: THREE.BackSide,
-        uniforms: { uSunPos, uTint: { value: new THREE.Vector3().fromArray(tint) } },
+        uniforms: { uSunPos, uTint: v3(tint) },
         vertexShader: SPHERE_VERTEX,
         fragmentShader: /* glsl */ `
           uniform vec3 uTint;
@@ -456,6 +477,7 @@ export function mount(canvas: HTMLCanvasElement) {
       }),
       48
     );
+    planet.add(air);
   };
 
   // Earth: NASA day and night maps, drifting clouds, a glint on the oceans, amber cities at night.
@@ -492,14 +514,13 @@ export function mount(canvas: HTMLCanvasElement) {
     }),
     128
   );
-  scene.remove(earth);
   earthTilt.add(earth);
-  const earthAir = atmosphere(EARTH.r, [0.35, 0.6, 1.0], 0.6);
+  atmosphere(earthTilt, EARTH.r, [0.35, 0.6, 1.0], 0.6);
 
   // The Moon and Mercury: grey rock, cratered by noise.
   const rock = (dark: number[], bright: number[]) =>
     new THREE.ShaderMaterial({
-      uniforms: { uSunPos, uDark: { value: new THREE.Vector3().fromArray(dark) }, uBright: { value: new THREE.Vector3().fromArray(bright) } },
+      uniforms: { uSunPos, uDark: v3(dark), uBright: v3(bright) },
       vertexShader: SPHERE_VERTEX,
       fragmentShader: /* glsl */ `
         uniform vec3 uDark, uBright;
@@ -548,11 +569,218 @@ export function mount(canvas: HTMLCanvasElement) {
           float warp = fbm(p * 2.5 + vec3(0.0, 0.0, uTime * 0.01));
           float bands = fbm(vec3(p.x * 1.6, p.y * 6.0 + warp * 2.2, p.z * 1.6) + vec3(uTime * 0.012, 0.0, 0.0));
           vec3 c = mix(vec3(0.5, 0.38, 0.22), vec3(0.8, 0.7, 0.5), smoothstep(0.25, 0.75, bands));
-          gl_FragColor = vec4(c * (0.015 + smoothstep(-0.05, 1.0, ndl) * 0.75), 1.0);
+          gl_FragColor = vec4(c * (0.015 + smoothstep(-0.05, 1.0, ndl) * 0.55), 1.0);
         }`
     })
   );
-  const venusAir = atmosphere(VENUS.r, [1.0, 0.82, 0.5], 0.35);
+  atmosphere(venus, VENUS.r, [1.0, 0.82, 0.5], 0.35);
+
+  // Mars: rust, darker plains, white poles.
+  const mars = sphere(
+    MARS.r,
+    new THREE.ShaderMaterial({
+      uniforms: { uSunPos },
+      vertexShader: SPHERE_VERTEX,
+      fragmentShader: /* glsl */ `
+        ${LIT}
+        ${NOISE}
+        void main() {
+          light();
+          vec3 c = mix(vec3(0.62, 0.3, 0.15), vec3(0.82, 0.5, 0.3), fbm(vObj * 4.0));
+          c = mix(c, vec3(0.3, 0.17, 0.11), smoothstep(0.5, 0.62, fbm(vObj * 1.6 + 4.0)) * 0.75);
+          c = mix(c, vec3(0.9, 0.88, 0.85), smoothstep(0.84, 0.9, abs(vObj.y) + (fbm(vObj * 8.0) - 0.5) * 0.1));
+          gl_FragColor = vec4(c * (0.015 + max(ndl, 0.0) * 1.05), 1.0);
+        }`
+    }),
+    64
+  );
+  atmosphere(mars, MARS.r, [1.0, 0.6, 0.4], 0.25);
+
+  /** Gas giants: cloud bands by latitude, stirred by noise, with an optional storm. */
+  const giant = (o: {
+    light: number[];
+    dark: number[];
+    streak: number[];
+    bands: number;
+    stir: number;
+    /** Direction on the sphere and size. */
+    storm?: number[];
+    stormTint?: number[];
+  }) =>
+    new THREE.ShaderMaterial({
+      uniforms: {
+        uSunPos,
+        uTime,
+        uLight: v3(o.light),
+        uDark: v3(o.dark),
+        uStreak: v3(o.streak),
+        uBands: { value: o.bands },
+        uStir: { value: o.stir },
+        uStorm: { value: new THREE.Vector4().fromArray(o.storm ?? [0, 1, 0, 0]) },
+        uStormTint: v3(o.stormTint ?? [0, 0, 0])
+      },
+      vertexShader: SPHERE_VERTEX,
+      fragmentShader: /* glsl */ `
+        uniform vec3 uLight, uDark, uStreak, uStormTint;
+        uniform vec4 uStorm;
+        uniform float uTime, uBands, uStir;
+        ${LIT}
+        ${NOISE}
+        void main() {
+          light();
+          vec3 p = vObj;
+          float stir = fbm(p * 3.0 + vec3(uTime * 0.01, 0.0, 0.0)) - 0.5;
+          float lat = p.y + stir * uStir;
+          float band = noise(vec3(0.5, lat * uBands, 0.5));
+          float streak = fbm(vec3(p.x * 3.0, lat * uBands * 4.0, p.z * 3.0));
+          vec3 c = mix(uDark, uLight, smoothstep(0.35, 0.65, band));
+          c = mix(c, uStreak, smoothstep(0.5, 0.8, streak) * 0.5);
+          vec3 q = p - normalize(uStorm.xyz);
+          q.y *= 1.8;
+          float storm = 1.0 - smoothstep(uStorm.w * 0.6, uStorm.w + 1e-4, length(q) + stir * 0.04);
+          c = mix(c, uStormTint, storm * step(1e-4, uStorm.w));
+          // Kept under the bloom threshold: a big bright disc blooms into a white smear.
+          c *= (0.012 + smoothstep(-0.08, 1.0, ndl) * 0.5) * (0.8 + 0.2 * max(dot(N, V), 0.0));
+          gl_FragColor = vec4(c, 1.0);
+        }`
+    });
+
+  const jupiter = sphere(
+    JUPITER.r,
+    giant({
+      light: [0.86, 0.79, 0.66],
+      dark: [0.62, 0.43, 0.29],
+      streak: [0.52, 0.32, 0.22],
+      bands: 7,
+      stir: 0.12,
+      storm: [-0.85, -0.38, 0.3, 0.17],
+      stormTint: [0.74, 0.36, 0.22]
+    }),
+    128
+  );
+  atmosphere(jupiter, JUPITER.r, [1.0, 0.85, 0.65], 0.15);
+
+  // Saturn sits in a group turned so its rings open toward the camera's path (set in layout).
+  const saturnTilt = new THREE.Group();
+  scene.add(saturnTilt);
+  const saturn = sphere(
+    SATURN.r,
+    giant({ light: [0.86, 0.76, 0.56], dark: [0.72, 0.6, 0.42], streak: [0.8, 0.7, 0.5], bands: 10, stir: 0.04 }),
+    128
+  );
+  saturnTilt.add(saturn);
+  atmosphere(saturn, SATURN.r, [1.0, 0.85, 0.6], 0.15);
+  const rings = new THREE.Mesh(
+    new THREE.RingGeometry(SATURN.r * 1.24, SATURN.r * 2.27, 256, 1),
+    throughPortal(
+      new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+        uniforms: { uSunPos, uCenter: { value: saturnTilt.position } },
+        vertexShader: /* glsl */ `
+          varying vec3 vW;
+          varying float vR;
+          void main() {
+            vR = length(position.xy) / ${SATURN.r.toFixed(1)};
+            vec4 w = modelMatrix * vec4(position, 1.0);
+            vW = w.xyz;
+            gl_Position = projectionMatrix * viewMatrix * w;
+          }`,
+        fragmentShader: /* glsl */ `
+          uniform vec3 uSunPos, uCenter;
+          varying vec3 vW;
+          varying float vR;
+          ${NOISE}
+          void main() {
+            float n = 0.6 * noise(vec3(vR * 30.0, 0.5, 0.5)) + 0.4 * noise(vec3(vR * 120.0, 0.5, 0.5));
+            float a = smoothstep(1.24, 1.3, vR) * (1.0 - smoothstep(2.2, 2.27, vR));
+            a *= mix(0.3, 1.0, smoothstep(1.5, 1.56, vR)); // the faint inner ring
+            a *= 1.0 - 0.9 * (smoothstep(1.93, 1.95, vR) - smoothstep(2.0, 2.03, vR)); // the Cassini division
+            a *= 0.4 + 0.6 * n;
+            // The planet's shadow: does the ray toward the Sun pass through Saturn?
+            vec3 L = normalize(uSunPos - vW);
+            vec3 oc = vW - uCenter;
+            float b = dot(oc, L);
+            float R2 = ${(SATURN.r * SATURN.r).toFixed(1)};
+            float shadow = step(b, 0.0) * smoothstep(R2 * 1.04, R2 * 0.96, dot(oc, oc) - b * b);
+            vec3 c = mix(vec3(0.5, 0.44, 0.36), vec3(0.86, 0.78, 0.62), n);
+            gl_FragColor = vec4(c * (0.05 + 0.55 * (1.0 - shadow)), a);
+          }`
+      })
+    )
+  );
+  rings.rotation.x = -Math.PI / 2;
+  saturnTilt.add(rings);
+
+  // Uranus rolls on its side, so its faint bands run pole to pole.
+  const uranus = sphere(
+    URANUS.r,
+    giant({ light: [0.58, 0.8, 0.84], dark: [0.5, 0.72, 0.78], streak: [0.64, 0.84, 0.88], bands: 6, stir: 0.02 })
+  );
+  uranus.rotation.z = 1.7;
+  atmosphere(uranus, URANUS.r, [0.55, 0.85, 0.9], 0.25);
+
+  const neptune = sphere(
+    NEPTUNE.r,
+    giant({
+      light: [0.32, 0.52, 0.98],
+      dark: [0.2, 0.36, 0.82],
+      streak: [0.6, 0.74, 0.96],
+      bands: 8,
+      stir: 0.06,
+      storm: [-0.8, -0.35, 0.45, 0.13],
+      stormTint: [0.1, 0.16, 0.45]
+    })
+  );
+  atmosphere(neptune, NEPTUNE.r, [0.35, 0.55, 1.0], 0.5);
+
+  /* The asteroid belt: lumpy rocks, one draw call. Placed in layout, since
+     they sit around the camera's path. */
+  const rockGeo = new THREE.IcosahedronGeometry(1, 1);
+  const rp = rockGeo.attributes.position;
+  const v = new THREE.Vector3();
+  for (let i = 0; i < rp.count; i++) {
+    // A smooth function of position, so shared corners move together and faces stay closed.
+    v.fromBufferAttribute(rp, i);
+    v.multiplyScalar(1 + 0.35 * Math.sin(v.x * 3.1 + 1) * Math.sin(v.y * 2.7 + 2) * Math.sin(v.z * 3.7));
+    rp.setXYZ(i, v.x, v.y, v.z);
+  }
+  rockGeo.computeVertexNormals();
+  const belt = new THREE.InstancedMesh(
+    rockGeo,
+    throughPortal(
+      new THREE.ShaderMaterial({
+        uniforms: { uSunPos },
+        vertexShader: /* glsl */ `
+          varying vec3 vN, vW;
+          varying float vTint;
+          void main() {
+            mat4 m = modelMatrix * instanceMatrix;
+            vN = normalize(mat3(m) * normal);
+            vec4 w = m * vec4(position, 1.0);
+            vW = w.xyz;
+            vTint = fract(sin(dot(instanceMatrix[3].xyz, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+            gl_Position = projectionMatrix * viewMatrix * w;
+          }`,
+        fragmentShader: /* glsl */ `
+          uniform vec3 uSunPos;
+          varying vec3 vN, vW;
+          varying float vTint;
+          void main() {
+            vec3 N = normalize(vN);
+            vec3 V = normalize(cameraPosition - vW);
+            vec3 c = mix(vec3(0.3, 0.27, 0.24), vec3(0.58, 0.5, 0.41), vTint);
+            float lit = 0.03 + max(dot(N, normalize(uSunPos - vW)), 0.0) * 1.1 + pow(1.0 - max(dot(N, V), 0.0), 3.0) * 0.12;
+            gl_FragColor = vec4(c * lit * smoothstep(500.0, 150.0, distance(cameraPosition, vW)), 1.0);
+          }`
+      })
+    ),
+    BELT.rocks
+  );
+  belt.frustumCulled = false;
+  scene.add(belt);
+  const rockSeed = new Float32Array(BELT.rocks * 6).map(Math.random);
 
   // The Sun: boiling granulation, darker at the limb, inside a corona of rays.
   const sun = sphere(
@@ -601,6 +829,47 @@ export function mount(canvas: HTMLCanvasElement) {
     )
   );
   scene.add(corona);
+
+  /* ── Dust: motes in a box that rides with the camera, so there is always
+     something close to fly past. Each is a line that stretches with speed. ── */
+  const DUST = 700;
+  const dustSeed = new Float32Array(DUST * 6);
+  const dustEnd = new Float32Array(DUST * 2);
+  for (let i = 0; i < DUST; i++) {
+    const seed = [Math.random(), Math.random(), Math.random()];
+    dustSeed.set(seed, i * 6);
+    dustSeed.set(seed, i * 6 + 3);
+    dustEnd[i * 2 + 1] = 1;
+  }
+  const uVel = { value: new THREE.Vector3() };
+  const dust = new THREE.LineSegments(
+    geometry({ position: [new Float32Array(DUST * 6), 3], aSeed: [dustSeed, 3], aEnd: [dustEnd, 1] }),
+    throughPortal(
+      new THREE.ShaderMaterial({
+        ...glow,
+        uniforms: { uSpace, uVel, uInk: { value: ink } },
+        vertexShader: /* glsl */ `
+          uniform vec3 uVel;
+          uniform float uSpace;
+          attribute vec3 aSeed;
+          attribute float aEnd;
+          varying float vA;
+          void main() {
+            const float BOX = 80.0;
+            vec3 lo = cameraPosition - BOX * 0.5;
+            vec3 p = lo + mod(aSeed * BOX - lo, BOX) - uVel * aEnd;
+            gl_Position = projectionMatrix * viewMatrix * vec4(p, 1.0);
+            vA = uSpace * smoothstep(BOX * 0.5, BOX * 0.15, distance(p, cameraPosition)) * (1.0 - aEnd * 0.85);
+          }`,
+        fragmentShader: /* glsl */ `
+          uniform vec3 uInk;
+          varying float vA;
+          void main() { gl_FragColor = vec4(uInk, vA * 0.7); }`
+      })
+    )
+  );
+  dust.frustumCulled = false;
+  scene.add(dust);
 
   /* ── Post: bloom, then one pass for lens and film. ── */
   // 8-bit target: stacked additive light clamps at white instead of blooming
@@ -652,7 +921,21 @@ export function mount(canvas: HTMLCanvasElement) {
   let looks: THREE.Vector3[] = [];
   let anchors: Array<[number, number]> = [[0, 0]];
   const STOPS = EXPOSURE.length - 1;
-  const earthPos = new THREE.Vector3();
+  const placed: Array<[number[], ...THREE.Object3D[]]> = [
+    [NEPTUNE.at, neptune],
+    [URANUS.at, uranus],
+    [SATURN.at, saturnTilt],
+    [JUPITER.at, jupiter],
+    [MARS.at, mars],
+    [EARTH.at, earthTilt],
+    [VENUS.at, venus],
+    [MERCURY.at, mercury],
+    [SUN.at, sun, corona]
+  ];
+  const m4 = new THREE.Matrix4();
+  const q = new THREE.Quaternion();
+  const e = new THREE.Euler();
+  const size3 = new THREE.Vector3();
   const frame = { f: new THREE.Vector3(), r: new THREE.Vector3(), u: new THREE.Vector3() };
   const at = ([d, side, rise]: number[], out = new THREE.Vector3()) =>
     out
@@ -667,15 +950,25 @@ export function mount(canvas: HTMLCanvasElement) {
     frame.r.crossVectors(frame.f, THREE.Object3D.DEFAULT_UP).normalize();
     frame.u.crossVectors(frame.r, frame.f);
 
-    at(EARTH.at, earthPos);
-    earthTilt.position.copy(earthPos);
-    earthAir.position.copy(earthPos);
-    at(VENUS.at, venus.position);
-    venusAir.position.copy(venus.position);
-    at(MERCURY.at, mercury.position);
-    at(SUN.at, sun.position);
-    corona.position.copy(sun.position);
+    for (const [p, ...objs] of placed) {
+      at(p, v);
+      for (const o of objs) o.position.copy(v);
+    }
     uSunPos.value.copy(sun.position);
+    // Saturn's pole leans off the frame's up, so the rings show as an open, tilted ellipse.
+    v.copy(frame.u).addScaledVector(frame.r, -0.2).addScaledVector(frame.f, 0.1).normalize();
+    saturnTilt.quaternion.setFromUnitVectors(THREE.Object3D.DEFAULT_UP, v);
+
+    for (let i = 0; i < BELT.rocks; i++) {
+      const [a, b, c, s, x, y] = rockSeed.subarray(i * 6, i * 6 + 6);
+      const size = 0.3 + s ** 5 * 4;
+      // Uniform across the slab, except a lane on the camera's path wider than the rock.
+      const side = BELT.lane[0] + Math.sign(b - 0.5) * (12 + size * 2 + Math.abs(b - 0.5) * 360);
+      at([BELT.from + a * (BELT.to - BELT.from), side, BELT.lane[1] + (c - 0.5) * 70], v);
+      q.setFromEuler(e.set(x * 6.3, y * 6.3, s * 6.3));
+      belt.setMatrixAt(i, m4.compose(v, q, size3.set(size * (1 + x * 0.6), size, size * (1 + y * 0.4))));
+    }
+    belt.instanceMatrix.needsUpdate = true;
 
     path = new THREE.CatmullRomCurve3(
       [hero, new THREE.Vector3(-shift * 0.4, 3.6, -16), PORTAL.clone(), ...STOPS_AT.map((p) => at(p))],
@@ -691,24 +984,26 @@ export function mount(canvas: HTMLCanvasElement) {
       const el = document.querySelector(sel);
       return el ? el.getBoundingClientRect().top + window.scrollY : NaN;
     };
-    const work = top("#work");
-    const loop = top("#loop");
-    const raw: Array<[number, number]> = [
-      [0, 0],
-      [work - vh * 0.3, 2],
-      [work + vh * 0.6, 3],
-      [loop - vh * 0.5, 4],
-      [loop + vh * 0.5, 5],
-      [top("#projects"), 6],
-      [top("#stack") - vh * 0.5, 7],
-      [top("#contact") - vh, 8],
-      [document.documentElement.scrollHeight - vh, STOPS]
+    const [work, loop, projects, stack, contact] = ["#work", "#loop", "#projects", "#stack", "#contact"].map(top);
+    const span = (a: number, b: number, ks: number[]) => ks.map((k) => a + (b - a) * k);
+    const portal = work - vh * 0.3;
+    // The scroll position of each stop in order, so each section gets its share of the flight.
+    const ys = [
+      0,
+      portal / 2,
+      portal,
+      work + vh * 0.6,
+      ...span(work, loop, [0.3, 0.45, 0.6, 0.75, 0.92]), // Neptune, Uranus, Saturn
+      ...span(loop, projects, [0.2, 0.75]), // Jupiter
+      ...span(projects, stack, [0.12, 0.3, 0.48, 0.66, 0.82, 0.97]), // the belt, Mars, Earth, Venus
+      ...span(stack, contact - vh, [0.4, 0.75, 1]), // Venus, Mercury, the Sun
+      document.documentElement.scrollHeight - vh
     ];
     // Keep only anchors that exist and move forward, so the mapping is monotonic.
     anchors = [];
-    for (const a of raw) {
-      if (Number.isFinite(a[0]) && (!anchors.length || a[0] > anchors[anchors.length - 1][0])) anchors.push(a);
-    }
+    ys.forEach((y, stop) => {
+      if (Number.isFinite(y) && (!anchors.length || y > anchors[anchors.length - 1][0])) anchors.push([y, stop]);
+    });
   };
 
   const stopAt = (y: number) => {
@@ -743,6 +1038,7 @@ export function mount(canvas: HTMLCanvasElement) {
   const aim = { x: 0, y: 0 };
   const cam = { x: 0, y: 0, stop: 0, warp: 0 };
   const pos = new THREE.Vector3();
+  const lastPos = new THREE.Vector3();
   const look = new THREE.Vector3();
   const introFrom = new THREE.Vector3();
   const introLook = new THREE.Vector3();
@@ -780,6 +1076,11 @@ export function mount(canvas: HTMLCanvasElement) {
       look.lerpVectors(introLook, look, e);
     }
 
+    // Dust streaks along the camera's motion; at rest it is short specks.
+    const vel = uVel.value.subVectors(pos, lastPos).multiplyScalar(3).clampLength(0, 24);
+    if (vel.lengthSq() < 0.02) vel.copy(frame.f).multiplyScalar(0.15);
+    lastPos.copy(pos);
+
     camera.position.copy(pos);
     camera.lookAt(look);
     camera.rotateZ(Math.sin(s * 1.3) * 0.05 * space);
@@ -796,9 +1097,13 @@ export function mount(canvas: HTMLCanvasElement) {
     earth.rotation.y = time * 0.02;
     venus.rotation.y = -time * 0.006;
     mercury.rotation.y = time * 0.01;
+    mars.rotation.y = time * 0.02;
+    jupiter.rotation.y = time * 0.003;
+    saturn.rotation.y = time * 0.004;
+    neptune.rotation.y = time * 0.005;
     const orbit = time * 0.03 + 2.2;
     moon.position
-      .copy(earthPos)
+      .copy(earthTilt.position)
       .addScaledVector(frame.r, Math.cos(orbit) * MOON.orbit)
       .addScaledVector(frame.f, Math.sin(orbit) * MOON.orbit)
       .addScaledVector(frame.u, 5);
@@ -852,7 +1157,7 @@ export function mount(canvas: HTMLCanvasElement) {
     window.removeEventListener("pointermove", onMove);
     document.documentElement.removeEventListener("pointerleave", onLeave);
     scene.traverse((o) => {
-      if (o instanceof THREE.Mesh || o instanceof THREE.Points) {
+      if (o instanceof THREE.Mesh || o instanceof THREE.Points || o instanceof THREE.Line) {
         o.geometry.dispose();
         (o.material as THREE.Material).dispose();
       }
